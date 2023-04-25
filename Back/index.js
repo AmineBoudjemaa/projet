@@ -62,6 +62,8 @@ async function main() {
 
 app.use((req,res,next)=>{
   res.locals.currentUser = req.user;
+  console.log('user',req.user);
+  console.log('session',req.session);
   next();
 });
 
@@ -93,14 +95,21 @@ app.get('/error',(req,res)=>{
 });
 
 //404 handler
-app.all('*',(req,res,next)=>{
-  next(new AppErr('not found',404));
-});
+// app.all('*',(req,res,next)=>{
+//   next(new AppErr('not found',404));
+// });
 
-//error handler
+// error handler
 app.use((err,req,res,next)=>{
   const {statusCode= 500 , message= 'something went wrong' } = err;
   res.status(statusCode);
+  if(message=='you must sign up'){
+    return res.redirect(`${process.env.CLIENT_URL}/sign-up`)
+  }
+  if(message=='already signed in'){
+    console.log('the already signed in worked')
+    return res.redirect(`${process.env.CLIENT_URL}`)
+  }
   console.log(err);
   next();
 });

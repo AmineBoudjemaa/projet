@@ -62,7 +62,8 @@ passport.use(
                     // const err = new Error('you must sign up first')
                     // err.status = 401
                     // done(err,null);
-                    res.redirect('/auth/google/loginf')
+                    const err = new Error('you must sign up');
+                    done(err,null)
                 }
                 
             }

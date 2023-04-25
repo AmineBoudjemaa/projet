@@ -15,8 +15,8 @@ router.use(session({
   
 
 const addSignupFields = (req,res,next)=>{
-    req.session.additionalFields = req.body.additionalFields;
-    next();
+  if(req.body.additionalFields)  req.session.additionalFields = req.body.additionalFields;
+  next();
 }
 
 // auth login
@@ -26,8 +26,8 @@ router.get('/login', (req, res) => {
 
 router.get('/loginf',(req,res)=>{
   console.log('sign up');
-  res.redirect('http://localhost:3001');
-})
+  res.redirect(`${process.env.CLIENT_URL}/signup`);
+});
 
 router.post('/signup',addSignupFields,passport.authenticate('google', {scope: ['profile','email']}))
 
@@ -35,21 +35,28 @@ router.post('/signup',addSignupFields,passport.authenticate('google', {scope: ['
 router.get('/logout', (req, res) => {
     // handle with passport
     req.logout();
-    res.redirect('http://localhost:3001/');
+    res.redirect(`${process.env.CLIENT_URL}`);
 });
 
 // auth with google
-router.get('/google',addSignupFields,passport.authenticate('google', {scope: ['profile','email']}));
+router.get('/google',(req,res,next)=>{
+  if(req.session.user){
+    throw new Error('already signed in');
+  }
+  next();
+},addSignupFields,passport.authenticate('google', {scope: ['profile','email']}));
 
 // callback route for google to redirect to
 // hand control to passport to use code to grab profile info
-router.get('/google/redirect', passport.authenticate('google',{ failureRedirect: '/loginf' }), (req, res) => {
-    console.log(req.session);
+router.get('/google/redirect', passport.authenticate('google') , (req, res) => {
+    console.log('1',req.session);
     req.session.user = req.user;
-    console.log(res.session)
-    res.redirect(`http://localhost:3001/signup`);
+    console.log('2',req.session)
+    res.redirect(`${process.env.CLIENT_URL}`);
     // res.status(200).send()
 });
+
+
 
 router.get('/me', (req, res) => {
     console.log(req.session)
