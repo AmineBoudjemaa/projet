@@ -1,0 +1,12 @@
+.teachers .container {
+    padding-top: 60px;
+}
+
+.add-card {
+  /* width: 300px; */
+  height: 415px;
+}
+
+.add-card img {
+  width: 120px;
+}

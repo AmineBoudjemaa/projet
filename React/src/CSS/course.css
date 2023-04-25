@@ -1,0 +1,111 @@
+.courses .container>h4 {
+    position: absolute;
+    top: -15px;
+    left: 20px;
+    font-size: 24px;
+}
+
+.course .container > div {
+  display: flex;
+  width: 100%;
+  margin: 50px 0;
+  background-color: #fff;
+  border-radius: 40px;
+}
+
+.course .container .presontation {
+  width: 65%;
+  padding: 40px 60px;
+  border-right: 2px solid rgba(0, 0, 0, 0.3);
+}
+
+.course .presontation h1 {
+  width: fit-content;
+  margin: 0 auto 40px;
+  color: var(--primary-color);
+}
+
+.course .presontation p,
+.course .presontation ul {
+  margin: 20px 0;
+  line-height: 34px;
+  font-size: 18px;
+}
+
+.course .presontation li {
+  padding-left: 30px;
+  position: relative;
+}
+
+.course .presontation li::before {
+  content: "=>";
+  position: absolute;
+  left: 5px;
+  color: var(--primary-color);
+}
+
+.course .presontation .btn-blue {
+  padding: 20px 100px 20px 40px;
+  font-size: 24px;
+  margin: 60px auto;
+}
+
+.course .presontation .btn-blue:disabled {
+  padding: 20px 40px;
+}
+
+.course .container .details {
+  width: 35%;
+}
+
+.course .container .details > div {
+  width: 100%;
+}
+
+.course .container .details .image {
+  height: fit-content;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.3);
+}
+
+.course .container .details .image > img {
+  max-width: 100%;
+  height: auto;
+}
+
+.course .container .details .detail {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  height: fit-content;
+  padding: 15px;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.3);
+}
+
+.detail span {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 6px;
+  font-size: 16px;
+}
+
+.detail span:last-child {
+  padding-right: 50px;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.detail span img {
+  width: 26px;
+}
+
+.course .teacher-profil h4 {
+  text-align: center;
+  margin: 20px 0;
+}
+
+.course .teacher-profil img {
+  display: block;
+  border-radius: 50%;
+  width: 170px;
+  margin: 20px auto;
+}

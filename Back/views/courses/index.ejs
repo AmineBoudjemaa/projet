@@ -1,0 +1,14 @@
+<% layout('layouts/boilerplate') %>
+    <h1>All courses</h1>
+    <div>
+        <% if (currentUser) { %>
+         <% if (currentUser.role==='teacher') { %>
+            <a href="/courses/new">Add a course</a>
+         <% } %>
+        <% } %>
+    </div>
+    <ul>
+        <% for (let course of courses){%>
+        <li><a href="/courses/<%= course._id %>"><%= course.title %></a> - by <%= course.teacher.name %></li>
+        <% }%>
+    </ul>

@@ -1,0 +1,118 @@
+/* Start Courses */
+.courses .container {
+  padding: 60px 0;
+}
+
+.courses .cards {
+  grid-template-columns: repeat(auto-fill, minmax(350px, 350px));
+}
+
+.courses .container>p{
+  font-size: 38px;
+  width: fit-content;
+  margin: auto;
+}
+
+.courses .cards a {
+  text-decoration: none;
+}
+
+.courses .card {
+  padding: 20px;
+  transition: transform var(--main-transition),
+    box-shadow var(--main-transition);
+}
+
+.courses .card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 2px 15px rgb(0 0 0 / 20%);
+}
+
+.courses .card .image {
+  position: relative;
+}
+
+.courses .card .image img {
+  width: 100%;
+}
+
+.courses .card .image span {
+  position: absolute;
+  left: 0;
+  top: 20px;
+  background-color: #05171f;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 13px;
+}
+
+.courses .card .text {
+  width: 100%;
+  padding: 10px;
+}
+
+.courses .card .text h3 {
+  font-size: 28px;
+}
+
+.courses .card .text h3,
+.courses .card .text .propertise,
+.courses .card .text .star,
+.courses .card .text .price {
+  margin-bottom: 10px;
+}
+
+.courses .card .propertise {
+  color: rgba(139, 139, 139, 1);
+  width: 95%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.courses .card .propertise span {
+  width: calc((75% - 20px) / 2);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.courses .card .propertise span:last-child{
+  width: calc(30% - 20px);
+}
+
+.courses .card .star span:first-child {
+  font-weight: 600;
+}
+
+.courses .card .star span:last-child {
+  color: rgba(139, 139, 139, 1);
+}
+
+.courses .card .price {
+  font-weight: 600;
+  font-size: 36px;
+  color: #36a624;
+}
+
+.courses .card button {
+  width: 100%;
+  border-radius: 13px;
+}
+
+.courses .card .edit-btn,
+.courses .card .delete-btn {
+  text-align: center;
+  width: 110px;
+  color: white;
+}
+
+.courses .card .edit-btn{
+  background-color: var(--edit);
+}
+.courses .card .delete-btn{
+  background-color: var(--delete);
+}
+/* End Courses */

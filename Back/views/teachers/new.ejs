@@ -1,0 +1,15 @@
+<% layout('layouts/boilerplate') %>
+
+
+<h1>add teacher</h1>
+    
+    <ul>
+        <% for (let user of users){%>
+            <% if (user.role==='admin') { %>
+                <li><a href="/admins/<%= user._id %>"><%= user.name %></a></li>
+            <% } else { %>
+                <li><a href="/students/<%= user._id %>"><%= user.name %></a></li>
+            <% } %> 
+            <form action="/teachers/<%= user._id %>" method="post"><button>add teacher</button></form>
+        <% }%>
+    </ul>

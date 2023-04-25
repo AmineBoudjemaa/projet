@@ -1,0 +1,357 @@
+
+/* Start Landing */
+.landing {
+  position: relative;
+}
+
+.landing .container {
+  min-height: calc(100vh - 72px);
+}
+
+.landing .container .hero-section {
+  height: 80vh;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 40px 0;
+}
+
+.landing .text {
+  max-width: 500px;
+  width: 45%;
+}
+
+@media (max-width: 991px) {
+  .landing .text {
+    text-align: center;
+  }
+}
+
+.landing .text h1 {
+  font-weight: 700;
+  font-size: 40px;
+  margin-bottom: 40px;
+}
+
+@media (max-width: 767px) {
+  .landing .text h1 {
+    font-size: 28px;
+  }
+}
+
+.landing .text p {
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 35px;
+  color: #05171f;
+  margin-bottom: 60px;
+  max-width: 500px;
+}
+
+@media (max-width: 991px) {
+  .landing .text p {
+    margin: 10px auto;
+  }
+}
+
+@media (max-width: 767px) {
+  .landing .text p {
+    font-size: 18px;
+  }
+}
+
+.landing .text .btn-blue {
+  background-color: var(--secondary-color);
+  padding: 20px 100px 20px 40px;
+  font-size: 18px;
+}
+
+.landing .image {
+  width: 40%;
+}
+
+.landing .image img {
+  position: relative;
+  width: 100%;
+  animation: up-and-down 4s linear infinite;
+}
+
+@media (max-width: 991px) {
+  .landing .image {
+    display: none;
+  }
+}
+
+.landing .container .cards {
+  height: 40%;
+}
+
+.landing .container .card {
+  height: 260px;
+  width: 260px;
+}
+
+.landing .container .card img {
+  display: block;
+  width: 50%;
+}
+
+.landing .container .card p {
+  text-align: center;
+}
+
+/* End Landing */
+
+/* Start Services */
+.services .container {
+  min-height: 100vh;
+}
+.services .container .hero-section {
+  height: 55%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 40px 0;
+}
+
+.services .text {
+  max-width: 500px;
+  width: 45%;
+}
+
+@media (max-width: 991px) {
+  .services .text {
+    text-align: center;
+  }
+}
+
+.services .text h1 {
+  font-weight: 700;
+  font-size: 40px;
+}
+
+@media (max-width: 767px) {
+  .services .text h1 {
+    font-size: 28px;
+  }
+}
+
+.services .text p {
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 29px;
+  color: #05171f;
+  margin-bottom: 40px;
+  max-width: 600px;
+}
+
+@media (max-width: 991px) {
+  .services .text p {
+    margin: 10px auto;
+  }
+}
+
+@media (max-width: 767px) {
+  .services .text p {
+    font-size: 18px;
+  }
+}
+
+.services .text .btns {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.services .text .btns button {
+  padding: 20px 40px;
+}
+
+.services .image {
+  width: 40%;
+}
+
+.services .image img {
+  position: relative;
+  width: 100%;
+  animation: up-and-down 4s linear infinite;
+}
+
+.services .lessons .cards {
+  height: 45%;
+}
+.services .lessons .card {
+  justify-content: left;
+  padding: 0;
+  height: 300px;
+  width: 260px;
+}
+
+.services .lessons .card h3,
+.services .lessons .card p,
+.services .lessons .card .btn-blue {
+  margin: 0 20px;
+}
+
+.services .lessons .card img {
+  position: relative;
+  width: 100%;
+}
+
+.services .lessons .card p {
+  color: #8b8b8b;
+}
+
+.services .lessons .btn-blue {
+  width: 100%;
+}
+
+/* End Services */
+
+/* Start Comming soon */
+.comming-soon .container {
+  position: relative;
+  padding-bottom: 30px;
+}
+
+.comming-soon .images {
+  position: relative;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 480px;
+}
+
+.comming-soon .container .images::after,
+.comming-soon .container .images::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 482.74px;
+  left: 0;
+  border-radius: 56px;
+  z-index: -1;
+}
+
+.comming-soon .container .images::after {
+  background: rgba(43, 166, 222, 0.35);
+  transform: rotate(2.57deg);
+}
+.comming-soon .container .images::before {
+  background: rgba(255, 178, 135, 0.4);
+  transform: rotate(-1.49deg);
+}
+
+.comming-soon .images img {
+  display: block;
+  width: 300px;
+  height: 300px;
+}
+
+.comming-soon .images .active {
+  height: 90%;
+  width: 350px;
+}
+
+/* End Comming soon */
+
+/* Start Teachers */
+.teachers .container {
+  padding-bottom: 30px;
+}
+
+.teachers .container .cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 300px));
+  gap: 40px;
+}
+
+.teachers .cards .card {
+  border-radius: 16px;
+  padding: 0;
+}
+
+.teachers .container .card .image {
+  position: relative;
+  width: 100%;
+  min-height: 250px;
+}
+.teachers .container .card .image::after {
+  content: "";
+  position: absolute;
+  height: 98%;
+  width: 100%;
+  left: 0;
+  border-radius: 16px 16px 0 0;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.08) 71.87%,
+    rgba(0, 0, 0, 0.48) 100%
+  );
+  z-index: 1;
+}
+
+.teachers .container .card .image>img {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 16px 16px 0 0;
+  max-height: 260px;
+}
+
+.teachers .container .card .image .name {
+  color: #fff;
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  align-items: center;
+  padding-left: 16px;
+  gap: 16px;
+  font-weight: 600;
+  font-size: 20px;
+  text-transform: capitalize;
+  letter-spacing: 0px;
+  position: absolute;
+  width: 100%;
+  height: 45px;
+  left: 0px;
+  bottom: 10px;
+  z-index: 2;
+}
+
+.teachers .container .card .modules {
+  display: flex;
+  justify-content: left;
+  width: 100%;
+  padding: 16px;
+}
+
+.teachers .container .card .modules p {
+  width: fit-content;
+  background-color: var(--primary-color);
+  color: #fff;
+  padding: 6px 10px;
+  margin-right: 8px;
+  border-radius: 5px;
+}
+
+.teachers .container .card>p{
+  padding: 0 16px 16px;
+  color: rgba(0, 0, 0, 0.5);
+  line-height: 24px;
+}
+/* End Teachers */
+
+/* Start Animation */
+@keyframes up-and-down {
+  0%,
+  100% {
+    top: 0;
+  }
+
+  50% {
+    top: -30px;
+  }
+}
+/* End Animation */

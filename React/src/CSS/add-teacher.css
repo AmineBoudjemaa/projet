@@ -1,0 +1,50 @@
+.add-teacher .container form {
+  display: flex;
+  width: 100%;
+  margin: 50px 0;
+  background-color: #fff;
+  border-radius: 40px;
+}
+
+.add-teacher .container form .prop {
+  width: 70%;
+  padding: 40px;
+}
+
+.add-teacher .container form .photo {
+  position: relative;
+  width: 30%;
+}
+
+.add-teacher .container form .photo img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.add-teacher .container > h4 {
+  padding-bottom: 30px;
+  font-size: 24px;
+  position: relative;
+}
+
+.add-teacher .container > h4::after {
+  content: "";
+  position: absolute;
+  width: calc(100% - 120px);
+  height: 2px;
+  background-color: rgba(0, 0, 0, 0.3);
+  right: 0;
+  top: 15px;
+}
+
+.add-teacher .container form .prop button {
+  padding: 20px 100px 20px 40px;
+  font-size: 24px;
+  margin: 60px auto;
+}
+
+.add-teacher .add-card {
+    margin-bottom: 40px;
+}
