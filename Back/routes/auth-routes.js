@@ -26,7 +26,7 @@ router.get('/loginf',(req,res)=>{
   res.redirect(`${process.env.CLIENT_URL}/signup`);
 });
 
-router.post('/signup',addSignupFields,(req,res)=>{
+router.post('/signup',(req,res)=>{
   if(req.body.additionalFields)  {
     const schema = Joi.object({
       name: Joi.string().alphanum().min(3).max(30).required(),
@@ -67,7 +67,7 @@ router.get('/google',(req,res,next)=>{
     throw new Error('already signed in');
   }
   next();
-},addSignupFields,passport.authenticate('google', {scope: ['profile','email']}));
+},passport.authenticate('google', {scope: ['profile','email']}));
 
 // callback route for google to redirect to
 // hand control to passport to use code to grab profile info
