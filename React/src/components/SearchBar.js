@@ -38,7 +38,7 @@ function SearchBar({ rol, data }) {
               />
               {filteredData.length === 0 ? (
                 <button>
-                  <i class="fa-sharp fa-solid fa-magnifying-glass fa-2x"></i>
+                  <i className="fa-sharp fa-solid fa-magnifying-glass fa-2x"></i>
                 </button>
               ) : (
                 <button id="clearBtn" onClick={clearInput}>
