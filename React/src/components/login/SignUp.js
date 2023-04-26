@@ -22,7 +22,7 @@ export class SignUp extends Component {
       .then((res) => {
         console.log(res);
       })
-      .then((err) => {
+      .catch((err) => {
         console.log(err);
       });
   };
