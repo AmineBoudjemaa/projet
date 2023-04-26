@@ -79,8 +79,8 @@ router.get('/google/redirect', passport.authenticate('google') , (req, res) => {
 
 
 router.get('/me', (req, res) => {
-    console.log(req.session)
-    if (req.user) {
+  console.log(req.user);
+  if (req.user) {
       res.send(req.user);
     } else {
       res.status(401).json({ message: 'Not authenticated' });

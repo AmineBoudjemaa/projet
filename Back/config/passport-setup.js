@@ -23,6 +23,7 @@ passport.use(
         callbackURL: '/auth/google/redirect',
         passReqToCallback: true
     }, (req,accessToken, refreshToken, profile, done) => {
+        console.log('from setup',req.session)
         // passport callback function
         User.findOne({googleId: profile.id}).then((currentUser) => {
             if(currentUser){
@@ -44,14 +45,14 @@ passport.use(
                     })
                 }else{
                 new Student({
-                    username: profile.displayName,
                     googleId: profile.id,
                     email:profile._json.email,
                     name:profile.displayName,
                     role:'student',
                     //get the other informations 
+                    username: req.session.additionalFields.name,
                     academicLevel:req.session.additionalFields.academicLevel,
-                    phone:req.session.additionalFields.phone,
+                    phone:req.session.additionalFields.tel,
                     address:req.session.additionalFields.address,
                 }).save().then(async (newUser) => {
                     done(null, newUser);
