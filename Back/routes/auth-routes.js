@@ -4,6 +4,7 @@ const session = require('express-session');
 require('dotenv').config();
 const MongoStore = require('connect-mongo');
 const cookie = require('cookie');
+const Joi = require('joi')
 
 
 
@@ -14,12 +15,6 @@ router.use(session({
     saveUninitialized: true,
     store: MongoStore.create({ mongoUrl: process.env.MONGO_URL })
 }));
-  
-
-const addSignupFields = (req,res,next)=>{
-  if(req.body.additionalFields)  req.session.additionalFields = req.body.additionalFields;
-  next();
-}
 
 // auth login
 router.get('/login', (req, res) => {
@@ -31,7 +26,25 @@ router.get('/loginf',(req,res)=>{
   res.redirect(`${process.env.CLIENT_URL}/signup`);
 });
 
-router.post('/signup',addSignupFields,passport.authenticate('google', {scope: ['profile','email']}))
+router.post('/signup',addSignupFields,(req,res)=>{
+  if(req.body.additionalFields)  {
+    const schema = Joi.object({
+      username: Joi.string().alphanum().min(3).max(30).required(),
+      phoneNumber: Joi.string().regex(/^(\+213|0)(5|6|7)\d{8}$/).required(),
+    });
+    const { error } = schema.validate(req.body);
+    if(!error){
+    req.session.additionalFields.name = req.body.additionalFields.username;
+    req.session.additionalFields.phoneNumber = req.body.additionalFields.phoneNumber;
+    return res.status(200).send({message:'infos sent successfully'});
+    }else{
+      return res.status(400).send({message:error.details[0].message})
+    }
+
+  }else{
+    return res.status(400).send({message:'infos missing'})
+  }
+})
 
 // auth logout
 router.get('/logout', (req, res) => {
