@@ -31,14 +31,14 @@
   padding: 90px 50px 50px 50px;
 }
 
-.sign-up-container .information button {
+/* .sign-up-container .information button {
   position: absolute;
   right: 40px;
   top: 35px;
   background-color: #0b78dc;
   padding: 12px 20px;
   color: #fff;
-}
+} */
 
 .sign-up-container .information h1 {
   text-align: center;
@@ -68,6 +68,15 @@
   border: none;
   padding: 15px;
   position: relative;
+}
+
+.sign-up-container .submit {
+  position: absolute;
+    left: 50%;
+    bottom: 35px;
+  background-color: #0b78dc;
+  padding: 12px 20px;
+  color: #fff;
 }
 
 .sign-up-container .information span {

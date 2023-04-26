@@ -17,6 +17,7 @@ import TeachersList from './components/admin/TeachersList';
 import TeacherForm from './components/admin/TeacherForm';
 import AddCourse from './components/admin/AddCourse';
 import LogApp from './components/login/LogApp';
+import SignUp from './components/login/SignUp';
 
 function App() {
   return (
@@ -32,7 +33,7 @@ function App() {
         <Route path="/admin/teachers" Component={TeachersList} />
         <Route path="/admin/teacher" Component={TeacherForm} />
         <Route path="/admin/AddCourse" Component={AddCourse} />
-        <Route path="/sign-up" Component={LogApp} />
+        <Route path="/sign-up" Component={SignUp} />
         <Route path="*" Component={Default} />
       </Routes>
       <Modal />
