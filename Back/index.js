@@ -10,6 +10,8 @@ const flash = require('connect-flash');
 const passportSetup = require('./config/passport-setup');
 const MongoStore = require('connect-mongo');
 const cors = require("cors");
+const bodyParser = require('body-parser');
+
 
 
 //utils
@@ -22,6 +24,8 @@ const isAdmin = require('./utils/isAdmin');
 //run express
 const app = express();
 
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(session({
   resave: false,
@@ -60,14 +64,14 @@ async function main() {
   .then(console.log('database connected'));
 };
 
-app.use((req,res,next)=>{
-  res.locals.currentUser = req.user;
-  console.log('user',req.user);
-  console.log('session',req.session);
-  console.log('cookies',req.cookies)
-  console.log('singed cookies',req.signedCookies)
-  next();
-});
+// app.use((req,res,next)=>{
+//   res.locals.currentUser = req.user;
+//   console.log('user',req.user);
+//   console.log('session',req.session);
+//   console.log('cookies',req.cookies)
+//   console.log('singed cookies',req.signedCookies)
+//   next();
+// });
 
 //routes
 const courses = require('./routes/courses');

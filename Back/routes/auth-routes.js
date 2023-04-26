@@ -27,16 +27,15 @@ router.get('/loginf',(req,res)=>{
 });
 
 router.post('/signup',(req,res)=>{
-  if(req.body.additionalFields)  {
+  if(req.body)  {
     const schema = Joi.object({
       name: Joi.string().alphanum().min(3).max(30).required(),
       tel: Joi.string().regex(/^(\+213|0)(5|6|7)\d{8}$/).required(),
     });
     const { error } = schema.validate(req.body);
     if(!error){
-    req.session.additionalFields.name = req.body.name;
-    req.session.additionalFields.tel = req.body.tel;
-    return res.status(200).send({message:'infos sent successfully',res:{name:req.body.name,tel:req.body.tel}});
+    req.session.additionalFields = {name:req.body.name,tel:req.body.tel};
+    return res.status(200).send({message:'infos sent successfully'});
     }else{
       return res.status(400).send({message:error.details[0].message})
     }
@@ -81,8 +80,8 @@ router.get('/google/redirect', passport.authenticate('google') , (req, res) => {
 
 router.get('/me', (req, res) => {
     console.log(req.session)
-    if (req.session.user) {
-      res.send(req.session.user);
+    if (req.user) {
+      res.send(req.user);
     } else {
       res.status(401).json({ message: 'Not authenticated' });
     }

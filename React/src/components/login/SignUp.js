@@ -20,7 +20,7 @@ export class SignUp extends Component {
     axios
       .post("http://localhost:3000/auth/signup", this.state)
       .then((res) => {
-        console.log(res);
+        console.log('api response',res);
       })
       .catch((err) => {
         console.log(err);
