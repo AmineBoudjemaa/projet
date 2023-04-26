@@ -1,6 +1,11 @@
 import React, { Component } from "react";
 import axios from "axios";
 
+const api = axios.create({
+  baseURL: "http://localhost:3000",
+  withCredentials: true, // send cookies with requests
+});
+
 export class SignUp extends Component {
   constructor(props) {
     super(props);
@@ -17,8 +22,8 @@ export class SignUp extends Component {
   submitHandler = (e) => {
     e.preventDefault();
     console.log(this.state);
-    axios
-      .post("http://localhost:3000/auth/signup", this.state)
+    api
+      .post("/auth/signup", this.state)
       .then((res) => {
         if (res.status === 200) {
           window.location.href = "http://localhost:3000/auth/google";
