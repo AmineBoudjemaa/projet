@@ -20,11 +20,11 @@ export class SignUp extends Component {
     axios
       .post("http://localhost:3000/auth/signup", this.state)
       .then((res) => {
-        console.log('api response',res);
+        if (res.status === 200) {
+          window.location.href = "http://localhost:3000/auth/google";
+        }
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => console.error(err));
   };
   render() {
     const { tel, name } = this.state;
