@@ -29,14 +29,14 @@ router.get('/loginf',(req,res)=>{
 router.post('/signup',addSignupFields,(req,res)=>{
   if(req.body.additionalFields)  {
     const schema = Joi.object({
-      username: Joi.string().alphanum().min(3).max(30).required(),
-      phoneNumber: Joi.string().regex(/^(\+213|0)(5|6|7)\d{8}$/).required(),
+      name: Joi.string().alphanum().min(3).max(30).required(),
+      tel: Joi.string().regex(/^(\+213|0)(5|6|7)\d{8}$/).required(),
     });
     const { error } = schema.validate(req.body);
     if(!error){
-    req.session.additionalFields.name = req.body.additionalFields.username;
-    req.session.additionalFields.phoneNumber = req.body.additionalFields.phoneNumber;
-    return res.status(200).send({message:'infos sent successfully'});
+    req.session.additionalFields.name = req.body.name;
+    req.session.additionalFields.tel = req.body.tel;
+    return res.status(200).send({message:'infos sent successfully',res:{name:req.body.name,tel:req.body.tel}});
     }else{
       return res.status(400).send({message:error.details[0].message})
     }
