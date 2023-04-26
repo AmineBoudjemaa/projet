@@ -3,6 +3,8 @@ const passport = require('passport');
 const session = require('express-session');
 require('dotenv').config();
 const MongoStore = require('connect-mongo');
+const cookie = require('cookie');
+
 
 
 
@@ -33,14 +35,22 @@ router.post('/signup',addSignupFields,passport.authenticate('google', {scope: ['
 
 // auth logout
 router.get('/logout', (req, res) => {
-    // handle with passport
+    console.log('beofre destroy',req.session,req.cookies)
     req.logout();
+    res.clearCookie('connect.sid');
+    console.log('after logout',req.session , req.cookies,req.user)
+
     res.redirect(`${process.env.CLIENT_URL}`);
 });
 
+router.get('/test',(req,res)=>{
+  console.log('test')
+  res.redirect(`${process.env.CLIENT_URL}`)
+})
+
 // auth with google
 router.get('/google',(req,res,next)=>{
-  if(req.session.user){
+  if(req.user){
     throw new Error('already signed in');
   }
   next();
@@ -49,9 +59,7 @@ router.get('/google',(req,res,next)=>{
 // callback route for google to redirect to
 // hand control to passport to use code to grab profile info
 router.get('/google/redirect', passport.authenticate('google') , (req, res) => {
-    console.log('1',req.session);
-    req.session.user = req.user;
-    console.log('2',req.session)
+    console.log('from redirect',req.session)
     res.redirect(`${process.env.CLIENT_URL}`);
     // res.status(200).send()
 });

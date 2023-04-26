@@ -34,11 +34,11 @@ app.use(session({
   },
   store: MongoStore.create({ mongoUrl: process.env.MONGO_URL })
 }));
-app.use(flash());//not in use
+// app.use(flash());//not in use
 
 app.use(//cors()
   cors({
-    origin: "http://localhost:3001",
+    origin: `${process.env.CLIENT_URL}`,
     methods: "GET,POST,PUT,DELETE",
     credentials: true,
   })
@@ -64,6 +64,8 @@ app.use((req,res,next)=>{
   res.locals.currentUser = req.user;
   console.log('user',req.user);
   console.log('session',req.session);
+  console.log('cookies',req.cookies)
+  console.log('singed cookies',req.signedCookies)
   next();
 });
 

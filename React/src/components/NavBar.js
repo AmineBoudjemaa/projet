@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Link, NavLink } from "react-router-dom";
 import logo from "../logo.png";
 import { CourseConsumer } from "../context";
+import LogoutLogoutButton from "./login/LogoutButton";
 import Login from "./login/Login";
 
 export default class NavBar extends Component {
@@ -36,10 +37,14 @@ export default class NavBar extends Component {
                       {/* <button className="btn-whit">Login</button> */}
                     </li>
                     <li>
+                      <LogoutLogoutButton/>
+                    </li>                    
+                    <li>
                       <Link to="/sign-up">
                         <button className="btn-blue">Sign up</button>
                       </Link>
                     </li>
+
                   </ul>
                 ) : (
                   <Link to="/profile">
