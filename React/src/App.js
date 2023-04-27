@@ -18,6 +18,7 @@ import TeacherForm from './components/admin/TeacherForm';
 import AddCourse from './components/admin/AddCourse';
 import LogApp from './components/login/LogApp';
 import SignUp from './components/login/SignUp';
+import CoursesForm from './components/CoursesForm';
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
       <Routes>
         <Route path="/" Component={Home} />
         <Route path="/courses" Component={Courses} />
+        <Route path="/courses/new" Component={CoursesForm} />
         <Route path="/course" Component={CourseDetails} />
         <Route path="/myCourses" Component={MyCourses} />
         <Route path="/teachers" Component={Teachers} />

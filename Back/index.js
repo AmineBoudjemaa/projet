@@ -116,7 +116,7 @@ app.use((err,req,res,next)=>{
     console.log('the already signed in worked')
     return res.redirect(`${process.env.CLIENT_URL}`)
   }
-  console.log(err);
+  console.log('from error handler ------------------------------------------------',err);
   next();
 });
 
