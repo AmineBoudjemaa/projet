@@ -1,5 +1,4 @@
 import React from 'react'
-import { MdEdit, MdDelete } from "react-icons/md";
 import { Link } from 'react-router-dom';
 
 const Teacher = ({ teacher, handleDelete, handleEdit }) => {
@@ -13,7 +12,7 @@ const Teacher = ({ teacher, handleDelete, handleEdit }) => {
       <div>
           <button className="edit-btn" aria-label="edit button">
         <Link to="/admin/teacher" state={{ _id }}>
-            <i class="fa-solid fa-pen-to-square"></i>
+            <i className="fa-solid fa-pen-to-square"></i>
         </Link>
           </button>
 
@@ -22,7 +21,7 @@ const Teacher = ({ teacher, handleDelete, handleEdit }) => {
           aria-label="edit button"
           onClick={() => handleDelete(_id)}
         >
-          <i class="fa-solid fa-trash"></i>
+          <i className="fa-solid fa-trash"></i>
         </button>
       </div>
     </li>

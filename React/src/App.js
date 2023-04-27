@@ -16,7 +16,6 @@ import MyCourses from './components/MyCourses';
 import TeachersList from './components/admin/TeachersList';
 import TeacherForm from './components/admin/TeacherForm';
 import AddCourse from './components/admin/AddCourse';
-import LogApp from './components/login/LogApp';
 import SignUp from './components/login/SignUp';
 
 function App() {

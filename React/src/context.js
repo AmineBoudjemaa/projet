@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import axios from "axios";
 import {
   dataCourses,
   dataTeacher,
@@ -8,11 +9,16 @@ import {
   homeTeachers,
 } from "./data-courses";
 
+const api = axios.create({
+  baseURL: "http://localhost:3000",
+  withCredentials: true, // send cookies with requests
+});
+
 const CourseContext = React.createContext();
 
 class CourseProvider extends Component {
   state = {
-    user: null,
+    user: {},
     role: "student",
     teachers: [],
     detailsTeacher: detailsTeacher,
@@ -28,6 +34,18 @@ class CourseProvider extends Component {
   componentDidMount() {
     this.setCourses();
     this.setTeachers();
+    api
+      .get("/auth/me")
+      .then((response) => {
+        if (response.status === 200) {
+          console.log(response.data);
+          this.setUser(response.data);
+        }
+      })
+      .catch((error) => {
+        console.log("no user");
+        console.error(error);
+      });
   }
 
   //to not change the data file
@@ -109,6 +127,18 @@ class CourseProvider extends Component {
     });
   };
 
+  handleUser = (user) => {
+    console.log(this.user);
+    this.setState(() => {
+      return { user: user };
+    });
+    console.log(this.user);
+  };
+
+  setUser = (user) => {
+    this.setState({ user });
+  };
+
   render() {
     return (
       <CourseContext.Provider
@@ -119,6 +149,8 @@ class CourseProvider extends Component {
           openModal: this.openModal,
           closeModal: this.closeModal,
           handleDetailsTeacher: this.handleDetailsTeacher,
+          handleUser: this.handleUser,
+          setUser: this.setUser,
         }}
       >
         {this.props.children}

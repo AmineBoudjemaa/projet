@@ -1,5 +1,4 @@
 import React from 'react';
-import Cookies from 'js-cookie';
 
 function LogoutButton() {
   const handleLogout = () => {
@@ -7,7 +6,12 @@ function LogoutButton() {
   };
 
   return (
-    <button onClick={handleLogout}>Logout</button>
+    <button
+      onClick={handleLogout}
+      style={{ backgroundColor: "white", fontWeight: 600, padding: 10, width:96, color: "#d50000" }}
+    >
+      Logout
+    </button>
   );
 }
 

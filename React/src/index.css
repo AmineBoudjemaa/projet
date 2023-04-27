@@ -279,6 +279,45 @@ ul {
   margin-left: 10px;
   text-transform: capitalize;
 }
+
+.header .user:hover .profile-modal  {
+ opacity: 1;
+ z-index: 100;
+}
+
+.header .profile-modal {
+  position: absolute;
+    display: block;
+    bottom: -65px;
+    width: 100px;
+    background: white;
+    text-align: center;
+    border: 2px solid var(--primary-color);
+    border-radius: 5px;
+    opacity: 0;
+}
+.header .profile-modal li{
+  cursor: pointer;
+}
+
+.header .profile-modal li:last-child::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  height: 2px;
+  width: 100%;
+  background-color: var(--primary-color);
+}
+
+.header .profile-modal li a button {
+  background-color: white;
+  font-weight: 600;
+  padding: 10px;
+  color: #333;
+  cursor: pointer;
+}
+
+
 /* End Header */
 
 /* Start Search */

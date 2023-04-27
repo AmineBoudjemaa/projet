@@ -6,6 +6,18 @@ import LogoutLogoutButton from "./login/LogoutButton";
 import Login from "./login/Login";
 
 export default class NavBar extends Component {
+  // constructor(props) {
+  //   super(props);
+  //   this.state = {
+  //     isOpen: false,
+  //   };
+  // }
+  // isOpenHandler = (isOpen) => {
+  //   this.setState(() => {
+  //     return { isOpen: !isOpen };
+  //   });
+  //   console.log(this.state.isOpen)
+  // };
   render() {
     return (
       <CourseConsumer>
@@ -26,34 +38,42 @@ export default class NavBar extends Component {
                   <li>
                     <NavLink to="/teachers">Teachers</NavLink>
                   </li>
-                  <li>
-                    <NavLink to="/contact">Contact</NavLink>
-                  </li>
                 </ul>
-                {user === null ? (
+                {Object.keys(user).length === 0 ? (
                   <ul>
                     <li>
-                      <Login/>
-                      {/* <button className="btn-whit">Login</button> */}
+                      <Login />
                     </li>
-                    <li>
-                      <LogoutLogoutButton/>
-                    </li>                    
                     <li>
                       <Link to="/sign-up">
                         <button className="btn-blue">Sign up</button>
                       </Link>
                     </li>
-
                   </ul>
                 ) : (
-                  <Link to="/profile">
-                    <button className="btn-profile btn-whit">
-                      <i className="fa-regular fa-user"></i>
-                      {/* <img src="" alt=""></img> */}
-                      <div className="user-name">user_name</div>
-                    </button>
-                  </Link>
+                  <>
+                    <ul className="user">
+                      <li>
+                        <button
+                          className="btn-profile btn-whit"
+                          // onClick={() => this.isOpenHandler(this.state.isOpen)}
+                        >
+                          <i className="fa-regular fa-user"></i>
+                          <div className="user-name">{user.username}</div>
+                        </button>
+                      </li>
+                      <ul className="profile-modal">
+                        <li>
+                          <Link to="/myCourses">
+                            <button>My Courses</button>
+                          </Link>
+                        </li>
+                        <li>
+                          <LogoutLogoutButton />
+                        </li>
+                      </ul>
+                    </ul>
+                  </>
                 )}
               </div>
             </div>
