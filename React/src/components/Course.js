@@ -5,12 +5,12 @@ import { CourseConsumer } from "../context";
 
 export default class Course extends Component {
   render() {
-    const {
+    let {
       _id,
       title,
-      img,
       category,
       type,
+      img,
       price,
       hours,
       certificate,
@@ -24,8 +24,8 @@ export default class Course extends Component {
               <Link to="/course">
                 <div>
                   <div className="image">
-                    <img src="./images/math.png" alt="" />
-                    {certificate ? <span>Certificate</span> : ""}
+                  <img src={'https://img.freepik.com/free-vector/webinar-landing-page-template-isometric-style_23-2148770030.jpg?w=740&t=st=1682603512~exp=1682604112~hmac=8d6aedcafa1ddfc2d5737ffcc25b3e4fcf1eeca10672fc0a3dad6ebb000255e7' || img} alt="" />
+                  {certificate ? <span>Certificate</span> : ""}
                   </div>
                   <div className="text">
                     <h3>{title}</h3>

@@ -5,7 +5,7 @@ import { CourseConsumer } from "../context";
 import LogoutLogoutButton from "./login/LogoutButton";
 import Login from "./login/Login";
 
-export default class NavBar extends Component {
+export default class Teacher extends Component {
   render() {
     return (
       <CourseConsumer>
@@ -16,7 +16,6 @@ export default class NavBar extends Component {
                 <Link to="/" className="logo">
                   <img src={logo} alt="school" />
                 </Link>
-                
                 <ul className="nav">
                   <li>
                     <NavLink to="/">Home</NavLink>

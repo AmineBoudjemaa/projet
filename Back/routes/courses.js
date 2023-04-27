@@ -14,35 +14,46 @@ const isTeacher = require('../utils/isTeacher');
 const isOwner = require('../utils/isOwner');
 
 //validating middleware
-const validateCourse=validate(courseSchema);
+// const validateCourse=validate(courseSchema);
 
-const addTeacher = async (req,res,next)=>{
-    const c = await Course.findById(req.params.id).populate('teacher');
-    req.body.course.teacher = c.teacher.name;
-    next();
-};
+// const addTeacher = async (req,res,next)=>{
+//     const c = await Course.findById(req.params.id).populate('teacher');
+//     req.body.course.teacher = c.teacher.name;
+//     next();
+// };
 
 
 //see courses
 router.get('/', catchAsync(async(req,res)=>{
     const courses = await Course.find({}).populate('teacher');
     if(courses) return res.status(200).send(courses);
-    res.status(500).send({err:'no courses found'});
+    res.status(500).send({message:'no courses found'});
 }));
 
 //new
-router.post('/', catchAsync(async (req, res) => {
-    const course = new Course(req.body.course);
-    const newCourse = await course.save();
-    if(newCourse) return res.status(200).send(newCourse);
-    res.status(500).send({err:'err creating course'});
+router.post('/',isLoggedIn,isTeacher,catchAsync(async (req, res) => {
+    const teacher = await Teacher.findById(req.user._id);
+    if(!teacher) return res.status(400).send({message:'teacher not found'});
+    req.body.teacher=teacher;
+    const { error } = courseSchema.validate(req.body);
+    if (error) {
+        const msg = error.details.map(el => el.message).join(',');
+        throw new AppErr(msg,400)
+    }
+    const course = new Course(req.body);
+    await course.save()
+    .then(newCourse=>{
+        res.status(200).send(newCourse);
+    }).catch(err=>{
+        res.status(500).send(err.message);
+    })
 }));
 
 //show
 router.get('/:id', catchAsync(async (req, res,) => {
     const course = await Course.findById(req.params.id);
     if(course) return res.status(200).send(course);
-    res.status(400).send({err:'course not found'});
+    res.status(400).send({message:'course not found'});
 }));
 
 //edit
@@ -51,7 +62,7 @@ router.put('/:id',catchAsync(async (req, res) => {
     const c = await Course.findById(id).populate('teacher');
     const course = await Course.findByIdAndUpdate(id, { ...req.body.course },{new:true});
     if(course) return res.status(200).send(course);
-    res.status(500).send({err:'error'});
+    res.status(500).send({message:'error'});
 }));
 
 //delete
@@ -59,7 +70,7 @@ router.delete('/:id',catchAsync(async (req, res) => {
     const { id } = req.params;
     const course = await Course.findByIdAndDelete(id);
     if(course) return res.status(200).send(course);
-    res.status(400).send({err:'course not found'});
+    res.status(400).send({message:'course not found'});
 }));
 
 router.post('/:id/subscribe',catchAsync(async (req,res)=>{

@@ -289,7 +289,7 @@ ul {
   position: absolute;
     display: block;
     bottom: -65px;
-    width: 100px;
+    width: inherit ;
     background: white;
     text-align: center;
     border: 2px solid var(--primary-color);

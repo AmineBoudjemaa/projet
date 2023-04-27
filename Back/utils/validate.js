@@ -5,9 +5,10 @@ const AppErr = require('./appErr');
 module.exports=function validate(Schema){
     return validateschema = (req, res, next) => {
     const { error } = Schema.validate(req.body);
+    console.log('from validate ---------------------------',req.body)
     if (error) {
         const msg = error.details.map(el => el.message).join(',');
-        throw new AppErr(msg, 400);
+        throw new AppErr(msg,400)
     } else {
         next();
     };

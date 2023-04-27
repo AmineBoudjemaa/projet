@@ -1,11 +1,17 @@
 const joi = require('joi');
 
 module.exports.courseSchema = joi.object({
-    course: joi.object({
         title: joi.string().required(),
         link: joi.string().required(),
         description: joi.string().required(),
-    }).required()
+        category: joi.string().required(),
+        type:joi.string().valid('on site', 'online'),
+        price:joi.number().min(10).max(5000000).required(),
+        hours:joi.number().required(),
+        certificate:joi.boolean().required(),
+        subscribe:joi.boolean().required(),
+        teacher:joi.object().required(),
+        img:joi.string().required(),
 })
 
 module.exports.studentSchema = joi.object({

@@ -14,6 +14,14 @@ const userSchema = new Schema({
     { timestamps: true }
 );
 
+const teacherSchema = new Schema({
+    courses:{
+        type : [{
+            type : Schema.Types.ObjectId , 
+            ref: 'Course'
+        }] , 
+    },
+});
 const studentSchema = new Schema({
     appliedCourses:{
         type : [{
@@ -42,4 +50,6 @@ const studentSchema = new Schema({
 
 const User = mongoose.model('User', userSchema);
 const Student = User.discriminator('Student', studentSchema);
-module.exports = {User,Student};
+const Teacher = User.discriminator('Teacher', teacherSchema);
+
+module.exports = {User,Student,Teacher};
