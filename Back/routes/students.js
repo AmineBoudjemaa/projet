@@ -22,14 +22,13 @@ const validateStudent=validate(studentSchema);
 
 //show students
 router.get('/',catchAsync(async(req,res)=>{
-    tC(async()=>{
-    const students = await Student.find({})
-    if(students){
-         res.status(200).send(students);
-    }else{
-        res.status(500).send({err:'error occured'});
-    }
-    });
+    await Student.find({})
+    .then(students=>{
+        res.status(200).send(students);
+    })
+    .catch(err=>{
+        return res.status(400).send({err});
+    })
 }));
 
 //show student

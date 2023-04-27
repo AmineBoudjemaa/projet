@@ -21,6 +21,12 @@ const teacherSchema = new Schema({
             ref: 'Course'
         }] , 
     },
+    description:String,
+    subjects:{
+        type : [{
+            type : String , 
+        }] , 
+    },
 });
 const studentSchema = new Schema({
     appliedCourses:{
