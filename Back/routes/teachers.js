@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const User = require('../models/user');
+const {User,Teacher} = require('../models/user');
 const {teacherSchema} = require('../schemas');
 const joi = require('joi');
 
@@ -48,8 +48,13 @@ const addEmail = catchAsync(async(req,res,next)=>{
 
 //show teachers
 router.get('/',catchAsync(async(req,res)=>{
-    const teachers = await User.find({role:'teacher'});
-    res.render('teachers/index', { teachers , title:'teachers' });
+    await Teacher.find({})
+    .then(teachers=>{
+        res.status(200).send(teachers);
+    })
+    .catch(err=>{
+        return res.status(400).send({err});
+    })
 }));
 
 //new teacher
