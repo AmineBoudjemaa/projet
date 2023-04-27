@@ -3,7 +3,7 @@ const router = express.Router();
 const Course = require('../models/course');
 const {User , Student , Teacher} = require('../models/user');
 const joi = require('joi');
-const {courseSchema} = require('../schemas');
+const {courseSchema,courseEditSchema} = require('../schemas');
 
 //utils
 const catchAsync = require('../utils/catchAsync');
@@ -57,17 +57,26 @@ router.get('/:id', catchAsync(async (req, res,) => {
 }));
 
 //edit
-router.put('/:id',catchAsync(async (req, res) => {
+router.put('/:id',isLoggedIn,isOwner,catchAsync(async (req, res) => {
     const { id } = req.params;
-    const c = await Course.findById(id).populate('teacher');
-    const course = await Course.findByIdAndUpdate(id, { ...req.body.course },{new:true});
-    if(course) return res.status(200).send(course);
-    res.status(500).send({message:'error'});
+    const course = Course.findById(id);
+    const {title,description,price,link,type,category,hours,certificate,subscribe,img}=req.body;
+    const { error } = courseEditSchema.validate({title,description,price,link,type,category,hours,certificate,subscribe,img});
+    if (error) {
+        const msg = error.details.map(el => el.message).join(',');
+        res.status(400).send({message:msg});    
+    }
+    const updatedCourse = await Course.findByIdAndUpdate(id, {title,description,price,link,type,category,hours,certificate,subscribe,img},{new:true})
+    .catch(err=>{
+        return res.status(400).send({err})
+    })
+    if(course) return res.status(200).send(updatedCourse);
 }));
 
 //delete
 router.delete('/:id',catchAsync(async (req, res) => {
     const { id } = req.params;
+
     const course = await Course.findByIdAndDelete(id);
     if(course) return res.status(200).send(course);
     res.status(400).send({message:'course not found'});

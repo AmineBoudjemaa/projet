@@ -14,6 +14,20 @@ module.exports.courseSchema = joi.object({
         img:joi.string().required(),
 })
 
+module.exports.courseEditSchema = joi.object({
+    title: joi.string(),
+    link: joi.string(),
+    description: joi.string(),
+    category: joi.string(),
+    type:joi.string().valid('on site', 'online'),
+    price:joi.number().min(10).max(5000000),
+    hours:joi.number(),
+    certificate:joi.boolean(),
+    subscribe:joi.boolean(),
+    teacher:joi.object(),
+    img:joi.string(),
+})
+
 module.exports.studentSchema = joi.object({
     student: joi.object({
         username: joi.string().required(),
