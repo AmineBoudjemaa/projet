@@ -5,6 +5,7 @@ require('dotenv').config();
 const MongoStore = require('connect-mongo');
 const cookie = require('cookie');
 const Joi = require('joi')
+const {Teacher} = require('../models/user')
 
 
 
@@ -73,7 +74,7 @@ router.get('/google',(req,res,next)=>{
 router.get('/google/redirect', passport.authenticate('google') ,async (req, res) => {
     console.log('from redirect',req.session)
     if(req.user.role==='teacher'){
-      req.user = await Teacher.findById(req.user.id).populate(courses);
+      req.user = await Teacher.findById(req.user.id).populate('courses');
     }
 
     req.session.user=req.user;
