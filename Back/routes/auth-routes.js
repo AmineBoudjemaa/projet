@@ -72,7 +72,7 @@ router.get('/google',(req,res,next)=>{
 // hand control to passport to use code to grab profile info
 router.get('/google/redirect', passport.authenticate('google') , (req, res) => {
     console.log('from redirect',req.session)
-    res.redirect(`${process.env.CLIENT_URL}`);
+    res.redirect(`${process.env.CLIENT_URL}/teacher-profile`);
     // res.status(200).send()
 });
 
