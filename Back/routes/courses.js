@@ -51,7 +51,9 @@ router.post('/',isLoggedIn,isTeacher,catchAsync(async (req, res) => {
 
           const populatedTeacher = await teacher.populate('courses')
           console.log('-------------------------______',{newCourse,populatedTeacher})
-          res.status(200).send({newCourse,populatedTeacher});
+          req.user=populatedTeacher
+          console.log('req.user',req.user)
+          res.status(200).send(newCourse);
     })
     .catch(err=>{
         res.status(500).send(err.message);
@@ -85,8 +87,8 @@ router.put('/:id',isLoggedIn,isOwner,catchAsync(async (req, res) => {
 //delete
 router.delete('/:id',catchAsync(async (req, res) => {
     const { id } = req.params;
-
     const course = await Course.findByIdAndDelete(id);
+    await Teacher.findByIdAndUpdate(course.teacher,{$pull:{courses:course.id}},{new:true})
     if(course) return res.status(200).send(course);
     res.status(400).send({message:'course not found'});
 }));

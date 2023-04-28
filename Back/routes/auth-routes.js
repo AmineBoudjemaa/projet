@@ -82,7 +82,7 @@ router.get('/google/redirect', passport.authenticate('google') , (req, res) => {
 router.get('/me', (req, res) => {
   console.log(req.user);
   if (req.user) {
-      res.send(req.user);
+      res.status(200).send(req.user);
     } else {
       res.status(401).json({ message: 'Not authenticated' });
     }
