@@ -31,7 +31,7 @@ router.get('/', catchAsync(async(req,res)=>{
 }));
 
 //new
-router.post('/',isLoggedIn,isTeacher,catchAsync(async (req, res) => {
+router.post('/',/*isLoggedIn,isTeacher,*/catchAsync(async (req, res) => {
     const teacher = await Teacher.findById(req.user._id);
     if(!teacher) return res.status(400).send({message:'teacher not found'});
     req.body.teacher=teacher;
@@ -42,9 +42,15 @@ router.post('/',isLoggedIn,isTeacher,catchAsync(async (req, res) => {
     }
     const course = new Course(req.body);
     await course.save()
-    .then(newCourse=>{
-        res.status(200).send(newCourse);
-    }).catch(err=>{
+    .then(catchAsync(async newCourse=>{
+        const updatedTeacher = await Teacher.findByIdAndUpdate(
+            req.user._id ,
+            { $addToSet: { courses: newCourse } },
+            { new: true }
+          ).populate('courses');
+          console.log({newCourse,teacher})
+        res.status(200).send({newCourse,teacher});
+    })).catch(err=>{
         res.status(500).send(err.message);
     })
 }));
