@@ -70,10 +70,13 @@ router.get('/google',(req,res,next)=>{
 
 // callback route for google to redirect to
 // hand control to passport to use code to grab profile info
-router.get('/google/redirect', passport.authenticate('google') , (req, res) => {
+router.get('/google/redirect', passport.authenticate('google') ,async (req, res) => {
     console.log('from redirect',req.session)
+    if(req.user.role==='teacher'){
+      req.user = await Teacher.findById(req.user.id).populate(courses);
+    }
+
     req.session.user=req.user;
-    // if(req.user.role==='teacher') return res.redirect(`${process.env.CLIENT_URL}/teacher-profile`);
     res.redirect(`${process.env.CLIENT_URL}`);
     // res.status(200).send()
 });
