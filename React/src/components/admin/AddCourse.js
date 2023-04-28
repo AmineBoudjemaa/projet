@@ -8,6 +8,8 @@ const initialTeachers = localStorage.getItem("techers")
 
 const AddCourse = () => {
     const location = useLocation();
+    const course = location.state.courseDetails;
+    console.log(course)
     const teacher = location.state.teacher
     const intialcourses = teacher.courses
     const id = location.state.teacher._id

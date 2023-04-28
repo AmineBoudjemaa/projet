@@ -16,16 +16,23 @@ export default class Course extends Component {
       certificate,
       subscribe,
     } = this.props.course;
+    let courseDetails = this.props.course;
     return (
       <CourseConsumer>
-        {({ role, handleDetails, addtoMyCourses, openModal }) => {
+        {({ user, handleDetails, addtoMyCourses, openModal }) => {
           return (
             <div className="card" onClick={() => handleDetails(_id)}>
               <Link to="/course">
                 <div>
                   <div className="image">
-                  <img src={'https://img.freepik.com/free-vector/webinar-landing-page-template-isometric-style_23-2148770030.jpg?w=740&t=st=1682603512~exp=1682604112~hmac=8d6aedcafa1ddfc2d5737ffcc25b3e4fcf1eeca10672fc0a3dad6ebb000255e7' || img} alt="" />
-                  {certificate ? <span>Certificate</span> : ""}
+                    <img
+                      src={
+                        "https://img.freepik.com/free-vector/webinar-landing-page-template-isometric-style_23-2148770030.jpg?w=740&t=st=1682603512~exp=1682604112~hmac=8d6aedcafa1ddfc2d5737ffcc25b3e4fcf1eeca10672fc0a3dad6ebb000255e7" ||
+                        img
+                      }
+                      alt=""
+                    />
+                    {certificate ? <span>Certificate</span> : ""}
                   </div>
                   <div className="text">
                     <h3>{title}</h3>
@@ -52,7 +59,7 @@ export default class Course extends Component {
                   </div>
                 </div>
               </Link>
-              {role === "student" ? (
+              {user.role === "student" ? (
                 <button
                   className="btn-blue"
                   disabled={subscribe ? true : false}
@@ -65,11 +72,9 @@ export default class Course extends Component {
                 </button>
               ) : (
                 <>
-                  <button
-                    className="btn edit-btn"
-                  >
-                    Edit
-                  </button>
+                  <Link to="/admin/AddCourse" state={{ courseDetails }}>
+                    <button className="btn edit-btn">Edit</button>
+                  </Link>
                   <button className="btn delete-btn">Delete</button>
                 </>
               )}

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
+import "../../CSS/sign-up.css";
 
 const api = axios.create({
   baseURL: "http://localhost:3000",

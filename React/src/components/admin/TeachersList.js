@@ -2,6 +2,7 @@ import React, { useState, useEffect} from "react";
 import Teacher from "./Teacher";
 import "../../CSS/adminTeachers.css";
 import Alert from "./Alert";
+import axios from "axios";
 
 const initialTeachers = [
   {
@@ -119,6 +120,11 @@ const initialTeachers = [
   },
 ];
 
+const api = axios.create({
+  baseURL: "http://localhost:3000",
+  withCredentials: true, // send cookies with requests
+});
+
 // const initialTeachers = localStorage.getItem("techers")
 //   ? JSON.parse(localStorage.getItem("techers"))
 //   : [];
@@ -126,7 +132,7 @@ const initialTeachers = [
 function TeachersList() {
   // ******************** State values *********************
   // all teachers, add teachers
-  const [teachers, setTeachers] = useState(initialTeachers);
+  const [teachers, setTeachers] = useState([]);
   // alert
   const [alert, setAlert] = useState({ show: false });
 
@@ -145,9 +151,23 @@ function TeachersList() {
   };
   // ******************** useEffect *********************
   useEffect(() => {
+    api
+      .get("/teachers")
+      .then((response) => {
+        if (response.status === 200) {
+          console.log(response.data);
+          setTeachers(response.data);
+          console.log(response.data);
+        }
+      })
+      .catch((error) => {
+        console.log("no teachers");
+        console.error(error);
+      });
     console.log("we called useEffect");
-    localStorage.setItem("techers", JSON.stringify(teachers));
-  }, [teachers]);
+  }, []);
+
+
   return (
     <>
       {alert.show && <Alert type={alert.type} text={alert.text} />}

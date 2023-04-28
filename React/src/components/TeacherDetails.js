@@ -11,8 +11,8 @@ export default class TeacherDetails extends Component {
     return (
       <CourseConsumer>
         {({ detailsTeacher }) => {
-          const { name, modules, description, courses } = detailsTeacher;
-          const length = modules.length;
+          const { name, subjects, description, courses } = detailsTeacher;
+          const length = subjects.length;
           return (
             <div>
               <div className="teacher">
@@ -21,11 +21,11 @@ export default class TeacherDetails extends Component {
                     <div className="text">
                       <h1>{name}</h1>
                       <div>
-                        {modules.map((module, i) => {
+                        {subjects.map((module, i) => {
                           return (
                             <React.Fragment key={i}>
                               <span>{module}</span>
-                              {(i+1) === length ? "" : "/"}
+                              {i + 1 === length ? "" : "/"}
                             </React.Fragment>
                           );
                         })}

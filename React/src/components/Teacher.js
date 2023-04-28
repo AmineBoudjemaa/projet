@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 
 export default class Teacher extends Component {
   render() {
+    console.log(this.props);
     const { _id, name, modules, description } = this.props.teacher;
     return (
       <CourseConsumer>

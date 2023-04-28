@@ -16,6 +16,7 @@ import MyCourses from './components/MyCourses';
 import TeachersList from './components/admin/TeachersList';
 import TeacherForm from './components/admin/TeacherForm';
 import AddCourse from './components/admin/AddCourse';
+import AddCourse2 from './components/admin/AddCourse2';
 import SignUp from './components/login/SignUp';
 import CoursesForm from './components/CoursesForm';
 import Courses2 from './components/Courses2';
@@ -36,6 +37,7 @@ function App() {
         <Route path="/admin/teachers" Component={TeachersList} />
         <Route path="/admin/teacher" Component={TeacherForm} />
         <Route path="/admin/AddCourse" Component={AddCourse} />
+        <Route path="/admin/AddCourse2" Component={AddCourse2} />
         <Route path="/sign-up" Component={SignUp} />
         <Route path="*" Component={Default} />
       </Routes>

@@ -33,17 +33,28 @@ class CourseProvider extends Component {
 
   componentDidMount() {
     this.setCourses();
-    this.setTeachers();
+    // this.setTeachers();
     api
       .get("/auth/me")
       .then((response) => {
         if (response.status === 200) {
-          console.log(response.data);
           this.setUser(response.data);
         }
       })
       .catch((error) => {
         console.log("no user");
+        console.error(error);
+      });
+
+    api
+      .get("/teachers")
+      .then((response) => {
+        if (response.status === 200) {
+          this.setTeachers(response.data);
+        }
+      })
+      .catch((error) => {
+        console.log("no teachers");
         console.error(error);
       });
   }
@@ -60,24 +71,30 @@ class CourseProvider extends Component {
     });
   };
 
-  setTeachers = () => {
-    let tempTeachers = [];
-    dataTeacher.forEach((teacher) => {
-      const singleTeacher = { ...teacher };
-      tempTeachers = [...tempTeachers, singleTeacher];
-    });
-    this.setState(() => {
-      return { teachers: tempTeachers };
-    });
-  };
+  setTeachers = (teachers) =>{
+    this.setState(()=>{
+      return { teachers: teachers };
+    })
+  }
+
+  // setTeachers = () => {
+  //   let tempTeachers = [];
+  //   dataTeacher.forEach((teacher) => {
+  //     const singleTeacher = { ...teacher };
+  //     tempTeachers = [...tempTeachers, singleTeacher];
+  //   });
+  //   this.setState(() => {
+  //     return { teachers: tempTeachers };
+  //   });
+  // };
 
   getCourse = (id) => {
     const course = this.state.courses.find((itme) => itme._id === id);
     return course;
   };
   getTeacher = (id) => {
-    const course = this.state.teachers.find((itme) => itme._id === id);
-    return course;
+    const teacher = this.state.teachers.find((itme) => itme._id === id);
+    return teacher;
   };
 
   addtoMyCourses = (id) => {

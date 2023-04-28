@@ -7,19 +7,14 @@ import { Link, useLocation } from "react-router-dom";
 import Alert from "./Alert";
 import Course from "../Course";
 
-const initialTeachers = localStorage.getItem("techers")
-  ? JSON.parse(localStorage.getItem("techers"))
-  : [];
+
 
 const TeacherForm = () => {
   const location = useLocation();
-  //find the right teacher
-  let teacher = initialTeachers.find((item) => item._id === location.state._id);
   // ******************** State values *********************
-  // all teachers, add teachers
-  const [teachers, setTeachers] = useState(initialTeachers);
   //single teacher
-  const [name, setName] = useState(teacher.name);
+  const [teacher, setTeacher] = useState(location.state.teacher);
+  const [name, setName] = useState(teacher.username);
   const [modules, setModule] = useState(teacher.modules);
   const [description, setDescription] = useState(teacher.description);
 //   const [courses, setCourses] = useState(teacher.courses);
@@ -30,8 +25,7 @@ const TeacherForm = () => {
   // ******************** useEffect *********************
   useEffect(() => {
     console.log("we called useEffect");
-    localStorage.setItem("techers", JSON.stringify(teachers));
-  }, [teachers]);
+  }, []);
   //handle teacher info
   const handleName = (e) => {
     setName(e.target.value);
@@ -42,14 +36,6 @@ const TeacherForm = () => {
   const handleDescription = (e) => {
     setDescription(e.target.value);
   };
-
-//   // handle delete course
-//   const handleDelete = (id) => {
-//     let tempCourses = courses.filter((item) => item._id !== id);
-//     setCourses(tempCourses);
-//     console.log("object")
-//     handleAlert({ type: "danger", text: "item deleted" });
-//   };
 
   //handle alert
   const handleAlert = ({ type, text }) => {
@@ -64,13 +50,9 @@ const TeacherForm = () => {
     e.preventDefault();
     if (name !== "" || modules !== "" || description !== "") {
       if (edit) {
-        let tempTechers = teachers.map((item) => {
-          return item._id === location.state._id
-            ? { ...item, name, modules, description }
-            : item;
-        });
-        console.log(tempTechers);
-        setTeachers(tempTechers);
+        let tempTecher = { ...teacher, name, modules, description };
+        console.log(tempTecher);
+        setTeacher(tempTecher);
         setEdit(false);
         handleAlert({ type: "success", text: "item edited" });
       }

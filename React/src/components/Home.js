@@ -15,6 +15,7 @@ export default class Home extends Component {
               <ComSoon/>
               <Teachers/>
               <button onClick={()=>{console.log(value.user)}}>Click</button>
+              <button onClick={()=>{console.log(value.teachers)}}>Click</button>
             </>
           );
         }}
