@@ -74,8 +74,10 @@ button {
 }
 
 .btn-profile {
+  width: 100%;
   display: flex;
   align-items: center;
+  justify-content: center;
 }
 
 .course .btn-blue img {
@@ -283,6 +285,10 @@ ul {
 .header .user:hover .profile-modal  {
  opacity: 1;
  z-index: 100;
+}
+
+.header .user li {
+  width: 100%;
 }
 
 .header .profile-modal {

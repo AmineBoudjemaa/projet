@@ -12,8 +12,7 @@ export default class Teachers extends Component {
           <div className="cards">
               <CourseConsumer>
                 {(value) => {
-                  console.log(value.teachers)
-                  return value.teachers.map((teacher) => {
+                  return value.teachers.map((teacher, i) => {
                     return <Teacher key={teacher._id} teacher={teacher} />;
                   });
                 }}

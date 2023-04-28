@@ -19,9 +19,9 @@ const CourseContext = React.createContext();
 class CourseProvider extends Component {
   state = {
     user: {},
-    role: "student",
+    role: "admin",
     teachers: [],
-    detailsTeacher: detailsTeacher,
+    detailsTeacher: {},
     courses: [],
     detailsCourse: detailsCourse,
     coursesCart: [],
@@ -32,6 +32,7 @@ class CourseProvider extends Component {
   };
 
   componentDidMount() {
+    console.log("amine");
     this.setCourses();
     // this.setTeachers();
     api
@@ -57,25 +58,48 @@ class CourseProvider extends Component {
         console.log("no teachers");
         console.error(error);
       });
+
+    api
+      .get("/courses")
+      .then((response) => {
+        if (response.status === 200) {
+          console.log(response);
+          this.setCourses(response.data);
+        }
+      })
+      .catch((error) => {
+        console.log("no teachers");
+        console.error(error);
+      });
+  }
+
+  componentDidUpdate() {
+    // console.log("amine");
+    // api
+    //   .get("/auth/me")
+    //   .then((response) => {
+    //     if (response.status === 200) {
+    //       this.setUser(response.data);
+    //     }
+    //   })
+    //   .catch((error) => {
+    //     console.log("no user");
+    //     console.error(error);
+    //   });
   }
 
   //to not change the data file
-  setCourses = () => {
-    let tempCourses = [];
-    dataCourses.forEach((course) => {
-      const singleCourse = { ...course };
-      tempCourses = [...tempCourses, singleCourse];
-    });
+  setCourses = (courses) => {
     this.setState(() => {
-      return { courses: tempCourses };
+      return { courses: courses };
     });
   };
 
-  setTeachers = (teachers) =>{
-    this.setState(()=>{
+  setTeachers = (teachers) => {
+    this.setState(() => {
       return { teachers: teachers };
-    })
-  }
+    });
+  };
 
   // setTeachers = () => {
   //   let tempTeachers = [];

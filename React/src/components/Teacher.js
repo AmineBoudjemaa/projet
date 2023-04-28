@@ -1,11 +1,12 @@
 import React, { Component } from "react";
 import { CourseConsumer } from "../context";
 import { Link } from "react-router-dom";
+import "../CSS/teacher.css"
+import "../CSS/teachers.css"
 
 export default class Teacher extends Component {
   render() {
-    console.log(this.props);
-    const { _id, name, modules, description } = this.props.teacher;
+    const { _id, name, subjects, description } = this.props.teacher;
     return (
       <CourseConsumer>
         {({ handleDetailsTeacher }) => (
@@ -22,7 +23,7 @@ export default class Teacher extends Component {
                 </div>
               </div>
               <div className="modules">
-                {modules.map((module, i) => {
+                {subjects.map((module, i) => {
                   return <p key={i}>{module}</p>;
                 })}
               </div>

@@ -1,17 +1,18 @@
 import React, { Component } from "react";
-import { CourseConsumer } from "../context";
-import "../CSS/teacher.css";
-import "../CSS/courses.css";
-import "../CSS/course.css";
-import Course from "./Course";
+import { CourseConsumer } from "../../context";
+import "../../CSS/teacher.css";
+import "../../CSS/courses.css";
+import "../../CSS/course.css";
+import Course from "../Course";
 
 
-export default class TeacherDetails extends Component {
+
+export default class TeacherProfile extends Component {
   render() {
     return (
       <CourseConsumer>
-        {({ detailsTeacher }) => {
-          const { username, subjects, description, courses } = detailsTeacher;
+        {({ user }) => {
+          const { username, subjects, description, courses } = user;
           const length = subjects.length;
           return (
             <div>

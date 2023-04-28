@@ -13,31 +13,40 @@ import TeacherDetails from './components/TeacherDetails';
 import "./CSS/home.css"
 import Footer from './components/Footer';
 import MyCourses from './components/MyCourses';
-import TeachersList from './components/admin/TeachersList';
-import TeacherForm from './components/admin/TeacherForm';
-import AddCourse from './components/admin/AddCourse';
-import AddCourse2 from './components/admin/AddCourse2';
 import SignUp from './components/login/SignUp';
 import CoursesForm from './components/CoursesForm';
-import Courses2 from './components/Courses2';
+//teacher space
+import TeacherProfile from './components/teacher/TeacherProfile';
+import TeacherAddCourse from './components/teacher/AddCourse';
+//admin space
+import TeachersList from "./components/admin/TeachersList";
+import TeacherForm from "./components/admin/TeacherForm";
+import AddCourse from "./components/admin/AddCourse";
+import AddCourse2 from "./components/admin/AddCourse2";
+import StudentList from './components/admin/StudentList';
 
 function App() {
   return (
     <React.Fragment>
       <NavBar />
       <Routes>
+        {/* teacher space */}
+        <Route path="/teacher-profile" Component={TeacherProfile} />
+        <Route path="/teacher-add-course" Component={TeacherAddCourse} />
+        {/* admin space */}
+        <Route path="/admin/teachers" Component={TeachersList} />
+        <Route path="/admin/teacher" Component={TeacherForm} />
+        <Route path="/admin/AddCourse" Component={AddCourse} />
+        <Route path="/admin/AddCourse2" Component={AddCourse2} />
+        <Route path="/admin/Students" Component={StudentList} />
+        {/* other */}
         <Route path="/" Component={Home} />
         <Route path="/courses" Component={Courses} />
-        <Route path="/courses2" Component={Courses2} />
         <Route path="/courses/new" Component={CoursesForm} />
         <Route path="/course" Component={CourseDetails} />
         <Route path="/myCourses" Component={MyCourses} />
         <Route path="/teachers" Component={Teachers} />
         <Route path="/teacher" Component={TeacherDetails} />
-        <Route path="/admin/teachers" Component={TeachersList} />
-        <Route path="/admin/teacher" Component={TeacherForm} />
-        <Route path="/admin/AddCourse" Component={AddCourse} />
-        <Route path="/admin/AddCourse2" Component={AddCourse2} />
         <Route path="/sign-up" Component={SignUp} />
         <Route path="*" Component={Default} />
       </Routes>
