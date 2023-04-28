@@ -72,6 +72,7 @@ router.get('/google',(req,res,next)=>{
 // hand control to passport to use code to grab profile info
 router.get('/google/redirect', passport.authenticate('google') , (req, res) => {
     console.log('from redirect',req.session)
+    req.session.user=req.user;
     // if(req.user.role==='teacher') return res.redirect(`${process.env.CLIENT_URL}/teacher-profile`);
     res.redirect(`${process.env.CLIENT_URL}`);
     // res.status(200).send()
@@ -81,8 +82,8 @@ router.get('/google/redirect', passport.authenticate('google') , (req, res) => {
 
 router.get('/me', (req, res) => {
   console.log(req.user);
-  if (req.user) {
-      res.status(200).send(req.user);
+  if (req.user && req.session.user) {
+      res.status(200).send(req.session.user);
     } else {
       res.status(401).json({ message: 'Not authenticated' });
     }

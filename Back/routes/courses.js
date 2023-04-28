@@ -51,7 +51,7 @@ router.post('/',isLoggedIn,isTeacher,catchAsync(async (req, res) => {
 
           const populatedTeacher = await teacher.populate('courses')
           console.log('-------------------------______',{newCourse,populatedTeacher})
-          req.user=populatedTeacher
+          req.session.user=populatedTeacher;
           console.log('req.user',req.user)
           res.status(200).send(newCourse);
     })
