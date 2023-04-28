@@ -11,7 +11,6 @@ export class CoursesForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      _id: uuidv4(),
       title: "course title",
       link: "linktocourse",
       description: "course description 101",

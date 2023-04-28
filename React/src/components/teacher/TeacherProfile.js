@@ -11,11 +11,13 @@ class TeacherProfile extends Component {
       <CourseConsumer>
         {({ user, courses }) => {
           const { username, subjects, description } = user;
+          console.log(user)
           const teacherCoursesIds = user.courses;
+          console.log(user.courses)
           let teacherCourses = [];
           for (const element of teacherCoursesIds) {
             teacherCourses.push(courses.find(
-              (course) => course._id !== element
+              (course) => course._id === element
             )) 
           }
           const length = subjects.length;

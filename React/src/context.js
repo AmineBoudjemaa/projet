@@ -112,6 +112,21 @@ class CourseProvider extends Component {
     const course = this.state.courses.find((itme) => itme._id === id);
     return course;
   };
+
+  getTeacherCourse = (id) => {
+    const course = this.state.user.courses.find((itme) => itme._id === id);
+    return course;
+  };
+
+  handleDeleteTeacherCourse = (id) => {
+    console.log(id)
+    console.log(this.state.user.courses);
+    let tempTecherCourses= this.state.user.courses.filter((item) => item !== id);
+    console.log(tempTecherCourses)
+    let tempUser = {...this.state.user, courses:tempTecherCourses}
+    this.setUser(tempUser);
+  };
+
   getTeacher = (id) => {
     const teacher = this.state.teachers.find((itme) => itme._id === id);
     return teacher;
@@ -188,6 +203,7 @@ class CourseProvider extends Component {
           handleDetailsTeacher: this.handleDetailsTeacher,
           handleUser: this.handleUser,
           setUser: this.setUser,
+          handleDeleteTeacherCourse: this.handleDeleteTeacherCourse,
         }}
       >
         {this.props.children}

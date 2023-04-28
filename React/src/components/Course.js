@@ -19,7 +19,13 @@ export default class Course extends Component {
     let courseDetails = this.props.course;
     return (
       <CourseConsumer>
-        {({ user, handleDetails, addtoMyCourses, openModal }) => {
+        {({
+          user,
+          handleDetails,
+          addtoMyCourses,
+          openModal,
+          handleDeleteTeacherCourse,
+        }) => {
           return (
             <div className="card" onClick={() => handleDetails(_id)}>
               <Link to="/course">
@@ -75,7 +81,12 @@ export default class Course extends Component {
                   <Link to="/techer-edit-course" state={{ courseDetails }}>
                     <button className="btn edit-btn">Edit</button>
                   </Link>
-                  <button className="btn delete-btn">Delete</button>
+                  <button
+                    className="btn delete-btn"
+                    onClick={()=>{handleDeleteTeacherCourse(_id)}}
+                  >
+                    Delete
+                  </button>
                 </>
               )}
             </div>
