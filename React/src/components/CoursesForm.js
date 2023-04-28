@@ -28,6 +28,7 @@ export class CoursesForm extends Component {
   };
 
   submitHandler = (e) => {
+    console.log("clicked")
     e.preventDefault();
     api
       .post("/courses", this.state)

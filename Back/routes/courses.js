@@ -30,28 +30,28 @@ router.get('/', catchAsync(async(req,res)=>{
     res.status(500).send({message:'no courses found'});
 }));
 
-//new
-router.post('/',/*isLoggedIn,isTeacher,*/catchAsync(async (req, res) => {
+//new course
+router.post('/',isLoggedIn,isTeacher,catchAsync(async (req, res) => {
     const teacher = await Teacher.findById(req.user._id);
     if(!teacher) return res.status(400).send({message:'teacher not found'});
     req.body.teacher=teacher;
     const { error } = courseSchema.validate(req.body);
     if (error) {
         const msg = error.details.map(el => el.message).join(',');
-        throw new AppErr(msg,400)
+        res.status(400).send(msg)
     }
     const course = new Course(req.body);
     await course.save()
     .then(async newCourse=>{
-        await Teacher.findByIdAndUpdate(
+        const teacher = await Teacher.findByIdAndUpdate(
             req.user._id ,
             { $addToSet: { courses: newCourse } },
             { new: true }
           )
-          console.log({newCourse,teacher})
-    })
-    .then(teacher=>{
-        res.status(200).send({newCourse,teacher});
+
+          const populatedTeacher = await teacher.populate('courses')
+          console.log('-------------------------______',{newCourse,populatedTeacher})
+          res.status(200).send({newCourse,populatedTeacher});
     })
     .catch(err=>{
         res.status(500).send(err.message);
