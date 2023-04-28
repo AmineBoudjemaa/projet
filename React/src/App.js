@@ -18,6 +18,7 @@ import CoursesForm from './components/CoursesForm';
 //teacher space
 import TeacherProfile from './components/teacher/TeacherProfile';
 import TeacherAddCourse from './components/teacher/AddCourse';
+import TeacherEditCourse from "./components/teacher/EditCourse";
 //admin space
 import TeachersList from "./components/admin/TeachersList";
 import TeacherForm from "./components/admin/TeacherForm";
@@ -33,9 +34,10 @@ function App() {
         {/* teacher space */}
         <Route path="/teacher-profile" Component={TeacherProfile} />
         <Route path="/teacher-add-course" Component={TeacherAddCourse} />
+        <Route path="//techer-edit-course" Component={TeacherEditCourse} />
         {/* admin space */}
         <Route path="/admin/teachers" Component={TeachersList} />
-        <Route path="/admin/teacher" Component={TeacherForm} />
+        <Route path="/admin/teacherForm" Component={TeacherForm} />
         <Route path="/admin/AddCourse" Component={AddCourse} />
         <Route path="/admin/AddCourse2" Component={AddCourse2} />
         <Route path="/admin/Students" Component={StudentList} />

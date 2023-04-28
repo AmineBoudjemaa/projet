@@ -1,136 +1,118 @@
-import React, { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
-import { v4 as uuidv4 } from "uuid";
+import React, { Component } from "react";
 import axios from "axios";
-
-//post the course or all the courses
+import { v4 as uuidv4 } from "uuid";
 
 const api = axios.create({
   baseURL: "http://localhost:3000",
   withCredentials: true, // send cookies with requests
 });
 
-
-const AddCourse = () => {
-    const location = useLocation();
-    const teacher = location.state.user
-    const intialcourses = teacher.courses
-
-    const [courses, setCourses] = useState(intialcourses);
-    const [title, setTitle] = useState("");
-    const [description, setDescription] = useState("");
-    const [program, setProgram] = useState("");
-    const [duration, setDuration] = useState(0);
-    const [timeWeek, setTimeWeek] = useState(0);
-    const [category, setCategory] = useState("");
-    const [credit, setCredit] = useState("");
-    const [type, setType] = useState("");
-    
-    const handleTitle = (e) => {
-        setTitle(e.target.value);
+export class CoursesForm extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      _id: uuidv4(),
+      title: "course title",
+      link: "linktocourse",
+      description: "course description 101",
+      category: "cat3",
+      type: "on site",
+      price: 2000,
+      hours: 2,
+      certificate: true,
+      subscribe: true,
+      img: "https://images.unsplash.com/photo-1580582932707-520aed937b7b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1032&q=80",
     };
-    const handleDescription = (e) => {
-        setDescription(e.target.value);
-    };
-    const handleProgram = (e) => {
-        setProgram(e.target.value);
+  }
+
+  changeHandeler = (e) => {
+    this.setState({ [e.target.name]: e.target.value });
   };
-  const handleDuration = (e) => {
-      setDuration(e.target.value);
-    };
-    const handleTimeWeek = (e) => {
-        setTimeWeek(e.target.value);
-    };
-    const handleCategory = (e) => {
-        setCategory(e.target.value);
-    };
-    const handleCredit = (e) => {
-        setCredit(e.target.value);
-    };
-    const handleType = (e) => {
-        setType(e.target.value);
-    };
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        const course = {
-            id: uuidv4(),
-            title,
-            description,
-            program,
-            duration,
-            timeWeek,
-            category,
-            credit,
-            type,
-            // certificate: false,
-            // subscribe: false,
-            // students: [],
-            // waitlist: [],
-        };
-    setCourses([...courses,course])
-    console.log(course)
+
+  submitHandler = (e) => {
+    e.preventDefault();
     api
-      .post("/", courses) //to modifie
+      .post("/courses", this.state)
       .then((res) => {
-        if (res.status === 200) {
-          window.location.href = "http://localhost:3000/auth/google";
-        }
+        console.log(res);
       })
       .catch((err) => console.error(err));
   };
-
-
-useEffect(() => {
-    console.log("we called useEffect");
-  }, [courses]);
-
-  return (
-    <div className="course add-course">
-      <div className="container">
-        <h1>Adding course</h1>
-        <form onSubmit={handleSubmit}>
-          <div className="presontation">
-            <label htmlFor="title">Title :</label>
-            <input type="text" name="title" onChange={handleTitle} />
-            <label htmlFor="description">Description :</label>
-            <textarea
-              id="description"
-              name="teacher_description"
-              onChange={handleDescription}
-            ></textarea>
-            <label htmlFor="program">Program :</label>
-            <textarea
-              id="program"
-              name="teacher_program"
-              onChange={handleProgram}
-            ></textarea>
-            <button type="submit" className="btn-blue">
-              Add <img src="../images/right-arrow.png" alt="" />
-            </button>
-          </div>
-          <div className="details">
-            <div className="image">
-              <img src="../images/icons/add-photo.png" alt="" />
+  render() {
+    const {
+      title,
+      link,
+      description,
+      category,
+      type,
+      price,
+      hours,
+      certificate,
+      subscribe,
+      img,
+    } = this.state;
+    return (
+      <div className="course add-course">
+        <div className="container">
+          <h1>Adding course</h1>
+          <form onSubmit={this.submitHandler}>
+            <div className="presontation">
+              <label htmlFor="title">title</label>
+              <input
+                type="text"
+                id="title"
+                required
+                placeholder="title"
+                name="title"
+                value={title}
+                onChange={this.changeHandeler}
+              />
+              <label htmlFor="link">link</label>
+              <input
+                type="text"
+                id="link"
+                required
+                placeholder="link"
+                name="link"
+                value={link}
+                onChange={this.changeHandeler}
+              />
+              <label htmlFor="description">description</label>
+              <textarea
+                type="text"
+                id="description"
+                required
+                placeholder="description"
+                name="description"
+                value={description}
+                onChange={this.changeHandeler}
+              />
+              <button type="submit" className="btn-blue">
+                Add <img src="../images/right-arrow.png" alt="" />
+              </button>
             </div>
-            <div>
+            {/* type */}
+            <div className="details">
               <div className="detail">
                 <span>
-                  <img src="../images/icons/calender.png" alt="" />
-                  Duration
+                  <img src="../images/icons/earth.png" alt="" />
+                  Type
                 </span>
                 <span>
-                  <input type="number" onChange={handleDuration} /> weeks
+                  <select
+                    id="type"
+                    name="type"
+                    value={type}
+                    required
+                    onChange={this.changeHandeler}
+                  >
+                    <option value="on site">on site</option>
+                    <option value="online">online</option>
+                  </select>
                 </span>
               </div>
-              <div className="detail">
-                <span>
-                  <img src="../images/icons/clock.png" alt="" />
-                  Time perweek
-                </span>
-                <span>
-                  <input type="number" onChange={handleTimeWeek} /> hours
-                </span>
-              </div>
+
+              {/* category */}
               <div className="detail">
                 <span>
                   <img src="../images/icons/view-grid.png" alt="" />
@@ -138,48 +120,119 @@ useEffect(() => {
                 </span>
                 <span>
                   <select
-                    name="category"
                     id="category"
-                    onChange={handleCategory}
+                    name="category"
+                    value={category}
+                    required
+                    onChange={this.changeHandeler}
                   >
-                    <option value="school">School</option>
-                    <option value="lniversity">University</option>
-                    <option value="language">Language</option>
+                    <option value="cat1">cat1</option>
+                    <option value="cat2">cat2</option>
+                    <option value="cat3">cat3</option>
+                    <option value="cat4">cat4</option>
                   </select>
                 </span>
               </div>
+
               <div className="detail">
                 <span>
                   <img src="../images/icons/coin.png" alt="" />
                   Credit
                 </span>
                 <span>
-                  <input type="number" onChange={handleCredit} /> DA
+                  <input
+                    type="number"
+                    id="price"
+                    //   pattern="[0-9]{10}"
+                    required
+                    placeholder="2000"
+                    name="price"
+                    value={price}
+                    onChange={this.changeHandeler}
+                  />
                 </span>
               </div>
+
               <div className="detail">
                 <span>
-                  <img src="../images/icons/earth.png" alt="" />
-                  Type
+                  <img src="../images/icons/clock.png" alt="" />
+                  Time perweek
                 </span>
                 <span>
-                  <select name="type" id="type" onChange={handleType}>
-                    <option value="online">Online</option>
-                    <option value="attendance">Attendance</option>
+                  <input
+                    type="number"
+                    id="hours"
+                    //   pattern="[0-9]{10}"
+                    required
+                    placeholder="2000"
+                    name="hours"
+                    value={hours}
+                    onChange={this.changeHandeler}
+                  />
+                </span>
+              </div>
+
+              <div className="detail">
+                <span>
+                  <img src="../images/icons/view-grid.png" alt="" />
+                  certificate
+                </span>
+                <span>
+                  <select
+                    id="certificate"
+                    name="certificate"
+                    value={certificate}
+                    required
+                    onChange={this.changeHandeler}
+                  >
+                    <option value="true">certificate</option>
+                    <option value="false">no certificate</option>
                   </select>
                 </span>
               </div>
-            </div>
-            <div className="teacher-profil">
-              <h4>Teacher</h4>
-              <img src="../images/teacher.png" alt="" />
-              <h4>{teacher.name}</h4>
-            </div>
-          </div>
-        </form>
-      </div>
-    </div>
-  );
-};
 
-export default AddCourse;
+              <div className="detail">
+                <span>
+                  <img src="../images/icons/view-grid.png" alt="" />
+                  certificate
+                </span>
+                <span>
+                  <select
+                    id="subscribe"
+                    name="subscribe"
+                    value={subscribe}
+                    required
+                    onChange={this.changeHandeler}
+                  >
+                    <option value="true">on</option>
+                    <option value="false">off</option>
+                  </select>
+                </span>
+              </div>
+
+              <div className="detail">
+                <span>
+                  <img src="../images/icons/calender.png" alt="" />
+                  Duration
+                </span>
+                <span>
+                  <input
+                    type="text"
+                    id="img"
+                    required
+                    placeholder="img"
+                    name="img"
+                    value={img}
+                    onChange={this.changeHandeler}
+                  />
+                </span>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    );
+  }
+}
+
+export default CoursesForm;

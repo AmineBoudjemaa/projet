@@ -32,9 +32,6 @@ class CourseProvider extends Component {
   };
 
   componentDidMount() {
-    console.log("amine");
-    this.setCourses();
-    // this.setTeachers();
     api
       .get("/auth/me")
       .then((response) => {
@@ -63,7 +60,6 @@ class CourseProvider extends Component {
       .get("/courses")
       .then((response) => {
         if (response.status === 200) {
-          console.log(response);
           this.setCourses(response.data);
         }
       })
