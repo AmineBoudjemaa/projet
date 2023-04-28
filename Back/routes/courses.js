@@ -42,15 +42,18 @@ router.post('/',/*isLoggedIn,isTeacher,*/catchAsync(async (req, res) => {
     }
     const course = new Course(req.body);
     await course.save()
-    .then(catchAsync(async newCourse=>{
-        const updatedTeacher = await Teacher.findByIdAndUpdate(
+    .then(async newCourse=>{
+        await Teacher.findByIdAndUpdate(
             req.user._id ,
             { $addToSet: { courses: newCourse } },
             { new: true }
-          ).populate('courses');
+          )
           console.log({newCourse,teacher})
+    })
+    .then(teacher=>{
         res.status(200).send({newCourse,teacher});
-    })).catch(err=>{
+    })
+    .catch(err=>{
         res.status(500).send(err.message);
     })
 }));
