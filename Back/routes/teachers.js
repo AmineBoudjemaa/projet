@@ -47,15 +47,15 @@ const addEmail = catchAsync(async(req,res,next)=>{
 ////////// teacher crud
 
 //show teachers
-router.get('/',catchAsync(async(req,res)=>{
-    await Teacher.find({})
-    .then(teachers=>{
-        res.status(200).send(teachers);
-    })
-    .catch(err=>{
-        return res.status(400).send({err});
-    })
+router.get('/', catchAsync(async(req, res) => {
+    const teachers = await Teacher.find({})
+        .populate('courses') // chain populate method to include full courses
+        .catch(err => {
+            return res.status(400).send({err});
+        })
+    res.status(200).send(teachers); // send the populated teachers
 }));
+
 
 //new teacher
 router.get('/new',catchAsync(async(req,res)=>{
