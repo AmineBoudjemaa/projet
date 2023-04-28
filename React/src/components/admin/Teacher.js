@@ -11,7 +11,7 @@ const Teacher = ({ teacher, handleDelete, handleEdit }) => {
       </div>
       <div>
         <button className="edit-btn" aria-label="edit button">
-          <Link to="/admin/teacher" state={{ _id, teacher }}>
+          <Link to="/admin/teacherForm" state={{ _id, teacher }}>
             <i className="fa-solid fa-pen-to-square"></i>
           </Link>
         </button>

@@ -5,15 +5,23 @@ import "../../CSS/courses.css";
 import "../../CSS/course.css";
 import Course from "../Course";
 
-
-
-export default class TeacherProfile extends Component {
+class TeacherProfile extends Component {
   render() {
     return (
       <CourseConsumer>
-        {({ user }) => {
-          const { username, subjects, description, courses } = user;
+        {({ user, courses }) => {
+          const { username, subjects, description } = user;
+          const teacherCoursesIds = user.courses;
+          let teacherCourses = [];
+          for (const element of teacherCoursesIds) {
+            teacherCourses.push(courses.find(
+              (course) => course._id !== element
+            )) 
+          }
           const length = subjects.length;
+          console.log(courses);
+          console.log(user.courses);
+          console.log(teacherCourses);
           return (
             <div>
               <div className="teacher">
@@ -43,7 +51,7 @@ export default class TeacherProfile extends Component {
                 <div className="container">
                   <h4>Courses : </h4>
                   <div className="cards">
-                    {courses.map((course) => {
+                    {teacherCourses.map((course) => {
                       return <Course key={course._id} course={course} />;
                     })}
                   </div>
@@ -56,3 +64,5 @@ export default class TeacherProfile extends Component {
     );
   }
 }
+
+export default TeacherProfile;

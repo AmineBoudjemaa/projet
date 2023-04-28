@@ -17,6 +17,9 @@ export default class NavBar extends Component {
                 </Link>
                 <ul className="nav">
                   <li>
+                    <NavLink to="/">Home</NavLink>
+                  </li>
+                  <li>
                     <NavLink to="/teacher-profile">Profile</NavLink>
                   </li>
                   <li>

@@ -72,7 +72,7 @@ export default class Course extends Component {
                 </button>
               ) : (
                 <>
-                  <Link to="/admin/AddCourse" state={{ courseDetails }}>
+                  <Link to="/techer-edit-course" state={{ courseDetails }}>
                     <button className="btn edit-btn">Edit</button>
                   </Link>
                   <button className="btn delete-btn">Delete</button>

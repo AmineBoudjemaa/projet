@@ -16,26 +16,35 @@ export default class Home extends Component {
               <div className="teachers">
                 <div className="container">
                   <div className="cards">
-                    {value.teachers.slice(0,2).map((teacher) => {
+                    {value.teachers.slice(0, 2).map((teacher) => {
                       return <Teacher key={teacher._id} teacher={teacher} />;
                     })}
                   </div>
                 </div>
               </div>
-              {/* <Teachers/> */}
               <button
                 onClick={() => {
                   console.log(value.user);
                 }}
+                style={{ color: "blue", lineHeight: 10, padding: 20 }}
               >
-                Click
+                user
               </button>
               <button
                 onClick={() => {
                   console.log(value.teachers);
                 }}
+                style={{ color: "blue", lineHeight: 10, padding: 20 }}
               >
-                Click
+                teachers
+              </button>
+              <button
+                onClick={() => {
+                  console.log(value.courses);
+                }}
+                style={{ color: "blue", lineHeight: 10, padding: 20 }}
+              >
+                Courses
               </button>
             </>
           );
