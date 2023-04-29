@@ -4,65 +4,78 @@ import "../../CSS/teacher.css";
 import "../../CSS/courses.css";
 import "../../CSS/course.css";
 import Course from "../Course";
+import axios from "axios";
+
+const api = axios.create({
+  baseURL: "http://localhost:3000",
+  withCredentials: true, // send cookies with requests
+});
 
 class TeacherProfile extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      user: {},
+      courses: [],
+    };
+  }
+  componentDidMount() {
+    api
+      .get("/auth/me")
+      .then((response) => {
+        if (response.status === 200) {
+          // console.log(response.data);
+          this.setState({ user: response.data });
+        }
+      })
+      .catch((error) => {
+        console.log("no user");
+        console.error(error);
+      });
+  }
   render() {
+    let { username, subjects, description, courses } = this.state.user;
+    // console.log(this.state.user)
+    const length = subjects?.length;
+
     return (
-      <CourseConsumer>
-        {({ user, courses }) => {
-          const { username, subjects, description } = user;
-          console.log(user)
-          const teacherCoursesIds = user.courses;
-          console.log(user.courses)
-          let teacherCourses = [];
-          for (const element of teacherCoursesIds) {
-            teacherCourses.push(courses.find(
-              (course) => course._id === element
-            )) 
-          }
-          const length = subjects.length;
-          console.log(courses);
-          console.log(user.courses);
-          console.log(teacherCourses);
-          return (
+      <div>
+        <div className="teacher">
+          <div className="container">
             <div>
-              <div className="teacher">
-                <div className="container">
-                  <div>
-                    <div className="text">
-                      <h1>{username}</h1>
-                      <div>
-                        {subjects.map((module, i) => {
-                          return (
-                            <React.Fragment key={i}>
-                              <span>{module}</span>
-                              {i + 1 === length ? "" : "/"}
-                            </React.Fragment>
-                          );
-                        })}
-                      </div>
-                      <p>{description}</p>
-                    </div>
-                    <div className="image">
-                      <img src="./images/teacher.png" alt="" />
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="courses">
-                <div className="container">
-                  <h4>Courses : </h4>
-                  <div className="cards">
-                    {teacherCourses.map((course) => {
-                      return <Course key={course._id} course={course} />;
+              <div className="text">
+                <h1>{username}</h1>
+                <div>
+                  {subjects &&
+                    subjects.map((module, i) => {
+                      return (
+                        <React.Fragment key={i}>
+                          <span>{module}</span>
+                          {i + 1 === length ? "" : "/"}
+                        </React.Fragment>
+                      );
                     })}
-                  </div>
                 </div>
+                <p>{description}</p>
+              </div>
+              <div className="image">
+                <img src="./images/teacher.png" alt="" />
               </div>
             </div>
-          );
-        }}
-      </CourseConsumer>
+          </div>
+        </div>
+        <div className="courses">
+          <div className="container">
+            <h4>Courses : </h4>
+            <div className="cards">
+              {courses &&
+                courses.map((course) => {
+                  return <Course key={course._id} course={course} />;
+                })}
+            </div>
+          </div>
+        </div>
+      </div>
     );
   }
 }

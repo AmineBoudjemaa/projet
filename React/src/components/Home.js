@@ -3,8 +3,27 @@ import { CourseConsumer } from "../context";
 import Landing from './homeComponents/Landing';
 import ComSoon from './homeComponents/ComSoon';
 import Teacher from './Teacher';
+import axios from 'axios';
+
+const api = axios.create({
+  baseURL: "http://localhost:3000",
+  withCredentials: true, // send cookies with requests
+});
 
 export default class Home extends Component {
+  user=()=>{
+    api
+      .get("/auth/me")
+      .then((response) => {
+        if (response.status === 200) {
+          console.log(response.data);
+        }
+      })
+      .catch((error) => {
+        console.log("no user");
+        console.error(error);
+      });
+  }
   render() {
     return (
       <CourseConsumer>
@@ -23,9 +42,7 @@ export default class Home extends Component {
                 </div>
               </div>
               <button
-                onClick={() => {
-                  console.log(value.user);
-                }}
+                onClick={() => this.user()}
                 style={{ color: "blue", lineHeight: 10, padding: 20 }}
               >
                 user

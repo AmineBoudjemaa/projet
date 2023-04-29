@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
+import axios from "axios";
 
 // category: "Programming";
 // certificate: true;
@@ -15,6 +16,11 @@ import { Link, useLocation } from "react-router-dom";
 // __v: 0;
 // _id: "642b5da8648064dce44e3475";
 
+const api = axios.create({
+  baseURL: "http://localhost:3000",
+  withCredentials: true, // send cookies with requests
+});
+
 function EditCourse() {
   const location = useLocation();
   const [course, setState] = useState(location.state.courseDetails);
@@ -24,8 +30,16 @@ function EditCourse() {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("submit");
+    console.log(course._id)
+    api
+      .put(`/courses/${course._id}`, course)
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
-  console.log(course);
   return (
     <div className="course add-course">
       <div className="container">

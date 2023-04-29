@@ -29,6 +29,7 @@ class CourseProvider extends Component {
     modalCourse: detailsCourse,
     comSoonImg: comSoonImg,
     homeTeachers: homeTeachers,
+    alert: { show: false },
   };
 
   componentDidMount() {
@@ -36,6 +37,7 @@ class CourseProvider extends Component {
       .get("/auth/me")
       .then((response) => {
         if (response.status === 200) {
+          console.log(response.data);
           this.setUser(response.data);
         }
       })
@@ -60,11 +62,12 @@ class CourseProvider extends Component {
       .get("/courses")
       .then((response) => {
         if (response.status === 200) {
+          console.log(response.data);
           this.setCourses(response.data);
         }
       })
       .catch((error) => {
-        console.log("no teachers");
+        console.log("no courses");
         console.error(error);
       });
   }
@@ -113,18 +116,51 @@ class CourseProvider extends Component {
     return course;
   };
 
-  getTeacherCourse = (id) => {
-    const course = this.state.user.courses.find((itme) => itme._id === id);
-    return course;
-  };
-
   handleDeleteTeacherCourse = (id) => {
-    console.log(id)
-    console.log(this.state.user.courses);
-    let tempTecherCourses= this.state.user.courses.filter((item) => item !== id);
-    console.log(tempTecherCourses)
-    let tempUser = {...this.state.user, courses:tempTecherCourses}
-    this.setUser(tempUser);
+    console.log(id);
+    // console.log("user befor delet", this.state.user);
+    // console.log("Courses befor delet",this.state.user.courses);
+    // let tempTecherCourses = this.state.user.courses.filter(
+    //   (item) => item._id !== id
+    // );
+    // console.log("Courses after delet", tempTecherCourses);
+    // let tempUser = { ...this.state.user, courses: tempTecherCourses };
+    // console.log(tempUser);
+    // this.setUser(tempUser);
+    // api
+    // .delete(`http://localhost:3000/courses/${id}`)
+    // .then((response) => {
+    //   if (response.status === 200) {
+    //     console.log(response)
+    //   }
+    //   api
+    //     .get("/courses")
+    //     .then((response) => {
+    //       if (response.status === 200) {
+    //         console.log(response.data);
+    //         this.setUser(response.data);
+    //       }
+    //     })
+    //     .catch((error) => {
+    //       console.log("no user");
+    //       console.error(error);
+    //     });
+    //   api
+    //     .get("/auth/me")
+    //     .then((response) => {
+    //       if (response.status === 200) {
+    //         console.log(response.data);
+    //         this.setUser(response.data);
+    //       }
+    //     })
+    //     .catch((error) => {
+    //       console.log("no user");
+    //       console.error(error);
+    //     });
+    // });
+    
+
+      
   };
 
   getTeacher = (id) => {

@@ -7,7 +7,7 @@ export default class CourseDetails extends Component {
   render() {
     return (
       <CourseConsumer>
-        {({ detailsCourse,addtoMyCourses, openModal }) => {
+        {({ detailsCourse,addtoMyCourses, openModal, user }) => {
           const {
             _id,
             title,
@@ -36,23 +36,27 @@ export default class CourseDetails extends Component {
                       <li>Linear models</li>
                       <li>Brief introduction to the QR decomposition</li>
                     </ul>
-                    <button
-                      className="btn-blue"
-                      disabled={subscribe ? true : false}
-                      onClick={() => {
-                        addtoMyCourses(_id);
-                        openModal(_id);
-                      }}
-                    >
-                      {subscribe ? (
-                        "subscribed"
-                      ) : (
-                        <>
-                          subscribe
-                          <img src="./images/right-arrow.png" alt="" />
-                        </>
-                      )}
-                    </button>
+                    {user.role === "student" ? (
+                      <button
+                        className="btn-blue"
+                        disabled={subscribe ? true : false}
+                        onClick={() => {
+                          addtoMyCourses(_id);
+                          openModal(_id);
+                        }}
+                      >
+                        {subscribe ? (
+                          "subscribed"
+                        ) : (
+                          <>
+                            subscribe
+                            <img src="./images/right-arrow.png" alt="" />
+                          </>
+                        )}
+                      </button>
+                    ) : (
+                      ""
+                    )}
                   </div>
                   <div className="details">
                     <div className="image">

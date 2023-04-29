@@ -83,7 +83,9 @@ export default class Course extends Component {
                   </Link>
                   <button
                     className="btn delete-btn"
-                    onClick={()=>{handleDeleteTeacherCourse(_id)}}
+                    onClick={() => {
+                      handleDeleteTeacherCourse(_id);
+                    }}
                   >
                     Delete
                   </button>
