@@ -38,7 +38,7 @@ courseSchema.pre('remove', async function(next) {
     // Update teacher document
     await Teacher.findByIdAndUpdate(
       teacherId,
-      { $pullAll: { courses: [this._id] } }
+      { $pull: { courses: [this._id] } }
     );
     
     // Update student documents

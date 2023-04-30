@@ -147,6 +147,7 @@ router.delete("/:id",catchAsync(async (req, res) => {
   //delete from all students enrolledcourses all of this should be with middleware
     const { id } = req.params;
     const course = await Course.findByIdAndDelete(id);
+
     req.session.user=await Teacher.findById(course.teacher);
     if (course) return res.status(200).send(course);
     res.status(400).send({ message: "course not found" });
