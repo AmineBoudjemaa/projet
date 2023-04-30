@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const User = require('../models/user');
+const {Admin,Teacher,Student} = require('../models/user');
 
 //utils
 const catchAsync = require('../utils/catchAsync');
@@ -10,7 +10,7 @@ const AppErr = require('../utils/appErr');
 // const validateTeacher=validate(teacherSchema);
 
 router.get('/',catchAsync(async(req,res)=>{
-    const admins = await User.find({role:'admin'});
+    const admins = await Admin.find();
     if(admins) return res.status(200).send(admins);
     res.status(500).send({err:'no admins found'});
 }));
@@ -18,7 +18,12 @@ router.get('/',catchAsync(async(req,res)=>{
 //create admins
 router.post('/:id',catchAsync(async (req, res) => {
     const { id } = req.params;
-    const newAdmin = await User.findByIdAndUpdate(id, { role:'admin' },{new:true});
+    //remove from students
+    //add to teachers
+    const student =await Student.findByIdAndDelete(id);//and delete
+    const {username,googleId,email,phone}=student;
+    const newAdmin = new Admin({username,googleId,email,role:'admin',phone});
+    await newAdmin.save();
     if(newAdmin) return res.status(200).send(newAdmin);
     res.status(500).send({err:'err creating admin'});
 }));
@@ -26,8 +31,9 @@ router.post('/:id',catchAsync(async (req, res) => {
 
 router.delete('/:id',catchAsync(async (req, res) => {
     const { id } = req.params;
-    const user = await User.findByIdAndDelete(id);
-    if(user) return res.status(200).send(user);
+    const deletedAdmin = await Admin.findByIdAndDelete(id);
+    console.log(deletedAdmin);
+    if(deletedAdmin) return res.status(200).send(deletedAdmin);
     res.status(400).send({err:'user not found'});
 }));
 

@@ -11,6 +11,7 @@ const userSchema = new Schema({
         enum: ['super admin','admin', 'teacher', 'student'],
     },
     img:String,
+    phone:String,
 },
     { timestamps: true }
 );
@@ -29,6 +30,7 @@ const teacherSchema = new Schema({
         }] , 
     },
 });
+
 const studentSchema = new Schema({
     appliedCourses:{
         type : [{
@@ -49,14 +51,19 @@ const studentSchema = new Schema({
         }]
     },
     academicLevel:String,
-    phone:String,
     address:String,
     dateOfBirth:Date,
 });
 
 
+const adminSchema = new Schema({
+
+})
+
+
 const User = mongoose.model('User', userSchema);
 const Student = User.discriminator('Student', studentSchema);
 const Teacher = User.discriminator('Teacher', teacherSchema);
+const Admin = User.discriminator('Admin',adminSchema);
 
-module.exports = {User,Student,Teacher};
+module.exports = {User,Student,Teacher,Admin};

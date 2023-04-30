@@ -140,16 +140,14 @@ router.put(
 );
 
 //delete
-router.delete(
-  "/:id",
-  catchAsync(async (req, res) => {
+router.delete("/:id",catchAsync(async (req, res) => {
+  //delete course
+  //delete course from teacher (middleware?)
+  //delete from all students appliedcourses
+  //delete from all students enrolledcourses all of this should be with middleware
     const { id } = req.params;
     const course = await Course.findByIdAndDelete(id);
-    await Teacher.findByIdAndUpdate(
-      course.teacher._id,
-      { $pull: { courses: course.id } },
-      { new: true }
-    );
+    req.session.user=await Teacher.findById(course.teacher);
     if (course) return res.status(200).send(course);
     res.status(400).send({ message: "course not found" });
   })
@@ -159,35 +157,53 @@ router.post(
   "/:id/subscribe",
   catchAsync(async (req, res) => {
     const { id } = req.params;
-    const student = await Student.findById(req.user._id);
-    if (!student) throw new AppErr("student not found", 400);
+    const student = await Student.findById(req.user._id)
+    .catch(err=>{
+      res.status(500).send(err.message);
+    });
     const updatedCourse = await Course.findByIdAndUpdate(
       id,
       { $addToSet: { waitlist: student._Id } },
       { new: true }
-    );
-    if (!updatedCourse) throw new AppErr("course not found", 400);
+    )
+    .catch(err=>{
+      res.status(500).send(err.message);
+    });
     const updatedStudent = await Student.findByIdAndUpdate(
       student._id,
       { $addToSet: { appliedCourses: id } },
       { new: true }
-    );
-    if (!updatedStudent) throw new AppErr("something is wrong", 500);
-    req.user = updatedStudent;
+    )
+    .catch(err=>{
+      res.status(500).send(err.message);
+    });
+    req.session.user = updatedStudent;
     res.status(200).send(updatedCourse);
   })
 );
 
+//it must be an admin
 router.post("/:id/confirm", async (req, res) => {
+  //add student to course student
+  //remove student from waitlist
+  //add course to student enroll
+  //remove course from applied
+  //add teacher to student's teachers
   const { id } = req.params;
-  const student = await Student.findById(req.user._id);
-  if (!student) throw new AppErr("student not found", 400);
+  const student = await Student.findById(req.query.s)
+  .catch(err=>{
+    res.status(500).send(err.message);
+  });
+
   const updatedCourse = await Course.findByIdAndUpdate(
     id,
     { $pull: { waitlist: student._id }, $addToSet: { students: student._id } },
     { new: true }
-  );
-  if (!updatedCourse) throw new AppErr("course not found", 400);
+  )
+  .catch(err=>{
+    res.status(500).send(err.message);
+  });
+
   const updatedStudent = await Student.findByIdAndUpdate(
     student._id,
     {
@@ -196,9 +212,12 @@ router.post("/:id/confirm", async (req, res) => {
       $addToSet: { teachers: updatedCourse.teacher },
     },
     { new: true }
-  );
-  if (!updatedStudent) throw new AppErr("something is wrong", 500);
-  req.user = updatedStudent;
+  )
+  .catch(err=>{
+    res.status(500).send(err.message);
+  });
+
+  req.session.user = updatedStudent;
   res.status(200).send(updatedCourse);
 });
 
@@ -206,23 +225,67 @@ router.delete(
   "/:id/subscribe",
   catchAsync(async (req, res) => {
     const { id } = req.params;
-    const student = await Student.findById(req.query.s);
-    if (!student) throw new AppErr("student not found", 400);
+    const student = await Student.findById(req.query.s)
+    .catch(err=>{
+      res.status(500).send(err.message);
+    });
+    //delete student from waitlist
+    //delete course from appliedcourses
+
     const updatedCourse = await Course.findByIdAndUpdate(
       id,
       { $pull: { waitlist: student._id } },
       { new: true }
-    );
-    if (!updatedCourse) throw new AppErr("course not found", 400);
+    )
+    .catch(err=>{
+      res.status(500).send(err.message);
+    });
+
     const updatedStudent = await Student.findByIdAndUpdate(
       student._id,
       { $pull: { appliedCourses: id } },
       { new: true }
-    );
-    if (!updatedStudent) throw new AppErr("something is wrong", 500);
-    req.user = updatedStudent;
-    res.send(updatedCourse);
+    )
+    .catch(err=>{
+      res.status(500).send(err.message);
+    });
+
+    req.session.user = updatedStudent;
+    res.status(200).send(updatedCourse);
   })
 );
+
+router.delete('/:id/confirm',catchAsync(async (req,res)=>{
+  const { id } = req.params;
+  const student = await Student.findById(req.query.s)
+  .catch(err=>{
+    res.status(500).send(err.message);
+  });
+
+  //delete course from student courses
+  //delete teacher from student
+  //delete student from course student
+
+  const updatedCourse = await Course.findByIdAndUpdate(
+    id,
+    { $pull: { students: student._id } },
+    { new: true }
+  )
+  .catch(err=>{
+    res.status(500).send(err.message);
+  });
+
+  const updatedStudent = await Student.findByIdAndUpdate(
+    student._id,
+    { $pull: { enrolledCourses: id , teacher:updatedCourse.teacher } },
+    { new: true }
+  )
+  .catch(err=>{
+    res.status(500).send(err.message);
+  });
+
+  req.session.user = updatedStudent;
+  res.status(200).send(updatedCourse);
+}));
 
 module.exports = router;
