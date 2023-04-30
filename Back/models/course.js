@@ -31,23 +31,25 @@ const courseSchema = new Schema({
     teacher:{ type: Schema.Types.ObjectId, ref: 'Teacher', required: true },
 });
 
-courseSchema.pre('remove', async function(next) {
-    const teacherId = this.teacher;
-    const studentIds = this.students.concat(this.waitlist);
-    
-    // Update teacher document
-    await Teacher.findByIdAndUpdate(
-      teacherId,
-      { $pull: { courses: [this._id] } }
-    );
-    
-    // Update student documents
+
+courseSchema.post('findOneAndDelete', async function(data) {
+    console.log('post',data)
+    const teacherId = data.teacher;
+    const studentIds = data.students.concat(data.waitlist);
+
+    if(data.students.length){
     await Student.updateMany(
       { _id: { $in: studentIds } },
-      { $pull: { enrolledCourses: this._id, appliedCourses: this._id } }
+      { $pull: { enrolledCourses: data._id, appliedCourses: data._id } }
+    );
+    }
+
+    // // Update teacher document
+    await Teacher.findByIdAndUpdate(
+      teacherId,
+      { $pull: { courses: data._id } }
     );
     
-    next();
   });
 
 const course = mongoose.model('Course',courseSchema);

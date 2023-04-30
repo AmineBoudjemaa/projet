@@ -144,11 +144,11 @@ router.delete("/:id",catchAsync(async (req, res) => {
   //delete course
   //delete course from teacher (middleware?)
   //delete from all students appliedcourses
-  //delete from all students enrolledcourses all of this should be with middleware
+  //delete from all students enrolledcourses all of this should be with middleware //done
     const { id } = req.params;
     const course = await Course.findByIdAndDelete(id);
-
     req.session.user=await Teacher.findById(course.teacher);
+    console.log(req.session.user)
     if (course) return res.status(200).send(course);
     res.status(400).send({ message: "course not found" });
   })
