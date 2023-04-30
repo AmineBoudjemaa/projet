@@ -132,9 +132,8 @@ router.put(
         img,
       },
       { new: true }
-    ).catch((err) => {
-      return res.status(400).send({ err });
-    });
+    )
+    req.session.user= await Teacher.findById(updatedCourse.teacher);
     if (course) return res.status(200).send(updatedCourse);
   })
 );

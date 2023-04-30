@@ -5,7 +5,8 @@ require('dotenv').config();
 const MongoStore = require('connect-mongo');
 const cookie = require('cookie');
 const Joi = require('joi')
-const {Teacher} = require('../models/user')
+const {User,Teacher} = require('../models/user');
+const catchAsync = require('../utils/catchAsync');
 
 
 
@@ -84,13 +85,14 @@ router.get('/google/redirect', passport.authenticate('google') ,async (req, res)
 
 
 
-router.get('/me', (req, res) => {
+router.get('/me',catchAsync(async (req, res) => {
   console.log(req.user);
   if (req.user && req.session.user) {
-      res.status(200).send(req.session.user);
+    const user = await User.findById(req.user._id).populate('courses');
+    res.status(200).send(user);
     } else {
       res.status(401).json({ message: 'Not authenticated' });
     }
-  });
+  })) 
 
 module.exports = router;
