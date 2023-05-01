@@ -19,7 +19,7 @@ const courseSchema = new Schema({
     students:{
         type : [{
             type : Schema.Types.ObjectId , 
-            ref: 'student'
+            ref: 'Student'
         }] , 
     },
     waitlist:{

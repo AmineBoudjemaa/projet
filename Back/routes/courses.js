@@ -26,7 +26,7 @@ const isOwner = require("../utils/isOwner");
 router.get(
   "/",
   catchAsync(async (req, res) => {
-    const courses = await Course.find({}).populate("teacher");
+    const courses = await Course.find({}).populate(["teacher",'waitlist']);
     if (courses) return res.status(200).send(courses);
     res.status(500).send({ message: "no courses found" });
   })
@@ -75,7 +75,8 @@ router.post(
 router.get(
   "/:id",
   catchAsync(async (req, res) => {
-    const course = await Course.findById(req.params.id);
+    const course = await Course.findById(req.params.id).populate(["teacher",'waitlist','students']);
+    console.log(course.students)
     if (course) return res.status(200).send(course);
     res.status(400).send({ message: "course not found" });
   })
