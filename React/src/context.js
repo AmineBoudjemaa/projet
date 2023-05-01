@@ -37,13 +37,11 @@ class CourseProvider extends Component {
       .get("/auth/me")
       .then((response) => {
         if (response.status === 200) {
-          console.log(response.data);
           this.setUser(response.data);
         }
       })
       .catch((error) => {
         console.log("no user");
-        console.error(error);
       });
 
     api
@@ -62,7 +60,6 @@ class CourseProvider extends Component {
       .get("/courses")
       .then((response) => {
         if (response.status === 200) {
-          console.log(response.data);
           this.setCourses(response.data);
         }
       })
@@ -70,21 +67,6 @@ class CourseProvider extends Component {
         console.log("no courses");
         console.error(error);
       });
-  }
-
-  componentDidUpdate() {
-    // console.log("amine");
-    // api
-    //   .get("/auth/me")
-    //   .then((response) => {
-    //     if (response.status === 200) {
-    //       this.setUser(response.data);
-    //     }
-    //   })
-    //   .catch((error) => {
-    //     console.log("no user");
-    //     console.error(error);
-    //   });
   }
 
   //to not change the data file
@@ -100,64 +82,43 @@ class CourseProvider extends Component {
     });
   };
 
-  // setTeachers = () => {
-  //   let tempTeachers = [];
-  //   dataTeacher.forEach((teacher) => {
-  //     const singleTeacher = { ...teacher };
-  //     tempTeachers = [...tempTeachers, singleTeacher];
-  //   });
-  //   this.setState(() => {
-  //     return { teachers: tempTeachers };
-  //   });
-  // };
-
   getCourse = (id) => {
     const course = this.state.courses.find((itme) => itme._id === id);
     return course;
   };
 
   handleDeleteTeacherCourse = (id) => {
-    console.log(id);
-    // console.log("user befor delet", this.state.user);
-    // console.log("Courses befor delet",this.state.user.courses);
-    // let tempTecherCourses = this.state.user.courses.filter(
-    //   (item) => item._id !== id
-    // );
-    // console.log("Courses after delet", tempTecherCourses);
-    // let tempUser = { ...this.state.user, courses: tempTecherCourses };
-    // console.log(tempUser);
-    // this.setUser(tempUser);
-    // api
-    // .delete(`http://localhost:3000/courses/${id}`)
-    // .then((response) => {
-    //   if (response.status === 200) {
-    //     console.log(response)
-    //   }
-    //   api
-    //     .get("/courses")
-    //     .then((response) => {
-    //       if (response.status === 200) {
-    //         console.log(response.data);
-    //         this.setUser(response.data);
-    //       }
-    //     })
-    //     .catch((error) => {
-    //       console.log("no user");
-    //       console.error(error);
-    //     });
-    //   api
-    //     .get("/auth/me")
-    //     .then((response) => {
-    //       if (response.status === 200) {
-    //         console.log(response.data);
-    //         this.setUser(response.data);
-    //       }
-    //     })
-    //     .catch((error) => {
-    //       console.log("no user");
-    //       console.error(error);
-    //     });
-    // });
+    api
+    .delete(`http://localhost:3000/courses/${id}`)
+    .then((response) => {
+      if (response.status === 200) {
+        console.log(response)
+      }
+      api
+        .get("/courses")
+        .then((response) => {
+          if (response.status === 200) {
+            console.log("after delet course",response.data);
+            this.setUser(response.data);
+          }
+        })
+        .catch((error) => {
+          console.log("no user");
+          console.error(error);
+        });
+      api
+        .get("/auth/me")
+        .then((response) => {
+          if (response.status === 200) {
+            console.log("after delet course",response.data);
+            this.setUser(response.data);
+          }
+        })
+        .catch((error) => {
+          console.log("no user");
+          console.error(error);
+        });
+    });
     
 
       

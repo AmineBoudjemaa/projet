@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import { CourseConsumer } from "../../context";
 import "../../CSS/teacher.css";
 import "../../CSS/courses.css";
 import "../../CSS/course.css";
-import Course from "../Course";
+import Course from "./Course";
+import { Link } from "react-router-dom";
 import axios from "axios";
 
 const api = axios.create({
@@ -24,7 +24,6 @@ class TeacherProfile extends Component {
       .get("/auth/me")
       .then((response) => {
         if (response.status === 200) {
-          // console.log(response.data);
           this.setState({ user: response.data });
         }
       })
@@ -33,10 +32,25 @@ class TeacherProfile extends Component {
         console.error(error);
       });
   }
+
+  handleDeleteTeacherCourse = (id) => {
+    api.delete(`http://localhost:3000/courses/${id}`).then((response) => {
+      api
+        .get("/auth/me")
+        .then((response) => {
+          if (response.status === 200) {
+            console.log("Course deleted");
+            this.setState({ user: response.data });
+          }
+        })
+        .catch((error) => {
+          console.log("no user");
+          console.error(error);
+        });
+    });
+  };
   render() {
-    let { username, subjects, description, courses } = this.state.user;
-    // console.log(this.state.user)
-    const length = subjects?.length;
+    const length = this.state.user.subjects?.length;
 
     return (
       <div>
@@ -44,10 +58,10 @@ class TeacherProfile extends Component {
           <div className="container">
             <div>
               <div className="text">
-                <h1>{username}</h1>
+                <h1>{this.state.user.username}</h1>
                 <div>
-                  {subjects &&
-                    subjects.map((module, i) => {
+                  {this.state.user.subjects &&
+                    this.state.user.subjects.map((module, i) => {
                       return (
                         <React.Fragment key={i}>
                           <span>{module}</span>
@@ -56,7 +70,7 @@ class TeacherProfile extends Component {
                       );
                     })}
                 </div>
-                <p>{description}</p>
+                <p>{this.state.user.description}</p>
               </div>
               <div className="image">
                 <img src="./images/teacher.png" alt="" />
@@ -67,11 +81,48 @@ class TeacherProfile extends Component {
         <div className="courses">
           <div className="container">
             <h4>Courses : </h4>
+            {this.state.user.courses && this.state.user.courses.length === 0 ? (
+              <Link
+                to="/teacher-add-course"
+                style={{
+                  display: "block",
+                  width: "fit-content",
+                  margin: "auto",
+                }}
+              >
+                <button
+                  className="btn-blue"
+                  style={{
+                    padding: 20,
+                    fontSize: 18,
+                  }}
+                >
+                  Add courses
+                </button>
+              </Link>
+            ) : (
+              <></>
+            )}
             <div className="cards">
-              {courses &&
-                courses.map((course) => {
-                  return <Course key={course._id} course={course} />;
-                })}
+              {this.state.user.courses &&
+              this.state.user.courses.length === 0 ? (
+                <></>
+              ) : (
+                <>
+                  {this.state.user.courses &&
+                    this.state.user.courses.map((course) => {
+                      return (
+                        <Course
+                          key={course._id}
+                          course={course}
+                          handleDeleteTeacherCourse={
+                            this.handleDeleteTeacherCourse
+                          }
+                        />
+                      );
+                    })}
+                </>
+              )}
             </div>
           </div>
         </div>

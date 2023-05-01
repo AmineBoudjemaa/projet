@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
-import { CourseConsumer } from "../context";
+import { CourseConsumer } from "../../context";
 
 export default class Course extends Component {
   render() {
@@ -14,20 +14,16 @@ export default class Course extends Component {
       price,
       hours,
       certificate,
-      subscribe,
     } = this.props.course;
     let courseDetails = this.props.course;
     return (
       <CourseConsumer>
         {({
-          user,
           handleDetails,
-          addtoMyCourses,
-          openModal,
         }) => {
           return (
             <div className="card" onClick={() => handleDetails(_id)}>
-              <Link to="/course">
+              <Link to="/teacher-course-details" state={{ courseDetails }}>
                 <div>
                   <div className="image">
                     <img
@@ -61,27 +57,28 @@ export default class Course extends Component {
                       <span>(23)</span>
                     </span>
                     {price === 0 ? (
-                      <div className="price">Free DA</div>
+                      <div className="price">Free</div>
                     ) : (
                       <div className="price">{price} DA</div>
                     )}
                   </div>
                 </div>
               </Link>
-              {user.role === "student" ? (
-                <button
-                  className="btn-blue"
-                  disabled={subscribe ? true : false}
-                  onClick={() => {
-                    addtoMyCourses(_id);
-                    openModal(_id);
-                  }}
-                >
-                  {subscribe ? "subscribed" : "Enroll"}
-                </button>
-              ) : (
-                <></>
-              )}
+              {
+                <>
+                  <Link to="/techer-edit-course" state={{ courseDetails }}>
+                    <button className="btn edit-btn">Edit</button>
+                  </Link>
+                  <button
+                    className="btn delete-btn"
+                    onClick={() => {
+                      this.props.handleDeleteTeacherCourse(_id);
+                    }}
+                  >
+                    Delete
+                  </button>
+                </>
+              }
             </div>
           );
         }}

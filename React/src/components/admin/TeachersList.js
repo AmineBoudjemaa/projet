@@ -156,8 +156,10 @@ function TeachersList() {
       .then((response) => {
         if (response.status === 200) {
           console.log(response.data);
-          setTeachers(response.data);
-          console.log(response.data);
+          const strAscending = [...response.data].sort((a, b) =>
+            a.username > b.username ? 1 : -1
+          );
+          setTeachers(strAscending);
         }
       })
       .catch((error) => {

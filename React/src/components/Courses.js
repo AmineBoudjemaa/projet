@@ -1,95 +1,136 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../CSS/courses.css";
-import { CourseConsumer } from "../context";
 import Course from "./Course";
 import SearchBar from "./SearchBar";
-import Filter from "./Filter";
 import { Link } from "react-router-dom";
+import axios from "axios";
+
+const api = axios.create({
+  baseURL: "http://localhost:3000",
+  withCredentials: true, // send cookies with requests
+});
 
 function Courses() {
   // const {currentUser} = useContext(UserContext)
-  let [filterCategoryValue, updateCategoryText] = useState("category");
-  let [filterTypeValue, updateTypeText] = useState("type");
+  let [categoryOption, setCategoryOption] = useState("category");
+  let [typeOption, setTypeOption] = useState("type");
+  let [free, setFree] = useState(false);
+  let [allCourses, setAllCourses] = useState([]);
+  let [courses, setCourses] = useState([]);
 
-  const onFilterValueSelectedCategory = (filterValue) => {
-    updateCategoryText(filterValue);
-  };
-  const onFilterValueSelectedType = (filterValue) => {
-    updateTypeText(filterValue);
-  };
-
-  const allCourses = () =>{
-    console.log("amine")
-    updateCategoryText("category");
-    updateTypeText("type");
+  const handleAllCourses =()=>{
+    setCourses(allCourses)
   }
 
-  let courses,
-    tempcourses = [];
+  const handleTypeChange = (event) => {
+    setTypeOption(event.target.value);
+    if (event.target.value === "type") {
+      setCourses(allCourses);
+    } else {
+      const tempCourses = allCourses.filter(
+        (course) => course.type === event.target.value
+      );
+      setCourses(tempCourses);
+    }
+  };
+
+  const handleCategoryChange = (event) => {
+    setCategoryOption(event.target.value);
+    if(event.target.value==="category"){
+      setCourses(allCourses);
+    }else {
+      const tempCourses = allCourses.filter(
+        (course) => course.category === event.target.value
+      );
+      setCourses(tempCourses);
+    }
+  };
+
+  const handleFreeCourse = (i) => {
+    if (!free) {
+      const freeCourse = i.filter((course) => course.price === 0);
+      console.log(freeCourse);
+      setCourses(freeCourse);
+    } else {
+      setCourses(allCourses);
+    }
+    setFree(!free);
+  };
+
+  useEffect(() => {
+    console.log("useEffect");
+    api
+      .get("/courses")
+      .then((response) => {
+        if (response.status === 200) {
+          setCourses(response.data);
+          setAllCourses(response.data);
+        }
+      })
+      .catch((error) => {
+        console.log("no courses");
+        console.error(error);
+      });
+  }, []);
 
   return (
     <>
-      <CourseConsumer>
-        {(value) => {
-                courses = value.courses.filter((course) => {
-                  if (filterCategoryValue === "school") {
-                    return course.category === "school";
-                  } else if (filterCategoryValue === "language") {
-                    return course.category === "language";
-                  } else if (filterCategoryValue === "university") {
-                    return course.category === "university";
-                  } else if (filterCategoryValue === "category") {
-                    return course;
-                  }
-                });
-              tempcourses = courses.filter((course) => {
-                if (filterTypeValue === "online") {
-                  return course.type === "online";
-                } else if (filterTypeValue === "attendance") {
-                  return course.type === "on site";
-                } else if (filterTypeValue === "type") {
-                  return course;
-                }
-              });
-              courses = tempcourses
-              const length = courses.length
-          return (
-            <>
-              <div className="search">
-                <div className="container">
-                  <SearchBar data={value.courses} />
-                  <div className="search-category">
-                    <button className="active" onClick={allCourses}>
-                      All courses
-                    </button>
-                    <Link to="/myCourses">
-                      <button>My courses</button>
-                    </Link>
-                    <Filter
-                      filterValueSelectedCategory={
-                        onFilterValueSelectedCategory
-                      }
-                      filterValueSelectedType={onFilterValueSelectedType}
-                    />
-                  </div>
-                </div>
-              </div>
-              <div className="courses">
-                <div className="container">
-                  <div className="cards">
-                    {length !== 0
-                      ? courses.map((course) => {
-                          return <Course key={course._id} course={course} />;
-                        })
-                      : ""}
-                  </div>
-                  {length === 0 ? <p>Comming soon</p> : ""}
-                </div>
-              </div>
-            </>
-          );
-        }}
-      </CourseConsumer>
+      <div className="search">
+        <div className="container">
+          {/* <SearchBar data={value.courses} /> */}
+          <div className="search-category">
+            <button className="active" onClick={()=>{handleAllCourses()}}>
+              All courses
+            </button>
+            {/* {value.user.role === "student" ? (
+              <Link to="/myCourses">
+                <button>My courses</button>
+              </Link>
+            ) : (
+              <></>
+            )} */}
+            <select
+              name="category"
+              id="category"
+              onChange={handleCategoryChange}
+            >
+              <option value="category">Category</option>
+              <option value="school">School</option>
+              <option value="university">University</option>
+              <option value="language">Language</option>
+            </select>
+            <select
+              name="type"
+              id="type"
+              onChange={handleTypeChange}
+            >
+              <option value="type">type</option>
+              <option value="online">Online</option>
+              <option value="on site">on site</option>
+            </select>
+            <span>
+              <input
+                type="checkbox"
+                id="free-courses"
+                name="free-courses"
+                onClick={() => handleFreeCourse(courses)}
+              />
+              <label htmlFor="free-courses">Free courses</label>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div className="courses">
+        <div className="container">
+          <div className="cards">
+            {courses &&
+              courses.map((course) => {
+                return <Course key={course._id} course={course} />;
+              })}
+          </div>
+          {courses.length === 0 ? <p>Comming soon</p> : ""}
+        </div>
+      </div>
     </>
   );
 }

@@ -1,20 +1,7 @@
-import React, { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import React, { useState } from "react";
+import { useLocation } from "react-router-dom";
 import axios from "axios";
 
-// category: "Programming";
-// certificate: true;
-// description: "Learn the basics of Python programming language and start your journey as a developer!";
-// hours: 20;
-// img: "https://example.com/python.jpg";
-// price: 99.99;
-// subscribe: true;
-// teacher: null;
-// title: "Introduction to Python";
-// type: "online";
-// waitlist: [];
-// __v: 0;
-// _id: "642b5da8648064dce44e3475";
 
 const api = axios.create({
   baseURL: "http://localhost:3000",
@@ -29,12 +16,10 @@ function EditCourse() {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("submit");
-    console.log(course._id)
     api
       .put(`/courses/${course._id}`, course)
-      .then((response) => {
-        console.log(response);
+      .then((res) => {
+        console.log("Course edit ");
       })
       .catch((error) => {
         console.error(error);
@@ -77,7 +62,7 @@ function EditCourse() {
               onChange={handleChange}
             />
             <button type="submit" className="btn-blue">
-              Add <img src="../images/right-arrow.png" alt="" />
+              Edit <img src="../images/right-arrow.png" alt="" />
             </button>
           </div>
           {/* type */}

@@ -19,7 +19,7 @@ a {
 }
 
 a:hover {
-  background-color: none;
+  background-color: inherit;
 }
 
 a:visited {

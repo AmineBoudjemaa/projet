@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import axios from "axios";
-import { v4 as uuidv4 } from "uuid";
 
 const api = axios.create({
   baseURL: "http://localhost:3000",
@@ -16,7 +15,7 @@ export class CoursesForm extends Component {
       description: "course description 101",
       category: "cat3",
       type: "on site",
-      price: 2000,
+      price: 200,
       hours: 2,
       certificate: true,
       subscribe: true,
@@ -30,11 +29,10 @@ export class CoursesForm extends Component {
 
   submitHandler = (e) => {
     e.preventDefault();
-    console.log(this.state)
     api
       .post("/courses", this.state)
       .then((res) => {
-        console.log(res);
+        console.log("course added");
       })
       .catch((err) => console.error(err));
   };
@@ -126,10 +124,10 @@ export class CoursesForm extends Component {
                     required
                     onChange={this.changeHandeler}
                   >
-                    <option value="cat1">cat1</option>
-                    <option value="cat2">cat2</option>
-                    <option value="cat3">cat3</option>
-                    <option value="cat4">cat4</option>
+                    <option value="category">Category</option>
+                    <option value="school">School</option>
+                    <option value="university">University</option>
+                    <option value="language">Language</option>
                   </select>
                 </span>
               </div>

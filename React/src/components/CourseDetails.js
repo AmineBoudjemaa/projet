@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { CourseConsumer } from "../context";
-import { Link } from "react-router-dom";
 import "../CSS/course.css"
 
 export default class CourseDetails extends Component {
@@ -60,7 +59,7 @@ export default class CourseDetails extends Component {
                   </div>
                   <div className="details">
                     <div className="image">
-                      <img src="./images/math.png" alt="" />
+                      <img src={img} alt="" />
                     </div>
                     <div>
                       <div className="detail">
@@ -75,7 +74,7 @@ export default class CourseDetails extends Component {
                           <img src="./images/icons/clock.png" alt="" />
                           Time per week
                         </span>
-                        <span>{} hours</span>
+                        <span>{hours} hours</span>
                       </div>
                       <div className="detail">
                         <span>
