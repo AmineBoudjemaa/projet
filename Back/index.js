@@ -6,7 +6,7 @@ const methodOverride = require('method-override');
 const session = require('express-session');
 const passport = require('passport');
 require('dotenv').config();
-const flash = require('connect-flash');
+// const flash = require('connect-flash');
 const passportSetup = require('./config/passport-setup');
 const MongoStore = require('connect-mongo');
 const cors = require("cors");
@@ -80,7 +80,7 @@ const students = require('./routes/students');
 const authRoutes = require('./routes/auth-routes');
 // const superAdmin = require('./routes/super-admin');
 const admins = require('./routes/admins');
-const sessions = require('./routes/sessions');
+const home = require('./routes/home');
 
 ///////////////////////////////////////////////////the home route
 app.get('/', (req, res) => {
@@ -93,7 +93,7 @@ app.use('/students',students);
 app.use('/auth', authRoutes);
 // app.use('/superadmin', isLoggedIn , isSuperAdmin , superAdmin);
 app.use('/admins', admins);
-app.use('/sessions',sessions);
+app.use('/home',home);
 
 
 app.get('/error',(req,res)=>{

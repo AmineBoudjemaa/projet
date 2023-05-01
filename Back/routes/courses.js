@@ -26,7 +26,7 @@ const isOwner = require("../utils/isOwner");
 router.get(
   "/",
   catchAsync(async (req, res) => {
-    const courses = await Course.find({}).populate(["teacher",'waitlist']);
+    const courses = await Course.find({}).populate(["teacher",'waitlist','students']);
     if (courses) return res.status(200).send(courses);
     res.status(500).send({ message: "no courses found" });
   })
