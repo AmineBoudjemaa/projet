@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const {User,Teacher} = require('../models/user');
+const {User,Teacher,Student} = require('../models/user');
 const {teacherSchema} = require('../schemas');
 const joi = require('joi');
 
@@ -58,17 +58,19 @@ router.get('/', catchAsync(async(req, res) => {
 
 
 //new teacher
-router.get('/new',catchAsync(async(req,res)=>{
-    const users = await User.find({role:{$nin:['super admin','teacher']}});
-    res.render('teachers/new', { users , title:'add teacher' });
-}));
+// router.get('/new',catchAsync(async(req,res)=>{
+//     const users = await User.find({role:{$nin:['super admin','teacher']}});
+//     res.render('teachers/new', { users , title:'add teacher' });
+// }));
 
 //create teacher
 router.post('/:id',catchAsync(async (req, res) => {
     const { id } = req.params;
-    const newTeacher = await User.findByIdAndUpdate(id, { role:'teacher' }).populate('courses');
-    req.flash('sucess',`successfully added ${newTeacher.username} as a teacher`);
-    res.redirect(`/teachers/${newTeacher._id}`);
+    const student = await Student.findByIdAndDelete(id);
+    const {username,googleId,email,img,phone} = student;
+    const teacher = await new Teacher({username,googleId,email,img,phone,role:'teacher',description:'teacher description'})
+    await teacher.save();
+    if(teacher) return res.status(200).send(teacher);
 }));
 
 router.get('/:id',catchAsync(async(req,res)=>{

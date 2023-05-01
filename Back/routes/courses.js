@@ -156,34 +156,52 @@ router.delete("/:id",catchAsync(async (req, res) => {
 router.post(
   "/:id/subscribe",
   catchAsync(async (req, res) => {
+    console.log('subscribe')
     const { id } = req.params;
-    const student = await Student.findById(req.user._id)
+    console.log(id)
+    let findId
+    if (req.user){
+      console.log('user')
+      findId = req.user._id
+    } else if (req.query.s){
+     findId = req.query.s
+     console.log('query')
+    }else{
+      findId = '644fd3c865e878f381a43035'
+      console.log('s')
+      console.log(findId)
+    }
+    const student = await Student.findById(findId)
     .catch(err=>{
       res.status(500).send(err.message);
-    });
+    });    
     const updatedCourse = await Course.findByIdAndUpdate(
       id,
-      { $addToSet: { waitlist: student._Id } },
+      { $addToSet: { waitlist: student } },
       { new: true }
     )
+    .populate(['waitlist'])
     .catch(err=>{
       res.status(500).send(err.message);
-    });
+    });   
     const updatedStudent = await Student.findByIdAndUpdate(
       student._id,
       { $addToSet: { appliedCourses: id } },
       { new: true }
     )
+    .populate('appliedCourses')
     .catch(err=>{
       res.status(500).send(err.message);
     });
     req.session.user = updatedStudent;
-    res.status(200).send(updatedCourse);
+    res.status(200).send({updatedCourse,updatedStudent}); 
+
   })
 );
 
 //it must be an admin
 router.post("/:id/confirm", async (req, res) => {
+  console.log('confirm')
   //add student to course student
   //remove student from waitlist
   //add course to student enroll
@@ -194,31 +212,31 @@ router.post("/:id/confirm", async (req, res) => {
   .catch(err=>{
     res.status(500).send(err.message);
   });
-
+  console.log(student)
+  // if(!(student.appliedCourses.includes(id))) return res.status(400).send({message:"the student is not in the waitlist"})
   const updatedCourse = await Course.findByIdAndUpdate(
     id,
-    { $pull: { waitlist: student._id }, $addToSet: { students: student._id } },
+    { $pull: { waitlist: student._id }, $addToSet: { students: student } },
     { new: true }
   )
   .catch(err=>{
     res.status(500).send(err.message);
   });
-
+  console.log(updatedCourse)
   const updatedStudent = await Student.findByIdAndUpdate(
     student._id,
     {
       $pull: { appliedCourses: id },
-      $addToSet: { enrolledCourses: id },
-      $addToSet: { teachers: updatedCourse.teacher },
+      $addToSet: { enrolledCourses: updatedCourse ,teachers: updatedCourse.teacher  },
     },
     { new: true }
   )
+  .populate('enrolledCourses')
   .catch(err=>{
     res.status(500).send(err.message);
   });
+  res.status(200).send({updatedCourse,updatedStudent});
 
-  req.session.user = updatedStudent;
-  res.status(200).send(updatedCourse);
 });
 
 router.delete(

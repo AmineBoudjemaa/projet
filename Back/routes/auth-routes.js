@@ -29,6 +29,7 @@ router.get('/loginf',(req,res)=>{
 });
 
 router.post('/signup',(req,res)=>{
+  console.log('hit the sign up route')
   if(req.body)  {
     const schema = Joi.object({
       name: Joi.string().alphanum().min(3).max(30).required(),

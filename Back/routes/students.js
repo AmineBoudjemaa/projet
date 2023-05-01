@@ -33,41 +33,32 @@ router.get('/',catchAsync(async(req,res)=>{
 
 //show student
 router.get('/:id',catchAsync(async (req, res,) => {
-    let student = null;
-    tC(async()=>{
-        student = await Student.findById(req.params.id);
+        const student = await Student.findById(req.params.id);
         if (!student) {
-            return res.status(400).send({err:'not found'});
+            return res.status(400).send({message:'not found'});
         }
         res.status(200).send(student);
-    })
-
 }));
 
 //edit student
 router.put('/:id',catchAsync(async (req, res) => {
     const { id } = req.params;
-    let student = null;
-    tC(async()=>{
-        student = await Student.findByIdAndUpdate(id, { ...req.body.student },{new:true});
+    const student = await Student.findByIdAndUpdate(id, { ...req.body.student },{new:true});
         if(student){
         res.status(200).send(student);
-    }})
+    }
 
 }));
 
 //delete profile
 router.delete('/:id',catchAsync(async (req, res) => {
     const { id } = req.params;
-    let student=null;
-    tC(async()=>{
-        student = await Student.findByIdAndDelete(id);
+    const student = await Student.findByIdAndDelete(id);
         //delete courses and teachers
         if(student){
             return res.status(200).send(student)
         }
         res.status(400).send({err:'not found'});
-    });
 
 }));
 
