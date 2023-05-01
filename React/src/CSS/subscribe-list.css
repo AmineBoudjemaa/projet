@@ -1,0 +1,12 @@
+.admin-Teachers.waiting-list .two-lists {
+    display: flex;
+}
+
+.admin-Teachers.waiting-list .list h2{
+    width: fit-content;
+    margin: 0 auto 20px;
+}
+
+.admin-Teachers.waiting-list .teacher {
+    margin: 0 10px 1rem;
+}

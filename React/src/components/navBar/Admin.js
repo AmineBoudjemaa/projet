@@ -16,13 +16,16 @@ export default class NavBar extends Component {
               <NavLink to="/">Home</NavLink>
             </li>
             <li>
-              <NavLink to="/admin/teachers">Teacher</NavLink>
+              <NavLink to="/admin/teachers">Teachers</NavLink>
             </li>
             <li>
               <NavLink to="/admin/courses">Courses</NavLink>
             </li>
             <li>
-              <NavLink to="/admin/Students">Students</NavLink>
+              <NavLink to="/admin/students">Students</NavLink>
+            </li>
+            <li>
+              <NavLink to="/admins">Admins</NavLink>
             </li>
           </ul>
           <ul className="user">
