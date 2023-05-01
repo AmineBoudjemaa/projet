@@ -5,7 +5,7 @@ import "../../../CSS/adminTeachers.css";
 const Course = ({ course }) => {
   const { title, price } = course;
   return (
-    <Link to="/admin/waiting-list" state={{course}}>
+    <Link to="/admin/waiting-list" state={{ course }}>
       <li className="teacher">
         <div className="info">
           <i className="fa-regular fa-user"></i>

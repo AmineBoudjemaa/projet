@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-import "../../CSS/add-teacher.css";
-import "../../CSS/add-course.css";
-import "../../CSS/courses.css";
-import "../../CSS/course.css";
+import "../../../CSS/add-teacher.css";
+import "../../../CSS/add-course.css";
+import "../../../CSS/courses.css";
+import "../../../CSS/course.css";
 import { Link, useLocation } from "react-router-dom";
-import Alert from "./Alert";
-import Course from "../Course";
+import Alert from "../Alert";
+import Course from "../../Course";
 
 
 

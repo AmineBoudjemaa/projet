@@ -1,7 +1,7 @@
 import React, { useState, useEffect} from "react";
 import Teacher from "./Teacher";
-import "../../CSS/adminTeachers.css";
-import Alert from "./Alert";
+import "../../../CSS/adminTeachers.css";
+import Alert from "../Alert";
 import axios from "axios";
 
 // const initialTeachers = [
