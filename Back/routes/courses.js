@@ -213,7 +213,7 @@ router.post("/:id/confirm", async (req, res) => {
     res.status(500).send(err.message);
   });
   console.log(student)
-  // if(!(student.appliedCourses.includes(id))) return res.status(400).send({message:"the student is not in the waitlist"})
+  if(!(student.appliedCourses.includes(id))) return res.status(400).send({message:"the student is not in the waitlist"})
   const updatedCourse = await Course.findByIdAndUpdate(
     id,
     { $pull: { waitlist: student._id }, $addToSet: { students: student } },
