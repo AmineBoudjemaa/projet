@@ -100,10 +100,10 @@ app.get('/error',(req,res)=>{
   kdso;
 });
 
-//404 handler
-// app.all('*',(req,res,next)=>{
-//   next(new AppErr('not found',404));
-// });
+// 404 handler
+app.all('*',(req,res,next)=>{
+  res.status(404).send({message:'not found'})
+});
 
 // error handler
 app.use((err,req,res,next)=>{
