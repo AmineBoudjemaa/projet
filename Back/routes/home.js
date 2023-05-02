@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { Homepage } = require("../models/home");
+const Homepage  = require("../models/home");
 const joi = require("joi");
 
 //utils
@@ -22,50 +22,23 @@ const isLoggedIn = require("../utils/isLoggedIn");
 router.get(
   "/teachers",
   catchAsync(async (req, res) => {
-    const teachers = await Homepage.find({},'teachers').select.populate('teachers')
-    if (teachers.length) return res.status(200).send(teachers);
-    res.status(400).send({ message: "no courses found" });
+    const resu = await Homepage.find({}).populate('teachers');
+    const {teachers} = resu[0]
+    if (teachers) return res.status(200).send(teachers);
+    res.status(400).send({ message: "something went wrong" });
   })
 );
 
 //new course
-// router.post(
-//   "/",
-//   isLoggedIn,
-//   isTeacher,
-//   catchAsync(async (req, res) => {
-//     const teacher = await Teacher.findById(req.user._id);
-//     if (!teacher) return res.status(400).send({ message: "teacher not found" });
-//     req.body.teacher = teacher;
-//     const { error } = courseSchema.validate(req.body);
-//     if (error) {
-//       const msg = error.details.map((el) => el.message).join(",");
-//       res.status(400).send(msg);
-//     }
-//     const course = new Course(req.body);
-//     await course
-//       .save()
-//       .then(async (newCourse) => {
-//         const teacher = await Teacher.findByIdAndUpdate(
-//           req.user._id,
-//           { $addToSet: { courses: newCourse } },
-//           { new: true }
-//         );
-
-//         const populatedTeacher = await teacher.populate("courses");
-//         console.log("-------------------------______", {
-//           newCourse,
-//           populatedTeacher,
-//         });
-//         req.session.user = populatedTeacher;
-//         console.log("req.user", req.user);
-//         res.status(200).send(newCourse);
-//       })
-//       .catch((err) => {
-//         res.status(500).send(err.message);
-//       });
-//   })
-// );
+router.post(
+  "/teachers/:id",
+  catchAsync(async (req, res) => {
+    console.log('ttttttttttttttttttttttt')
+    const { id } = req.params;
+    const teacher = await Homepage.findOneAndUpdate({},{$addToSet:{teachers:id}},{new:true})
+    if(teacher) res.send(teacher);
+  })
+);
 
 // //show
 // router.get(

@@ -75,26 +75,27 @@ router.post('/:id',catchAsync(async (req, res) => {
 
 router.get('/:id',catchAsync(async(req,res)=>{
     const { id } = req.params;
-    const teacher = await User.findById(id);
+    const teacher = await Teacher.findById(id);
     res.render('teachers/profile',{ teacher , title:'profile' });
 }));
 
-router.get('/:id/edit',isLoggedIn , isOwner ,catchAsync(async(req,res)=>{
-    res.render('teachers/edit',{ title:'edit profile' });
-}));
+// router.get('/:id/edit',isLoggedIn , isOwner ,catchAsync(async(req,res)=>{
+//     res.render('teachers/edit',{ title:'edit profile' });
+// }));
 
 router.put('/:id',isLoggedIn , isOwner ,catchAsync(async(req,res)=>{
     const { id } = req.params;
-    const updatedTeacher = await User.findByIdAndUpdate(id, { ...req.body.teacher });
-    req.flash('sucess','successfully updated your profile');
-    res.redirect(`/teachers/${id}`);
+    const updatedTeacher = await Teacher.findByIdAndUpdate(id, { ...req.body.teacher });
+    if (!updatedTeacher) res.status(400).send({message:'err'});
+    req.session.user = updatedTeacher;
+    res.status(200).send(updatedTeacher);
 }));
 
 router.delete('/:id',isLoggedIn,deleteAuth,catchAsync(async(req,res)=>{
     const { id } = req.params;
-    const deletedTeacher = await User.findByIdAndDelete(id);
-    req.flash('sucess','successfully deleted ',deletedTeacher.name,' profile');
-    res.redirect('/teachers');
+    const deletedTeacher = await Teacher.findByIdAndDelete(id);
+    if(deletedTeacher) res.status(500).send({message:'something went wrong deleting'});
+    res.status(200).send(deletedTeacher);
 }));
 
 // //create a teacher
