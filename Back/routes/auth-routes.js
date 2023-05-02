@@ -32,7 +32,7 @@ router.post('/signup',(req,res)=>{
   console.log('hit the sign up route')
   if(req.body)  {
     const schema = Joi.object({
-      name: Joi.string().alphanum().min(3).max(30).required(),
+      name: Joi.string().min(3).max(30).required(),
       tel: Joi.string().regex(/^(\+213|0)(5|6|7)\d{8}$/).required(),
     });
     const { error } = schema.validate(req.body);
@@ -74,11 +74,11 @@ router.get('/google',(req,res,next)=>{
 // callback route for google to redirect to
 // hand control to passport to use code to grab profile info
 router.get('/google/redirect', passport.authenticate('google') ,async (req, res) => {
+  req.session.additionalFields=null
     console.log('from redirect',req.session)
     if(req.user.role==='teacher'){
       req.user = await Teacher.findById(req.user.id).populate('courses');
     }
-
     req.session.user=req.user;
     res.redirect(`${process.env.CLIENT_URL}`);
     // res.status(200).send()

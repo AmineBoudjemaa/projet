@@ -1,7 +1,7 @@
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 require('dotenv').config();
-const {User,Student} = require('../models/user');
+const {User,Student, Teacher,Admin} = require('../models/user');
 const AppErr = require('../utils/appErr');
 
 
@@ -25,9 +25,14 @@ passport.use(
     }, (req,accessToken, refreshToken, profile, done) => {
         console.log('from setup',req.session)
         // passport callback function
-        User.findOne({googleId: profile.id}).then((currentUser) => {
+        User.findOne({googleId: profile.id}).then(async(currentUser) => {
             if(currentUser){
+                console.log('current user--------------------------------------------',currentUser)
+                if(currentUser.role==='teacher') {const teacher = await Teacher.findOne({googleId: profile.id}); if(!teacher) {const err = new Error('you must sign up');done(err,null)}}
+                if(currentUser.role==='student') {const student = await Student.findOne({googleId: profile.id}); if(!student) {const err = new Error('you must sign up');done(err,null)}}
+                if(currentUser.role==='admin') {const admin = await Admin.findOne({googleId: profile.id}); if(!admin) {const err = new Error('you must sign up');done(err,null)}}
                 // already have this user
+                req.session.additionalFields=null
                 done(null, currentUser);
                 // do something
             } else {
@@ -41,6 +46,7 @@ passport.use(
                     name:profile.displayName,
                     role:'super admin',
                     }).save().then(async(superAdmin)=>{
+                        
                         done(null,superAdmin);
                     })
                 }else{
@@ -56,18 +62,20 @@ passport.use(
                     address:req.session.additionalFields.address,
                 }).save().then(async (newUser) => {
                     done(null, newUser);
-                }); 
+                });
                 }
                 }else{
                     //you must sign up
                     // const err = new Error('you must sign up first')
                     // err.status = 401
                     // done(err,null);
+                    
                     const err = new Error('you must sign up');
                     done(err,null)
                 }
                 
             }
+            
         });
     })
 );
