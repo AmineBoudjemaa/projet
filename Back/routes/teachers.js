@@ -83,9 +83,9 @@ router.get('/:id',catchAsync(async(req,res)=>{
 //     res.render('teachers/edit',{ title:'edit profile' });
 // }));
 
-router.put('/:id',isLoggedIn ,catchAsync(async(req,res)=>{
+router.put('/:id'/*,isLoggedIn */,catchAsync(async(req,res)=>{
     const { id } = req.params;
-    const updatedTeacher = await Teacher.findByIdAndUpdate(id, { ...req.body.teacher });
+    const updatedTeacher = await Teacher.findByIdAndUpdate(id, { ...req.body },{new:true});
     if (!updatedTeacher) res.status(400).send({message:'err'});
     req.session.user = updatedTeacher;
     res.status(200).send(updatedTeacher);
