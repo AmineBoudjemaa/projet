@@ -1,4 +1,3 @@
-
 /* Start Landing */
 .landing {
   position: relative;
@@ -116,7 +115,8 @@
 
 .services .text {
   max-width: 500px;
-  width: 45%;
+    width: 45%;
+    margin-right: 50px;
 }
 
 @media (max-width: 991px) {
@@ -138,11 +138,12 @@
 
 .services .text p {
   font-weight: 400;
-  font-size: 24px;
+  font-size: 22px;
   line-height: 29px;
   color: #05171f;
   margin-bottom: 40px;
-  max-width: 600px;
+  margin-top: 20px;
+  max-width: 500px;
 }
 
 @media (max-width: 991px) {
@@ -196,6 +197,7 @@
 .services .lessons .card img {
   position: relative;
   width: 100%;
+  border-radius: 20px;
 }
 
 .services .lessons .card p {
@@ -291,7 +293,7 @@
   z-index: 1;
 }
 
-.teachers .container .card .image>img {
+.teachers .container .card .image > img {
   position: relative;
   width: 100%;
   height: 100%;
@@ -336,7 +338,7 @@
   border-radius: 5px;
 }
 
-.teachers .container .card>p{
+.teachers .container .card > p {
   padding: 0 16px 16px;
   color: rgba(0, 0, 0, 0.5);
   line-height: 24px;

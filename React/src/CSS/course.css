@@ -97,6 +97,10 @@
 .detail span img {
   width: 26px;
 }
+.detail span i {
+  width: 26px;
+  font-size: 24px;
+}
 
 .course .teacher-profil h4 {
   text-align: center;

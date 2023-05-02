@@ -41,7 +41,7 @@ export default class Home extends Component {
                   </div>
                 </div>
               </div>
-              <button
+              {/* <button
                 onClick={() => this.user()}
                 style={{ color: "blue", lineHeight: 10, padding: 20 }}
               >
@@ -62,7 +62,7 @@ export default class Home extends Component {
                 style={{ color: "blue", lineHeight: 10, padding: 20 }}
               >
                 Courses
-              </button>
+              </button> */}
             </>
           );
         }}

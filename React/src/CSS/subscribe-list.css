@@ -9,4 +9,13 @@
 
 .admin-Teachers.waiting-list .teacher {
     margin: 0 10px 1rem;
+    align-items: center;
+}
+
+
+.admin-Teachers .two-lists .info {
+  flex: 0 0 60%;
+  display: flex;
+  align-items: center;
+  padding: 13px;
 }

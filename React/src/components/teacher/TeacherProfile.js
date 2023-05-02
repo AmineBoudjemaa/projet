@@ -87,10 +87,9 @@ class TeacherProfile extends Component {
                 style={{
                   display: "block",
                   width: "fit-content",
-                  margin: "auto",
                 }}
               >
-                <button
+                {/* <button
                   className="btn-blue"
                   style={{
                     padding: 20,
@@ -98,7 +97,10 @@ class TeacherProfile extends Component {
                   }}
                 >
                   Add courses
-                </button>
+                </button> */}
+                <div class="card add-card">
+                  <img src="./images/icons/add.png" alt="" />
+                </div>
               </Link>
             ) : (
               <></>

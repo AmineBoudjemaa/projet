@@ -71,12 +71,12 @@
 }
 
 .sign-up-container .submit {
-  position: absolute;
-    left: 50%;
-    bottom: 35px;
   background-color: #0b78dc;
   padding: 12px 20px;
   color: #fff;
+  width: 80%;
+  text-align: center;
+  font-size: 18px;
 }
 
 .sign-up-container .information span {

@@ -11,11 +11,22 @@ const Waiting = ({waitingStudent}) => {
         <span className="name">{username}</span>
       </div>
       <div>
-        <button className="edit-btn" aria-label="edit button">
+        <button
+          className="btn-whit"
+          style={{
+            display: "inline",
+            justifyContent: "space-between",
+            width: 133,
+          }}
+        >
+          {/* <i class="fa-solid fa-user-gear"></i> */}
+          accepte
+        </button>
+        {/* <button className="edit-btn" aria-label="edit button">
           <Link to="/admin/teacherForm" state={{ _id, waitingStudent }}>
             <i className="fa-solid fa-pen-to-square"></i>
           </Link>
-        </button>
+        </button> */}
 
         <button className="clear-btn" aria-label="edit button">
           <i className="fa-solid fa-trash"></i>

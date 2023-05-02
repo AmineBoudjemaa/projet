@@ -13,14 +13,14 @@ const Student = ({ student, handleDelete, makeHimAdmin }) => {
         <button
           className="btn-whit"
           style={{
-            background: "white",
-            display: "inline-block",
-            border: "none",
-            padding: 0,
+            display: "flex",
+            justifyContent: "space-between",
+            width: 133,
           }}
           onClick={() => makeHimAdmin(_id)}
         >
-          Add Admin
+          <i class="fa-solid fa-user-gear"></i>
+          add admin
         </button>
         <button className="edit-btn" aria-label="edit button">
           <Link>

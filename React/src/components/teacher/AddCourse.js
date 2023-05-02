@@ -153,7 +153,7 @@ export class CoursesForm extends Component {
 
               <div className="detail">
                 <span>
-                  <img src="../images/icons/clock.png" alt="" />
+                  <i class="fa-sharp fa-regular fa-clock"></i>
                   Time perweek
                 </span>
                 <span>
@@ -172,7 +172,7 @@ export class CoursesForm extends Component {
 
               <div className="detail">
                 <span>
-                  <img src="../images/icons/view-grid.png" alt="" />
+                  <i class="fa-sharp fa-solid fa-award"></i>
                   certificate
                 </span>
                 <span>
@@ -191,8 +191,8 @@ export class CoursesForm extends Component {
 
               <div className="detail">
                 <span>
-                  <img src="../images/icons/view-grid.png" alt="" />
-                  certificate
+                  <i class="fa-solid fa-bell"></i>
+                  subscribe
                 </span>
                 <span>
                   <select
@@ -224,6 +224,11 @@ export class CoursesForm extends Component {
                     onChange={this.changeHandeler}
                   />
                 </span>
+              </div>
+              <div className="teacher-profil">
+                <h4>Teacher</h4>
+                <img src="./images/teacher.png" alt="" />
+                <h4>{}</h4>
               </div>
             </div>
           </form>

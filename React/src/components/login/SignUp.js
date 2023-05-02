@@ -65,16 +65,13 @@ export class SignUp extends Component {
               value={tel}
               onChange={this.changeHandeler}
             />
-            {/* <input type="submit" value="Create your account" /> */}
             <button type="submit" className="submit">
-              Submit
-            </button>
-            {/* <span>
               <i
                 className="fa-brands fa-google"
-                style={{ color: "#ffffff" }}
-              ></i>
-            </span> */}
+                style={{ color: "#ffffff", paddingRight:10 }}
+                ></i>
+              Create your account
+            </button>
           </form>
         </div>
       </div>

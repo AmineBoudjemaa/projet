@@ -11,11 +11,11 @@ const Waiting = ({ studentAccepted }) => {
         <span className="name">{username}</span>
       </div>
       <div>
-        <button className="edit-btn" aria-label="edit button">
+        {/* <button className="edit-btn" aria-label="edit button">
           <Link to="/admin/teacherForm" state={{ _id, studentAccepted }}>
             <i className="fa-solid fa-pen-to-square"></i>
           </Link>
-        </button>
+        </button> */}
 
         <button className="clear-btn" aria-label="edit button">
           <i className="fa-solid fa-trash"></i>
