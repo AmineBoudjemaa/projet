@@ -1,19 +1,18 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const homeSchema = new Schema({
-    teachers: {
-        type:[{
-            type:Schema.Types.ObjectId,
-            ref:'Teacher'
-        }]
-    },
-    imgs: {
-        type:[{
-            type:String,
-        }]
-    },
-});
 
-const Homepage = mongoose.model('Homepage',homeSchema);
-module.exports = Homepage;
+const homeTeacherSchema = new Schema({
+    teacher: {
+        type: Schema.Types.ObjectId,
+        ref: 'Teacher'
+      }
+})
+
+const homeImgSchema = new Schema({
+    img:String,
+})
+
+const HomeTeacher = mongoose.model('HomeTeacher',homeTeacherSchema);
+const HomeImg = mongoose.model('homeImg',homeImgSchema);
+module.exports = {HomeTeacher,HomeImg};

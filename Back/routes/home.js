@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const Homepage  = require("../models/home");
+const {HomeTeacher,HomeImg}  = require("../models/home");
 const joi = require("joi");
 
 //utils
@@ -22,10 +22,13 @@ const isLoggedIn = require("../utils/isLoggedIn");
 router.get(
   "/teachers",
   catchAsync(async (req, res) => {
-    const resu = await Homepage.find({}).populate('teachers');
-    const {teachers} = resu[0]
+    console.log('get teacher')
+    await HomeTeacher.find({}).populate(['teacher']).then(teachers=>{
+    console.log(teachers)
     if (teachers) return res.status(200).send(teachers);
-    res.status(400).send({ message: "something went wrong" });
+    res.status(500).send({ message: "something went wrong" });
+    });
+
   })
 );
 
@@ -33,10 +36,40 @@ router.get(
 router.post(
   "/teachers/:id",
   catchAsync(async (req, res) => {
-    console.log('ttttttttttttttttttttttt')
+    console.log('post teacher')
     const { id } = req.params;
-    const teacher = await Homepage.findOneAndUpdate({},{$addToSet:{teachers:id}},{new:true})
-    if(teacher) res.send(teacher);
+    const homeTeacher = new HomeTeacher({
+      teacher: id
+    })
+    homeTeacher.save()
+    .then((homeTeacher) => {
+      console.log('Created HomeTeacher:', homeTeacher);
+      res.send(homeTeacher);
+    })
+    .catch((error) => {
+      console.error('Error creating HomeTeacher:', error);
+      res.status('500').send({message:error})
+    });
+  })
+);
+
+//delete
+router.delete("/teachers/:id",catchAsync(async (req, res) => {
+    const { id } = req.params;
+
+    HomeTeacher.deleteOne({teacher : id})
+  .then((deletedHomeTeacher) => {
+    if (!deletedHomeTeacher) {
+      console.error('HomeTeacher not found');
+      return res.status(400).send({message:'teacher not found'});
+    }
+    console.log('Deleted HomeTeacher:', deletedHomeTeacher);
+    res.send(deletedHomeTeacher);
+  })
+  .catch((error) => {
+    console.error('Error deleting HomeTeacher:', error);
+    res.status('500').send({message:error});
+  });
   })
 );
 
@@ -108,20 +141,7 @@ router.post(
 //   })
 // );
 
-// //delete
-// router.delete("/:id",catchAsync(async (req, res) => {
-//   //delete course
-//   //delete course from teacher (middleware?)
-//   //delete from all students appliedcourses
-//   //delete from all students enrolledcourses all of this should be with middleware //done
-//     const { id } = req.params;
-//     const course = await Course.findByIdAndDelete(id);
-//     req.session.user=await Teacher.findById(course.teacher);
-//     console.log(req.session.user)
-//     if (course) return res.status(200).send(course);
-//     res.status(400).send({ message: "course not found" });
-//   })
-// );
+
 
 // router.post(
 //   "/:id/subscribe",
