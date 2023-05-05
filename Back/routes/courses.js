@@ -209,7 +209,7 @@ router.post("/:id/confirm", async (req, res) => {
   //remove course from applied
   //add teacher to student's teachers
   const { id } = req.params;
-  const student = await Student.findById(req.query.s)
+  const student = await Student.findById(req.body.student)
   .catch(err=>{
     res.status(500).send(err.message);
   });
@@ -244,7 +244,7 @@ router.delete(
   "/:id/subscribe",
   catchAsync(async (req, res) => {
     const { id } = req.params;
-    const student = await Student.findById(req.query.s)
+    const student = await Student.findById(req.body.student)
     .catch(err=>{
       res.status(500).send(err.message);
     });
@@ -276,7 +276,7 @@ router.delete(
 
 router.delete('/:id/confirm',catchAsync(async (req,res)=>{
   const { id } = req.params;
-  const student = await Student.findById(req.query.s)
+  const student = await Student.findById(req.body.student)
   .catch(err=>{
     res.status(500).send(err.message);
   });
