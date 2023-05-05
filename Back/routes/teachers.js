@@ -75,8 +75,9 @@ router.post('/:id',catchAsync(async (req, res) => {
 
 router.get('/:id',catchAsync(async(req,res)=>{
     const { id } = req.params;
-    const teacher = await Teacher.findById(id);
-    res.render('teachers/profile',{ teacher , title:'profile' });
+    const teacher = await Teacher.findById(id).populate('courses');
+    if(teacher) return res.send(teacher)
+    res.status(400).send('something went wrong finding the teacher')
 }));
 
 // router.get('/:id/edit',isLoggedIn , isOwner ,catchAsync(async(req,res)=>{
