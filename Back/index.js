@@ -61,7 +61,7 @@ mongoose.set('strictQuery', false);
 main().catch(err => console.log(err));
 async function main() {
   await mongoose.connect(process.env.MONGO_URL,{useNewUrlParser:true,useUnifiedTopology:true,})
-  .then(console.log('database connected'));
+  .then(console.log('database connected port: ',process.env.MONGO_URL));
 };
 
 // app.use((req,res,next)=>{

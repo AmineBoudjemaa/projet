@@ -32,7 +32,6 @@ router.get(
   })
 );
 
-//new course
 router.post(
   "/teachers/:id",
   catchAsync(async (req, res) => {
@@ -72,6 +71,62 @@ router.delete("/teachers/:id",catchAsync(async (req, res) => {
   });
   })
 );
+
+router.get(
+  "/imgs",
+  catchAsync(async (req, res) => {
+    console.log('get imgs')
+    await HomeImg.find({}).then(imgs=>{
+    console.log(imgs)
+    if (imgs) return res.status(200).send(imgs);
+    res.status(500).send({ message: "something went wrong getting home imgs" });
+    });
+
+  })
+);
+
+router.post(
+  "/imgs",
+  catchAsync(async (req, res) => {
+    console.log('post teacher')
+    
+    const { link,img } = req.body;
+    const homeImg = new HomeImg({link,img})
+    homeImg.save()
+    // const homeTeacher = new HomeTeacher({
+    //   teacher: id
+    // })
+    // homeTeacher.save()
+    .then((homeImg) => {
+      console.log('Created homeImg:', homeImg);
+      res.send(homeImg);
+    })
+    .catch((error) => {
+      console.error('Error creating homeImg:', error);
+      res.status('500').send({message:error})
+    });
+  })
+);
+
+router.delete("/imgs/:id",catchAsync(async (req, res) => {
+  const { id } = req.params;
+
+  HomeImg.findByIdAndDelete(id)
+.then((deletedHomeImg) => {
+  if (!deletedHomeImg) {
+    console.error('HomeTeacher not found');
+    return res.status(400).send({message:'img not found'});
+  }
+  console.log('Deleted img:', deletedHomeImg);
+  res.send(deletedHomeImg);
+})
+.catch((error) => {
+  console.error('Error deleting img:', error);
+  res.status('500').send({message:error});
+});
+})
+);
+
 
 
 module.exports = router;

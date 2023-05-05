@@ -11,6 +11,7 @@ const homeTeacherSchema = new Schema({
 
 const homeImgSchema = new Schema({
     img:String,
+    link:String,
 })
 
 const HomeTeacher = mongoose.model('HomeTeacher',homeTeacherSchema);
