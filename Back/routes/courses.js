@@ -181,7 +181,7 @@ router.post(
       { $addToSet: { waitlist: student } },
       { new: true }
     )
-    .populate(['waitlist'])
+    .populate(["teacher",'waitlist','students'])
     .catch(err=>{
       res.status(500).send(err.message);
     });   
@@ -190,13 +190,13 @@ router.post(
       { $addToSet: { appliedCourses: id } },
       { new: true }
     )
-    .populate('appliedCourses')
+    .populate(['teachers','appliedCourses','enrolledCourses'])
     .catch(err=>{
       res.status(500).send(err.message);
     });
-    req.session.user = updatedStudent;
-    res.status(200).send({updatedCourse,updatedStudent}); 
 
+    req.session.user = updatedStudent;
+    res.status(200).send({updatedCourse,updatedStudent});
   })
 );
 
@@ -219,7 +219,7 @@ router.post("/:id/confirm", async (req, res) => {
     id,
     { $pull: { waitlist: student._id }, $addToSet: { students: student } },
     { new: true }
-  )
+  ).populate(["teacher",'waitlist','students'])
   .catch(err=>{
     res.status(500).send(err.message);
   });
@@ -232,7 +232,7 @@ router.post("/:id/confirm", async (req, res) => {
     },
     { new: true }
   )
-  .populate('enrolledCourses')
+  .populate(['teachers','appliedCourses','enrolledCourses'])
   .catch(err=>{
     res.status(500).send(err.message);
   });
@@ -255,7 +255,7 @@ router.delete(
       id,
       { $pull: { waitlist: student._id } },
       { new: true }
-    )
+    ).populate(["teacher",'waitlist','students'])
     .catch(err=>{
       res.status(500).send(err.message);
     });
@@ -265,12 +265,12 @@ router.delete(
       { $pull: { appliedCourses: id } },
       { new: true }
     )
+    .populate(['teachers','appliedCourses','enrolledCourses'])
     .catch(err=>{
       res.status(500).send(err.message);
     });
 
-    req.session.user = updatedStudent;
-    res.status(200).send(updatedCourse);
+    res.status(200).send({updatedCourse,updatedStudent});
   })
 );
 
@@ -289,7 +289,7 @@ router.delete('/:id/confirm',catchAsync(async (req,res)=>{
     id,
     { $pull: { students: student._id } },
     { new: true }
-  )
+  ).populate(["teacher",'waitlist','students'])
   .catch(err=>{
     res.status(500).send(err.message);
   });
@@ -299,12 +299,11 @@ router.delete('/:id/confirm',catchAsync(async (req,res)=>{
     { $pull: { enrolledCourses: id , teacher:updatedCourse.teacher } },
     { new: true }
   )
+  .populate(['teachers','appliedCourses','enrolledCourses'])
   .catch(err=>{
     res.status(500).send(err.message);
   });
-
-  req.session.user = updatedStudent;
-  res.status(200).send(updatedCourse);
+  res.status(200).send({updatedCourse,updatedStudent});
 }));
 
 module.exports = router;
