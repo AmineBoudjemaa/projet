@@ -26,6 +26,7 @@ router.get('/',catchAsync(async(req,res)=>{
     .then(students=>{
         res.status(200).send(students);
     })
+    .populate(['teachers','appliedCourses','enrolledCourses'])
     .catch(err=>{
         return res.status(400).send({err});
     })
@@ -33,7 +34,8 @@ router.get('/',catchAsync(async(req,res)=>{
 
 //show student
 router.get('/:id',catchAsync(async (req, res,) => {
-        const student = await Student.findById(req.params.id);
+        const student = await Student.findById(req.params.id)
+        .populate(['teachers','appliedCourses','enrolledCourses'])
         if (!student) {
             return res.status(400).send({message:'not found'});
         }
