@@ -16,7 +16,7 @@ export default class Course extends Component {
       certificate,
       subscribe,
     } = this.props.course;
-    let courseDetails = this.props.course;
+    // let courseDetails = this.props.course;
     return (
       <CourseConsumer>
         {({
@@ -25,6 +25,7 @@ export default class Course extends Component {
           addtoMyCourses,
           openModal,
         }) => {
+          console.log(user.role)
           return (
             <div className="card" onClick={() => handleDetails(_id)}>
               <Link to="/course">
@@ -32,8 +33,8 @@ export default class Course extends Component {
                   <div className="image">
                     <img
                       src={
-                        "https://img.freepik.com/free-vector/webinar-landing-page-template-isometric-style_23-2148770030.jpg?w=740&t=st=1682603512~exp=1682604112~hmac=8d6aedcafa1ddfc2d5737ffcc25b3e4fcf1eeca10672fc0a3dad6ebb000255e7" ||
-                        img
+                        img ||
+                        "https://img.freepik.com/free-vector/webinar-landing-page-template-isometric-style_23-2148770030.jpg?w=740&t=st=1682603512~exp=1682604112~hmac=8d6aedcafa1ddfc2d5737ffcc25b3e4fcf1eeca10672fc0a3dad6ebb000255e7"
                       }
                       alt=""
                     />
@@ -71,13 +72,14 @@ export default class Course extends Component {
               {user.role === "student" ? (
                 <button
                   className="btn-blue"
-                  disabled={subscribe ? true : false}
+                  // disabled={subscribe ? true : false}
                   onClick={() => {
-                    addtoMyCourses(_id);
-                    openModal(_id);
+                    addtoMyCourses(this.props.course);
+                    // openModal(_id);
                   }}
                 >
-                  {subscribe ? "subscribed" : "Enroll"}
+                  {/* {subscribe ? "subscribed" : "Enroll"} */}
+                  Enroll
                 </button>
               ) : (
                 <></>

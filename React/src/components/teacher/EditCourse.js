@@ -31,7 +31,7 @@ function EditCourse() {
         <h1>Edit course</h1>
         <form onSubmit={handleSubmit}>
           <div className="presontation">
-            <label htmlFor="title">title</label>
+            <label htmlFor="title">Title</label>
             <input
               type="text"
               id="title"
@@ -41,7 +41,7 @@ function EditCourse() {
               value={course.title}
               onChange={handleChange}
             />
-            <label htmlFor="link">link</label>
+            <label htmlFor="link">Link</label>
             <input
               type="text"
               id="link"
@@ -51,7 +51,7 @@ function EditCourse() {
               value={course.link}
               onChange={handleChange}
             />
-            <label htmlFor="description">description</label>
+            <label htmlFor="description">Description</label>
             <textarea
               type="text"
               id="description"
@@ -62,14 +62,14 @@ function EditCourse() {
               onChange={handleChange}
             />
             <button type="submit" className="btn-blue">
-              Edit <img src="../images/right-arrow.png" alt="" />
+              Edit <i class="fa-solid fa-arrow-right"></i>
             </button>
           </div>
           {/* type */}
           <div className="details">
             <div className="detail">
               <span>
-                <img src="../images/icons/earth.png" alt="" />
+                <i className="fa-solid fa-globe"></i>
                 Type
               </span>
               <span>
@@ -89,7 +89,7 @@ function EditCourse() {
             {/* category */}
             <div className="detail">
               <span>
-                <img src="../images/icons/view-grid.png" alt="" />
+                <i className="fa-solid fa-landmark"></i>
                 Category
               </span>
               <span>
@@ -100,17 +100,17 @@ function EditCourse() {
                   required
                   onChange={handleChange}
                 >
-                  <option value="cat1">cat1</option>
-                  <option value="cat2">cat2</option>
-                  <option value="cat3">cat3</option>
-                  <option value="cat4">cat4</option>
+                  <option value="category">Category</option>
+                  <option value="school">School</option>
+                  <option value="university">University</option>
+                  <option value="language">Language</option>
                 </select>
               </span>
             </div>
 
             <div className="detail">
               <span>
-                <img src="../images/icons/coin.png" alt="" />
+                <i className="fa-solid fa-sack-dollar"></i>
                 Credit
               </span>
               <span>
@@ -129,7 +129,7 @@ function EditCourse() {
 
             <div className="detail">
               <span>
-                <img src="../images/icons/clock.png" alt="" />
+                <i className="fa-sharp fa-regular fa-clock"></i>
                 Time perweek
               </span>
               <span>
@@ -148,7 +148,7 @@ function EditCourse() {
 
             <div className="detail">
               <span>
-                <img src="../images/icons/view-grid.png" alt="" />
+                <i className="fa-sharp fa-solid fa-award"></i>
                 certificate
               </span>
               <span>
@@ -167,8 +167,8 @@ function EditCourse() {
 
             <div className="detail">
               <span>
-                <img src="../images/icons/view-grid.png" alt="" />
-                certificate
+                <i className="fa-solid fa-bell"></i>
+                subscribe
               </span>
               <span>
                 <select
@@ -186,7 +186,7 @@ function EditCourse() {
 
             <div className="detail">
               <span>
-                <img src="../images/icons/calender.png" alt="" />
+                <i className="fa-regular fa-calendar"></i>
                 Duration
               </span>
               <span>

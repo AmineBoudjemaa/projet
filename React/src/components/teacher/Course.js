@@ -10,10 +10,11 @@ export default class Course extends Component {
       title,
       category,
       type,
-      img,
       price,
       hours,
       certificate,
+      subscribe,
+      img,
     } = this.props.course;
     let courseDetails = this.props.course;
     return (
@@ -28,8 +29,8 @@ export default class Course extends Component {
                   <div className="image">
                     <img
                       src={
-                        "https://img.freepik.com/free-vector/webinar-landing-page-template-isometric-style_23-2148770030.jpg?w=740&t=st=1682603512~exp=1682604112~hmac=8d6aedcafa1ddfc2d5737ffcc25b3e4fcf1eeca10672fc0a3dad6ebb000255e7" ||
-                        img
+                        img ||
+                        "https://img.freepik.com/free-vector/webinar-landing-page-template-isometric-style_23-2148770030.jpg?w=740&t=st=1682603512~exp=1682604112~hmac=8d6aedcafa1ddfc2d5737ffcc25b3e4fcf1eeca10672fc0a3dad6ebb000255e7"
                       }
                       alt=""
                     />

@@ -1,23 +1,30 @@
 import React, { Component } from "react";
 import { CourseConsumer } from "../context";
-import "../CSS/course.css"
+// import "../CSS/css"
 
 export default class CourseDetails extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      teacher: {},
+    };
+  }
   render() {
     return (
       <CourseConsumer>
-        {({ detailsCourse,addtoMyCourses, openModal, user }) => {
+        {({ detailsCourse, addtoMyCourses, openModal, user }) => {
           const {
             _id,
             title,
+            link,
             description,
-            img,
             category,
             type,
             price,
             hours,
             certificate,
-            subscribe
+            subscribe,
+            img,
           } = detailsCourse;
           return (
             <div className="course">
@@ -27,6 +34,10 @@ export default class CourseDetails extends Component {
                     <h1>{title}</h1>
                     <h2>Description</h2>
                     <p>{description}</p>
+                    <h2>Course Link</h2>
+                    <a href={link}>
+                      <p>Introduction to {title}</p>
+                    </a>
                     <h2>Program</h2>
                     <ul>
                       <li>Matrix algebra notation</li>
@@ -38,20 +49,21 @@ export default class CourseDetails extends Component {
                     {user.role === "student" ? (
                       <button
                         className="btn-blue"
-                        disabled={subscribe ? true : false}
+                        // disabled={subscribe ? true : false}
                         onClick={() => {
-                          addtoMyCourses(_id);
-                          openModal(_id);
+                          addtoMyCourses(detailsCourse);
+                          // openModal(_id);
                         }}
                       >
-                        {subscribe ? (
+                        {/* {subscribe ? (
                           "subscribed"
                         ) : (
                           <>
                             subscribe
                             <img src="./images/right-arrow.png" alt="" />
                           </>
-                        )}
+                        )} */}
+                        Enroll
                       </button>
                     ) : (
                       ""
@@ -64,44 +76,61 @@ export default class CourseDetails extends Component {
                     <div>
                       <div className="detail">
                         <span>
-                          <img src="./images/icons/calender.png" alt="" />
-                          Duration
+                          <i className="fa-solid fa-globe"></i>
+                          Type
                         </span>
-                        <span>{} weeks</span>
+                        <span>{type}</span>
                       </div>
                       <div className="detail">
                         <span>
-                          <img src="./images/icons/clock.png" alt="" />
-                          Time per week
-                        </span>
-                        <span>{hours} hours</span>
-                      </div>
-                      <div className="detail">
-                        <span>
-                          <img src="./images/icons/view-grid.png" alt="" />
+                          <i className="fa-solid fa-landmark"></i>
                           Category
                         </span>
                         <span>{category}</span>
                       </div>
                       <div className="detail">
                         <span>
-                          <img src="./images/icons/coin.png" alt="" />
-                          Credit
+                          <i className="fa-solid fa-sack-dollar"></i> Credit
                         </span>
                         <span>{price} DA</span>
                       </div>
                       <div className="detail">
                         <span>
-                          <img src="./images/icons/earth.png" alt="" />
-                          Type
+                          <i className="fa-sharp fa-regular fa-clock"></i>
+                          Time perweek
                         </span>
-                        <span>{type}</span>
+                        <span>{hours} hours</span>
+                      </div>
+                      <div className="detail">
+                        <span>
+                          <i className="fa-sharp fa-solid fa-award"></i>
+                          certificate
+                        </span>
+                        {certificate ? (
+                          <span>Certificated</span>
+                        ) : (
+                          <span>Decertified</span>
+                        )}
+                      </div>
+                      <div className="detail">
+                        <span>
+                          <i className="fa-solid fa-bell"></i>
+                          subscribe
+                        </span>
+                        {subscribe ? <span>Open</span> : <span>Closed</span>}
+                      </div>
+                      <div className="detail">
+                        <span>
+                          <i className="fa-regular fa-calendar"></i>
+                          Duration
+                        </span>
+                        <span>{4} weeks</span>
                       </div>
                     </div>
                     <div className="teacher-profil">
                       <h4>Teacher</h4>
                       <img src="./images/teacher.png" alt="" />
-                      <h4>{}</h4>
+                      {/* <h4>{username}</h4> */}
                     </div>
                   </div>
                 </div>
