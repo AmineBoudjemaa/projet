@@ -17,6 +17,7 @@ function Courses() {
   let [free, setFree] = useState(false);
   let [allCourses, setAllCourses] = useState([]);
   let [courses, setCourses] = useState([]);
+  let [user, setUser] = useState([]);
 
   const handleAllCourses =()=>{
     setCourses(allCourses)
@@ -71,6 +72,18 @@ function Courses() {
         console.log("no courses");
         console.error(error);
       });
+    api
+      .get("/auth/me")
+      .then((response) => {
+        if (response.status === 200) {
+          // console.log(response.data)
+          setUser(response.data);
+        }
+      })
+      .catch((error) => {
+        console.log("no courses");
+        console.error(error);
+      });
   }, []);
 
   return (
@@ -82,13 +95,13 @@ function Courses() {
             <button className="active" onClick={()=>{handleAllCourses()}}>
               All courses
             </button>
-            {/* {value.user.role === "student" ? (
+            {user.role === "student" ? (
               <Link to="/myCourses">
                 <button>My courses</button>
               </Link>
             ) : (
               <></>
-            )} */}
+            )}
             <select
               name="category"
               id="category"

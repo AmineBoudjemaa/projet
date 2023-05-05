@@ -10,12 +10,12 @@ export class CoursesForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      title: "course title",
-      link: "linktocourse",
-      description: "course description 101",
-      category: "cat3",
+      title: "",
+      link: "",
+      description: "",
+      category: "",
       type: "on site",
-      price: 200,
+      price: 2000,
       hours: 2,
       certificate: true,
       subscribe: true,
@@ -55,45 +55,45 @@ export class CoursesForm extends Component {
           <h1>Adding course</h1>
           <form onSubmit={this.submitHandler}>
             <div className="presontation">
-              <label htmlFor="title">title</label>
+              <label htmlFor="title">Title</label>
               <input
                 type="text"
                 id="title"
                 required
-                placeholder="title"
+                placeholder="BOOL ALGEBRA"
                 name="title"
                 value={title}
                 onChange={this.changeHandeler}
               />
-              <label htmlFor="link">link</label>
+              <label htmlFor="link">Link</label>
               <input
                 type="text"
                 id="link"
                 required
-                placeholder="link"
+                placeholder="https://fr.wikipedia.org"
                 name="link"
                 value={link}
                 onChange={this.changeHandeler}
               />
-              <label htmlFor="description">description</label>
+              <label htmlFor="description">Description</label>
               <textarea
                 type="text"
                 id="description"
                 required
-                placeholder="description"
+                placeholder="A course on Boolean algebra is typically an introductory..."
                 name="description"
                 value={description}
                 onChange={this.changeHandeler}
               />
               <button type="submit" className="btn-blue">
-                Add <img src="../images/right-arrow.png" alt="" />
+                Add <i class="fa-solid fa-arrow-right"></i>
               </button>
             </div>
             {/* type */}
             <div className="details">
               <div className="detail">
                 <span>
-                  <img src="../images/icons/earth.png" alt="" />
+                  <i className="fa-solid fa-globe"></i>
                   Type
                 </span>
                 <span>
@@ -113,7 +113,7 @@ export class CoursesForm extends Component {
               {/* category */}
               <div className="detail">
                 <span>
-                  <img src="../images/icons/view-grid.png" alt="" />
+                  <i className="fa-solid fa-landmark"></i>
                   Category
                 </span>
                 <span>
@@ -134,8 +134,7 @@ export class CoursesForm extends Component {
 
               <div className="detail">
                 <span>
-                  <img src="../images/icons/coin.png" alt="" />
-                  Credit
+                  <i className="fa-solid fa-sack-dollar"></i> Credit
                 </span>
                 <span>
                   <input
@@ -153,7 +152,7 @@ export class CoursesForm extends Component {
 
               <div className="detail">
                 <span>
-                  <i class="fa-sharp fa-regular fa-clock"></i>
+                  <i className="fa-sharp fa-regular fa-clock"></i>
                   Time perweek
                 </span>
                 <span>
@@ -172,7 +171,7 @@ export class CoursesForm extends Component {
 
               <div className="detail">
                 <span>
-                  <i class="fa-sharp fa-solid fa-award"></i>
+                  <i className="fa-sharp fa-solid fa-award"></i>
                   certificate
                 </span>
                 <span>
@@ -191,7 +190,7 @@ export class CoursesForm extends Component {
 
               <div className="detail">
                 <span>
-                  <i class="fa-solid fa-bell"></i>
+                  <i className="fa-solid fa-bell"></i>
                   subscribe
                 </span>
                 <span>
@@ -210,7 +209,7 @@ export class CoursesForm extends Component {
 
               <div className="detail">
                 <span>
-                  <img src="../images/icons/calender.png" alt="" />
+                  <i className="fa-regular fa-calendar"></i>
                   Duration
                 </span>
                 <span>

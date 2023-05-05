@@ -98,7 +98,7 @@ class TeacherProfile extends Component {
                 >
                   Add courses
                 </button> */}
-                <div class="card add-card">
+                <div className="card add-card">
                   <img src="./images/icons/add.png" alt="" />
                 </div>
               </Link>

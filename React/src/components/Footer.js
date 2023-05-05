@@ -1,21 +1,22 @@
 import React, { Component } from 'react'
+import logo from "../logo.png"
 
 export default class Footer extends Component {
   render() {
     return (
       <footer>
         <div className="container">
-          <img src="./images/logo.png" alt="" />
+          <img src={logo} alt="" />
           <p>We are social</p>
           <div className="social-icons">
             <a href="#instagram">
-              <img src="./images/instagram.png" alt="" />
+              <i class="fa-brands fa-instagram"></i>
             </a>
             <a href="#facebook">
-              <img src="./images/facebook.png" alt="" />
+              <i class="fa-brands fa-facebook"></i>
             </a>
             <a href="#email">
-              <img src="./images/email.png" alt="" />
+              <i class="fa-solid fa-envelope"></i>
             </a>
           </div>
           <p className="copyright">

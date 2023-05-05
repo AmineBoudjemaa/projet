@@ -25,6 +25,8 @@ class CourseProvider extends Component {
     courses: [],
     detailsCourse: detailsCourse,
     coursesCart: [],
+    appliedCourses: [],
+    enrolledCourses: [],
     modalOpan: false,
     modalCourse: detailsCourse,
     comSoonImg: comSoonImg,
@@ -38,6 +40,21 @@ class CourseProvider extends Component {
       .then((response) => {
         if (response.status === 200) {
           this.setUser(response.data);
+          if (response.data.role === "student") {
+            api
+              .get(`/students/${response.data._id}`)
+              .then((response) => {
+                if (response.status === 200) {
+                  // console.log(response.data);
+                  this.setAppliedCourses(response.data.appliedCourses);
+                  this.setEnrolledCourses(response.data.enrolledCourses);
+                }
+              })
+              .catch((error) => {
+                console.log("no teachers");
+                console.error(error);
+              });
+          }
         }
       })
       .catch((error) => {
@@ -82,23 +99,33 @@ class CourseProvider extends Component {
     });
   };
 
+  setAppliedCourses = (appliedCourses) => {
+    this.setState(() => {
+      return { enrolledCourses: appliedCourses };
+    });
+  };
+
+  setEnrolledCourses = (enrolledCourses) => {
+    this.setState(() => {
+      return { enrolledCourses: enrolledCourses };
+    });
+  };
+
   getCourse = (id) => {
     const course = this.state.courses.find((itme) => itme._id === id);
     return course;
   };
 
   handleDeleteTeacherCourse = (id) => {
-    api
-    .delete(`http://localhost:3000/courses/${id}`)
-    .then((response) => {
+    api.delete(`http://localhost:3000/courses/${id}`).then((response) => {
       if (response.status === 200) {
-        console.log(response)
+        console.log(response);
       }
       api
         .get("/courses")
         .then((response) => {
           if (response.status === 200) {
-            console.log("after delet course",response.data);
+            console.log("after delet course", response.data);
             this.setUser(response.data);
           }
         })
@@ -110,7 +137,7 @@ class CourseProvider extends Component {
         .get("/auth/me")
         .then((response) => {
           if (response.status === 200) {
-            console.log("after delet course",response.data);
+            console.log("after delet course", response.data);
             this.setUser(response.data);
           }
         })
@@ -119,9 +146,6 @@ class CourseProvider extends Component {
           console.error(error);
         });
     });
-    
-
-      
   };
 
   getTeacher = (id) => {
@@ -129,24 +153,49 @@ class CourseProvider extends Component {
     return teacher;
   };
 
-  addtoMyCourses = (id) => {
-    let tempCourses = [...this.state.courses];
-    const index = tempCourses.indexOf(this.getCourse(id));
-    const course = tempCourses[index];
-    course.subscribe = true;
-    course.count = 1;
-    course.total = course.count;
+  addtoMyCourses = (course) => {
+    console.log("add to waiting list");
+    console.log(course)
     this.setState(
       () => {
         return {
-          courses: tempCourses,
-          coursesCart: [...this.state.coursesCart, course],
+          enrolledCourses: [...this.state.enrolledCourses, course],
         };
       },
       () => {
         console.log(this.state);
       }
     );
+    api
+      .post(`/courses/${course._id}/subscribe`)
+      .then((response) => {
+        if (response.status === 200) {
+          console.log(response.data)
+        }
+      })
+      .catch((error) => {
+        console.log("no teachers");
+        console.error(error);
+      });
+
+
+    // let tempEnrolledCourses = [...this.state.enrolledCourses];
+    // const index = tempCourses.indexOf(this.getCourse(id));
+    // const course = tempCourses[index];
+    // course.subscribe = true;
+    // course.count = 1;
+    // course.total = course.count;
+    // this.setState(
+    //   () => {
+    //     return {
+    //       courses: tempCourses,
+    //       coursesCart: [...this.state.coursesCart, course],
+    //     };
+    //   },
+    //   () => {
+    //     console.log(this.state);
+    //   }
+    // );
   };
 
   handleDetails = (id) => {
