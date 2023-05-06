@@ -98,7 +98,6 @@ router.put(
   isOwner,
   catchAsync(async (req, res) => {
     const { id } = req.params;
-    console.log("body  -----------------------------------",req.body)
     const course = Course.findById(id);
     const {
       title,
