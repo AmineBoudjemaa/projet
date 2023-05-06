@@ -110,6 +110,7 @@ router.put(
       certificate,
       subscribe,
       img,
+      plan,
     } = req.body;
     const { error } = courseEditSchema.validate({
       title,
@@ -122,10 +123,11 @@ router.put(
       certificate,
       subscribe,
       img,
+      plan
     });
     if (error) {
       const msg = error.details.map((el) => el.message).join(",");
-      res.status(400).send({ message: msg });
+      return res.status(400).send({ message: msg });
     }
     const updatedCourse = await Course.findByIdAndUpdate(
       id,
@@ -342,5 +344,41 @@ router.delete(
     res.status(200).send({ updatedCourse, updatedStudent });
   })
 );
+
+router.post('/:id/email',catchAsync(async(req,res)=>{
+  const { id } = req.params;
+  const {mail,title} = req.body
+  console.log(mail,title)
+  const course = await Course.findById(id).populate('students')
+  const emails = course.students.map(student => student.email);
+console.log(emails);
+if(!emails.length) res.status(400).send({message:"empty emails"})
+  let transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: process.env.GOOGLE_MAIL,
+      pass: process.env.GOOGLE_MAIL_PASSWORD
+    }
+  });
+  console.log({
+    user: process.env.GOOGLE_MAIL,
+    pass: process.env.GOOGLE_MAIL_PASSWORD
+  })
+  const mailOptions = {
+    from: process.env.GOOGLE_MAIL,
+    to: emails,
+    subject: title,
+    text: mail
+  };
+  transporter.sendMail(mailOptions, function(error, info){
+    if (error) {
+      console.log(error);
+      res.send(error)
+    } else {
+      console.log('Email sent: ' + info.response);
+      return res.send(info)
+    }
+  });
+}))
 
 module.exports = router;
