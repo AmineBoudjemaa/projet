@@ -23,10 +23,10 @@ const validateStudent=validate(studentSchema);
 //show students
 router.get('/',catchAsync(async(req,res)=>{
     await Student.find({})
+    .populate(['teachers','appliedCourses','enrolledCourses'])
     .then(students=>{
         res.status(200).send(students);
     })
-    .populate(['teachers','appliedCourses','enrolledCourses'])
     .catch(err=>{
         return res.status(400).send({err});
     })
