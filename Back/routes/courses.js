@@ -182,9 +182,13 @@ router.post(
       console.log("s");
       console.log(findId);
     }
-    const student = await Student.findById(findId).catch((err) => {
+    const student = await Student.findById(findId)
+    .catch((err) => {
       res.status(500).send(err.message);
     });
+    if (student.appliedCourses.includes(id)||student.enrolledCourses.includes(id)){
+      res.send({message:"student already in"});
+    }
     const updatedCourse = await Course.findByIdAndUpdate(
       id,
       { $addToSet: { waitlist: student } },
