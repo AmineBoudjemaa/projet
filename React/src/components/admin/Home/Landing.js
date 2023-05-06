@@ -25,12 +25,12 @@ export default class Landing extends Component {
                 </Link>
               </div>
               <div className="image">
-                <img src="./images/landing-section-2.png" alt="amine" />
+                <img src="../images/landing-section-2.png" alt="amine" />
               </div>
             </div>
             <div className="cards">
               <div className="card">
-                <img src="./images/idea.png" alt="" />
+                <img src="../images/idea.png" alt="" />
                 <h3>LEARN FROM EXPERTS</h3>
                 <p>
                   1-2 Lessons with industry tutors you know and love (or will
@@ -38,7 +38,7 @@ export default class Landing extends Component {
                 </p>
               </div>
               <div className="card">
-                <img src="./images/smiley-face.png" alt="" />
+                <img src="../images/smiley-face.png" alt="" />
                 <h3>100% PERSONALISED</h3>
                 <p>
                   Identify your goals and enjoy trailord lessons with instant
@@ -46,7 +46,7 @@ export default class Landing extends Component {
                 </p>
               </div>
               <div className="card">
-                <img src="./images/like.png" alt="" />
+                <img src="../images/like.png" alt="" />
                 <h3>BOOK WITH EASE</h3>
                 <p>
                   Find timeslots to suit your schedule with new ones added every
@@ -60,7 +60,7 @@ export default class Landing extends Component {
           <div className="container">
             <div className="hero-section">
               <div className="image">
-                <img src="./images/hero-section-2.png" alt="amine" />
+                <img src="../images/hero-section-2.png" alt="amine" />
               </div>
               <div className="text">
                 <div>
@@ -82,7 +82,7 @@ export default class Landing extends Component {
             <div className="lessons">
               <div className="cards">
                 <div className="card">
-                  <img src="./images/school.png" alt="" />
+                  <img src="../images/school.png" alt="" />
                   <h3>School</h3>
                   <p>Math , Physics , Science ...</p>
                   <Link to="/sign-up" style={{ width: "80%" }}>
@@ -90,7 +90,7 @@ export default class Landing extends Component {
                   </Link>
                 </div>
                 <div className="card">
-                  <img src="./images/university.png" alt="" />
+                  <img src="../images/university.png" alt="" />
                   <h3>University</h3>
                   <p>Mi , St , Biologic , law ...</p>
                   <Link to="/sign-up" style={{ width: "80%" }}>
@@ -98,7 +98,7 @@ export default class Landing extends Component {
                   </Link>
                 </div>
                 <div className="card">
-                  <img src="./images/language.png" alt="" />
+                  <img src="../images/language.png" alt="" />
                   <h3>Language</h3>
                   <p>English , French , Germany ...</p>
                   <Link to="/sign-up" style={{ width: "80%" }}>
