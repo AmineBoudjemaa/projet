@@ -4,6 +4,7 @@ const Course = require("../models/course");
 const { User, Student, Teacher } = require("../models/user");
 const joi = require("joi");
 const { courseSchema, courseEditSchema } = require("../schemas");
+const nodemailer = require('nodemailer');
 
 //utils
 const catchAsync = require("../utils/catchAsync");
@@ -48,7 +49,7 @@ router.post(
     const { error } = courseSchema.validate(req.body);
     if (error) {
       const msg = error.details.map((el) => el.message).join(",");
-      res.status(400).send(msg);
+      return res.status(400).send(msg);
     }
     const course = new Course(req.body);
     await course
@@ -67,10 +68,10 @@ router.post(
         });
         req.session.user = populatedTeacher;
         console.log("req.user", req.user);
-        res.status(200).send(newCourse);
+        return res.status(200).send(newCourse);
       })
       .catch((err) => {
-        res.status(500).send(err.message);
+        return res.status(500).send(err.message);
       });
   })
 );
@@ -156,9 +157,13 @@ router.delete(
     //delete from all students appliedcourses
     //delete from all students enrolledcourses all of this should be with middleware //done
     const { id } = req.params;
+    console.log('deleting:',id)
     const course = await Course.findByIdAndDelete(id);
-    req.session.user = await Teacher.findById(course.teacher);
-    console.log(req.session.user);
+    req.session.user = await Teacher.findByIdAndUpdate(
+      course.teacher,
+      { $pull: { courses: course._id } }
+    );
+    console.log('after deletion',req.session.user);
     if (course) return res.status(200).send(course);
     res.status(400).send({ message: "course not found" });
   })

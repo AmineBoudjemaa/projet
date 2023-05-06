@@ -1,7 +1,7 @@
 const express = require('express');
 const path = require('path');
 const mongoose = require('mongoose');
-const ejsMate = require('ejs-mate');
+// const ejsMate = require('ejs-mate');
 const methodOverride = require('method-override');
 const session = require('express-session');
 const passport = require('passport');
@@ -51,8 +51,8 @@ app.use(//cors()
 
 app.use(passport.initialize());
 app.use(passport.session());
-app.set('view engine', 'ejs');
-app.engine('ejs', ejsMate);
+// app.set('view engine', 'ejs');
+// app.engine('ejs', ejsMate);
 app.set('views', path.join(__dirname, 'views'));
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
@@ -83,9 +83,9 @@ const admins = require('./routes/admins');
 const home = require('./routes/home');
 
 ///////////////////////////////////////////////////the home route
-app.get('/', (req, res) => {
-    res.render('home.ejs',{title:'home'});
-});
+// app.get('/', (req, res) => {
+//     res.render('home.ejs',{title:'home'});
+// });
 
 app.use('/courses',courses);
 app.use('/teachers',teachers);

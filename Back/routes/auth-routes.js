@@ -90,7 +90,6 @@ router.get('/me',catchAsync(async (req, res) => {
   console.log(req.user);
   if (req.user && req.session.user) {
     const user = await User.findById(req.user._id).populate(['courses','teachers','appliedCourses','enrolledCourses']);
-    console.log('from /me -------------------------------------- user is ', user)
     res.status(200).send(user);
     } else {
       res.status(401).json({ message: 'Not authenticated' });

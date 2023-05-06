@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const {Teacher,Student} = require('./user');
+const {Student} = require('./user');
+const catchAsync = require('../utils/catchAsync')
 
 const courseSchema = new Schema({
     title:String,
@@ -33,25 +34,20 @@ const courseSchema = new Schema({
 });
 
 
-courseSchema.post('findOneAndDelete', async function(data) {
+courseSchema.post('findOneAndDelete',
+    async function(data) {
     console.log('post',data)
-    const teacherId = data.teacher;
     const studentIds = data.students.concat(data.waitlist);
 
     if(data.students.length){
-    await Student.updateMany(
+    const updatedStudent = await Student.updateMany(
       { _id: { $in: studentIds } },
       { $pull: { enrolledCourses: data._id, appliedCourses: data._id } }
     );
     }
-
-    // // Update teacher document
-    await Teacher.findByIdAndUpdate(
-      teacherId,
-      { $pull: { courses: data._id } }
-    );
     
-  });
+  }
+) ;
 
 const course = mongoose.model('Course',courseSchema);
 module.exports = course;
