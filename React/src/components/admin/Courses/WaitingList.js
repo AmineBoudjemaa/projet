@@ -3,10 +3,45 @@ import { useLocation } from "react-router-dom";
 import Waiting from "./Waiting";
 import Accepted from "./Accepted"
 import "../../../CSS/subscribe-list.css"
+import axios from "axios";
+import { useEffect } from "react";
+
+const api = axios.create({
+  baseURL: "http://localhost:3000",
+  withCredentials: true, // send cookies with requests
+});
 
 function WaitingList() {
   const location = useLocation();
-  const [course, setState] = useState(location.state.course);
+  const [course, setCourse] = useState(location.state.course);
+  
+  useEffect(()=>{
+    api
+      .get(`/courses/${course._id}`)
+      .then((response) => {
+        if (response.status === 200) {
+          setCourse(response.data);
+        }
+      })
+      .catch((error) => {
+        console.log("no course");
+        console.error(error);
+      });
+  },[])
+
+  const refrechCourse = ()=>{
+    api
+      .get(`/courses/${course._id}`)
+      .then((response) => {
+        if (response.status === 200) {
+          setCourse(response.data);
+        }
+      })
+      .catch((error) => {
+        console.log("no course");
+        console.error(error);
+      });
+  }
   return (
     <div>
       <div className="admin-Teachers waiting-list">
@@ -21,6 +56,8 @@ function WaitingList() {
                     <Waiting
                       key={waitingStudent._id}
                       waitingStudent={waitingStudent}
+                      course={course}
+                      refrechCourse={refrechCourse}
                     />
                   );
                 })}
@@ -33,6 +70,8 @@ function WaitingList() {
                     <Accepted
                       key={studentAccepted._id}
                       studentAccepted={studentAccepted}
+                      course={course}
+                      refrechCourse={refrechCourse}
                     />
                   );
                 })}

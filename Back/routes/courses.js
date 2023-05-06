@@ -26,7 +26,11 @@ const isOwner = require("../utils/isOwner");
 router.get(
   "/",
   catchAsync(async (req, res) => {
-    const courses = await Course.find({}).populate(["teacher",'waitlist','students']);
+    const courses = await Course.find({}).populate([
+      "teacher",
+      "waitlist",
+      "students",
+    ]);
     if (courses) return res.status(200).send(courses);
     res.status(500).send({ message: "no courses found" });
   })
@@ -75,8 +79,12 @@ router.post(
 router.get(
   "/:id",
   catchAsync(async (req, res) => {
-    const course = await Course.findById(req.params.id).populate(["teacher",'waitlist','students']);
-    console.log(course.students)
+    const course = await Course.findById(req.params.id).populate([
+      "teacher",
+      "waitlist",
+      "students",
+    ]);
+    console.log(course.students);
     if (course) return res.status(200).send(course);
     res.status(400).send({ message: "course not found" });
   })
@@ -133,22 +141,24 @@ router.put(
         img,
       },
       { new: true }
-    )
-    req.session.user= await Teacher.findById(updatedCourse.teacher);
+    );
+    req.session.user = await Teacher.findById(updatedCourse.teacher);
     if (course) return res.status(200).send(updatedCourse);
   })
 );
 
 //delete
-router.delete("/:id",catchAsync(async (req, res) => {
-  //delete course
-  //delete course from teacher (middleware?)
-  //delete from all students appliedcourses
-  //delete from all students enrolledcourses all of this should be with middleware //done
+router.delete(
+  "/:id",
+  catchAsync(async (req, res) => {
+    //delete course
+    //delete course from teacher (middleware?)
+    //delete from all students appliedcourses
+    //delete from all students enrolledcourses all of this should be with middleware //done
     const { id } = req.params;
     const course = await Course.findByIdAndDelete(id);
-    req.session.user=await Teacher.findById(course.teacher);
-    console.log(req.session.user)
+    req.session.user = await Teacher.findById(course.teacher);
+    console.log(req.session.user);
     if (course) return res.status(200).send(course);
     res.status(400).send({ message: "course not found" });
   })
@@ -157,97 +167,106 @@ router.delete("/:id",catchAsync(async (req, res) => {
 router.post(
   "/:id/subscribe",
   catchAsync(async (req, res) => {
-    console.log('subscribe')
+    console.log("subscribe");
     const { id } = req.params;
-    console.log(id)
-    let findId
-    if (req.user){
-      console.log('user')
-      findId = req.user._id
-    } else if (req.query.s){
-     findId = req.query.s
-     console.log('query')
-    }else{
-      findId = '6426e8f07dbff6bdc7180d78'
-      console.log('s')
-      console.log(findId)
+    console.log(id);
+    let findId;
+    if (req.user) {
+      console.log("user");
+      findId = req.user._id;
+    } else if (req.query.s) {
+      findId = req.query.s;
+      console.log("query");
+    } else {
+      findId = "6426e8f07dbff6bdc7180d78";
+      console.log("s");
+      console.log(findId);
     }
-    const student = await Student.findById(findId)
-    .catch(err=>{
+    const student = await Student.findById(findId).catch((err) => {
       res.status(500).send(err.message);
-    });    
+    });
     const updatedCourse = await Course.findByIdAndUpdate(
       id,
       { $addToSet: { waitlist: student } },
       { new: true }
     )
-    .populate(["teacher",'waitlist','students'])
-    .catch(err=>{
-      res.status(500).send(err.message);
-    });   
+      .populate(["teacher", "waitlist", "students"])
+      .catch((err) => {
+        res.status(500).send(err.message);
+      });
     const updatedStudent = await Student.findByIdAndUpdate(
       student._id,
       { $addToSet: { appliedCourses: id } },
       { new: true }
     )
-    .populate(['teachers','appliedCourses','enrolledCourses'])
-    .catch(err=>{
-      res.status(500).send(err.message);
-    });
+      .populate(["teachers", "appliedCourses", "enrolledCourses"])
+      .catch((err) => {
+        res.status(500).send(err.message);
+      });
 
     req.session.user = updatedStudent;
-    res.status(200).send({updatedCourse,updatedStudent});
+    res.status(200).send({ updatedCourse, updatedStudent });
   })
 );
 
 //it must be an admin
 router.post("/:id/confirm", async (req, res) => {
-  console.log('confirm')
+  console.log("confirm");
   //add student to course student
   //remove student from waitlist
   //add course to student enroll
   //remove course from applied
   //add teacher to student's teachers
   const { id } = req.params;
-  const student = await Student.findById(req.body.student)
-  .catch(err=>{
+  console.log(
+    "----------------------------------re;BODY.student",
+    req.body.student
+  );
+  const student = await Student.findById(req.body.student).catch((err) => {
     res.status(500).send(err.message);
   });
-  console.log(student)
-  if(!(student.appliedCourses.includes(id))) return res.status(400).send({message:"the student is not in the waitlist"})
+  console.log(student);
+  if (!student.appliedCourses.includes(id))
+    return res
+      .status(400)
+      .send({ message: "the student is not in the waitlist" });
   const updatedCourse = await Course.findByIdAndUpdate(
     id,
     { $pull: { waitlist: student._id }, $addToSet: { students: student } },
     { new: true }
-  ).populate(["teacher",'waitlist','students'])
-  .catch(err=>{
-    res.status(500).send(err.message);
-  });
-  console.log(updatedCourse)
+  )
+    .populate(["teacher", "waitlist", "students"])
+    .catch((err) => {
+      res.status(500).send(err.message);
+    });
+  console.log(updatedCourse);
   const updatedStudent = await Student.findByIdAndUpdate(
     student._id,
     {
       $pull: { appliedCourses: id },
-      $addToSet: { enrolledCourses: updatedCourse ,teachers: updatedCourse.teacher  },
+      $addToSet: {
+        enrolledCourses: updatedCourse,
+        teachers: updatedCourse.teacher,
+      },
     },
     { new: true }
   )
-  .populate(['teachers','appliedCourses','enrolledCourses'])
-  .catch(err=>{
-    res.status(500).send(err.message);
-  });
-  res.status(200).send({updatedCourse,updatedStudent});
-
+    .populate(["teachers", "appliedCourses", "enrolledCourses"])
+    .catch((err) => {
+      res.status(500).send(err.message);
+    });
+  res.status(200).send({ updatedCourse, updatedStudent });
 });
 
 router.delete(
   "/:id/subscribe",
   catchAsync(async (req, res) => {
     const { id } = req.params;
-    const student = await Student.findById(req.body.student)
-    .catch(err=>{
+    console.log(req.body.student);
+    const student = await Student.findById(req.query.s).catch((err) => {
       res.status(500).send(err.message);
     });
+    console.log(student);
     //delete student from waitlist
     //delete course from appliedcourses
 
@@ -255,55 +274,61 @@ router.delete(
       id,
       { $pull: { waitlist: student._id } },
       { new: true }
-    ).populate(["teacher",'waitlist','students'])
-    .catch(err=>{
-      res.status(500).send(err.message);
-    });
+    )
+      .populate(["teacher", "waitlist", "students"])
+      .catch((err) => {
+        res.status(500).send(err.message);
+      });
 
     const updatedStudent = await Student.findByIdAndUpdate(
       student._id,
       { $pull: { appliedCourses: id } },
       { new: true }
     )
-    .populate(['teachers','appliedCourses','enrolledCourses'])
-    .catch(err=>{
-      res.status(500).send(err.message);
-    });
+      .populate(["teachers", "appliedCourses", "enrolledCourses"])
+      .catch((err) => {
+        res.status(500).send(err.message);
+      });
 
-    res.status(200).send({updatedCourse,updatedStudent});
+    res.status(200).send({ updatedCourse, updatedStudent });
   })
 );
 
-router.delete('/:id/confirm',catchAsync(async (req,res)=>{
-  const { id } = req.params;
-  const student = await Student.findById(req.body.student)
-  .catch(err=>{
-    res.status(500).send(err.message);
-  });
+router.delete(
+  "/:id/confirm",
+  catchAsync(async (req, res) => {
+    const { id } = req.params;
+    console.log("---------------", req.query);
 
-  //delete course from student courses
-  //delete teacher from student
-  //delete student from course student
+    const student = await Student.findById(req.query.s).catch((err) => {
+      res.status(500).send(err.message);
+    });
+    console.log(student);
+    //delete course from student courses
+    //delete teacher from student
+    //delete student from course student
 
-  const updatedCourse = await Course.findByIdAndUpdate(
-    id,
-    { $pull: { students: student._id } },
-    { new: true }
-  ).populate(["teacher",'waitlist','students'])
-  .catch(err=>{
-    res.status(500).send(err.message);
-  });
+    const updatedCourse = await Course.findByIdAndUpdate(
+      id,
+      { $pull: { students: student._id } },
+      { new: true }
+    )
+      .populate(["teacher", "waitlist", "students"])
+      .catch((err) => {
+        res.status(500).send(err.message);
+      });
 
-  const updatedStudent = await Student.findByIdAndUpdate(
-    student._id,
-    { $pull: { enrolledCourses: id , teacher:updatedCourse.teacher } },
-    { new: true }
-  )
-  .populate(['teachers','appliedCourses','enrolledCourses'])
-  .catch(err=>{
-    res.status(500).send(err.message);
-  });
-  res.status(200).send({updatedCourse,updatedStudent});
-}));
+    const updatedStudent = await Student.findByIdAndUpdate(
+      student._id,
+      { $pull: { enrolledCourses: id, teacher: updatedCourse.teacher } },
+      { new: true }
+    )
+      .populate(["teachers", "appliedCourses", "enrolledCourses"])
+      .catch((err) => {
+        res.status(500).send(err.message);
+      });
+    res.status(200).send({ updatedCourse, updatedStudent });
+  })
+);
 
 module.exports = router;
