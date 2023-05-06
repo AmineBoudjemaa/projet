@@ -13,6 +13,7 @@
 }
 
 .modal-content {
+  position: relative;
   background-color: #fefefe;
   margin: 15% auto;
   padding: 20px;
@@ -28,12 +29,34 @@
 }
 
 .modal h5 {
-  font-size: 20px;
+  font-size: 24px;
   padding: 20px;
+  color: var(--edit);
 }
 
+
+.modal i{
+  position: absolute;
+  left: 50%;
+  top: 40%;
+  transform: translate(-50%,-50%);
+  color: var(--edit);
+  font-size: 120px;
+}
+
+.modal .buttons{
+  display: flex;
+  position: absolute;
+  bottom: 0px;
+  justify-content: space-between;
+  width: 90%;
+}
+
+.modal .buttons a {
+  width: 45%;
+}
 .modal button{
-  display: block;
+  width: 100%;
   margin: 40px auto;
   padding: 20px;
   border-radius: 16px;
@@ -42,6 +65,8 @@
   background-color: var(--primary-color);
 }
 
-.modal .close {
-  background-color: #EC4949;
+.modal .link {
+  background-color: #f5f5f5;
+  color: var(--primary-color);
+  border: 2px solid var(--primary-color);
 }

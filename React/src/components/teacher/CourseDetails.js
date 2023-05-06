@@ -10,13 +10,16 @@ const api = axios.create({
 function CourseDetails() {
   const location = useLocation();
   const course = location.state.courseDetails;
-  const title = course.title;
   console.log("plan of course: ", course.plan);
   const [planList, setPlanList] = useState(course.plan.split("."));
   const [teacher, setTeacher] = useState({});
   const [mail, setMail] = useState("");
+  const [titleMail, setTitleMail] = useState("");
 
-  const handleChange = (e) => {
+  const handleChangeMail = (e) => {
+    setTitleMail(e.target.value);
+  };
+  const handleChangeTitleMail = (e) => {
     setMail(e.target.value);
   };
 
@@ -24,7 +27,7 @@ function CourseDetails() {
     e.preventDefault();
     console.log("send email", e);
     api
-      .put(`/courses/${course._id}/email`, { mail: mail, title: title })
+      .put(`/courses/${course._id}/email`, { mail: mail, title: titleMail })
       .then((res) => {
         console.log("Email send ");
       })
@@ -65,6 +68,16 @@ function CourseDetails() {
               })}
             </ul>
             <form style={{ display: "block" }} onSubmit={handleSubmit}>
+              <label htmlFor="titleMail">Mail title</label>
+              <input
+                type="text"
+                id="titleMail"
+                required
+                placeholder="Mail title"
+                name="titleMail"
+                value={titleMail}
+                onChange={handleChangeTitleMail}
+              />
               <label htmlFor="mail">Mail</label>
               <input
                 type="text"
@@ -73,7 +86,7 @@ function CourseDetails() {
                 placeholder="https://fr.wikipedia.org"
                 name="mail"
                 value={mail}
-                onChange={handleChange}
+                onChange={handleChangeMail}
               />
               <button className="btn-blue">
                 Send Email<i class="fa-solid fa-arrow-right"></i>
