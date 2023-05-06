@@ -6,6 +6,7 @@ const courseSchema = new Schema({
     title:String,
     description:String,
     link:String,
+    plan:String,
     img:String,
     category:String,//should be enum
     type: {

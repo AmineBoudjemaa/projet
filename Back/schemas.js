@@ -12,6 +12,7 @@ module.exports.courseSchema = joi.object({
         subscribe:joi.boolean().required(),
         teacher:joi.object().required(),
         img:joi.string().required(),
+        plan:joi.String()
 })
 
 module.exports.courseEditSchema = joi.object({
