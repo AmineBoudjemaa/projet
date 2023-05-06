@@ -187,7 +187,7 @@ router.post(
       res.status(500).send(err.message);
     });
     if (student.appliedCourses.includes(id)||student.enrolledCourses.includes(id)){
-      res.send({message:"student already in"});
+      return res.send({message:"student already in"});
     }
     const updatedCourse = await Course.findByIdAndUpdate(
       id,
