@@ -96,7 +96,7 @@ router.delete('/:id'/*,isLoggedIn,deleteAuth*/,catchAsync(async(req,res)=>{
     const { id } = req.params;
     const deletedTeacher = await Teacher.findByIdAndDelete(id);
     console.log(deletedTeacher)
-    if(deletedTeacher) return res.status(500).send({message:'something went wrong deleting'});
+    if(!deletedTeacher) return res.status(500).send({message:'something went wrong deleting'});
     res.status(200).send(deletedTeacher);
 }));
 

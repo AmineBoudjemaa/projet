@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const { Course } = require('./course');
 
 
 const userSchema = new Schema({
@@ -60,6 +61,20 @@ const adminSchema = new Schema({
 
 })
 
+studentSchema.post('findOneAndDelete', async function(data) {
+    console.log('post',data);
+    const coursesIds = data.appliedCourses.concat(data.enrolledCourses);
+
+    if(data.appliedCourses.length){
+        console.log('appliedcourses.length ',data.appliedCourses);
+
+        await Course.updateMany(
+          { _id: { $in: coursesIds } },
+          { $pull: { waitlist: data._id, students: data._id } }
+        );
+    }
+
+  });
 
 const User = mongoose.model('User', userSchema);
 const Student = User.discriminator('Student', studentSchema);
