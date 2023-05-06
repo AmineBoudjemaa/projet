@@ -11,7 +11,7 @@ export default class TeacherDetails extends Component {
     return (
       <CourseConsumer>
         {({ detailsTeacher }) => {
-          const { username, subjects, description, courses } = detailsTeacher;
+          const { username, subjects, description, courses, img } = detailsTeacher;
           const length = subjects.length;
           return (
             <div>
@@ -33,7 +33,7 @@ export default class TeacherDetails extends Component {
                       <p>{description}</p>
                     </div>
                     <div className="image">
-                      <img src="./images/teacher.png" alt="" />
+                      <img src={img} alt="" />
                     </div>
                   </div>
                 </div>

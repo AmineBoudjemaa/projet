@@ -10,12 +10,6 @@ const Student = ({ admin, handleDelete }) => {
         <span className="name">{username}</span>
       </div>
       <div style={{ display: "flex" }}>
-        <button className="edit-btn" aria-label="edit button">
-          <Link>
-            <i className="fa-solid fa-pen-to-square"></i>
-          </Link>
-        </button>
-
         <button
           className="clear-btn"
           aria-label="edit button"

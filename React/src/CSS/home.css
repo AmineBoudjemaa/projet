@@ -1,3 +1,10 @@
+.home .teachers .container > h1,
+.home .comming-soon .container > h1,
+.home .container > h1 {
+  text-align: center;
+  padding: 50px 0;
+}
+
 /* Start Landing */
 .landing {
   position: relative;
@@ -115,8 +122,8 @@
 
 .services .text {
   max-width: 500px;
-    width: 45%;
-    margin-right: 50px;
+  width: 45%;
+  margin-right: 50px;
 }
 
 @media (max-width: 991px) {
@@ -271,12 +278,13 @@
 .teachers .cards .card {
   border-radius: 16px;
   padding: 0;
+  height: 400px;
 }
 
 .teachers .container .card .image {
   position: relative;
   width: 100%;
-  min-height: 250px;
+  min-height: fit-content;
 }
 .teachers .container .card .image::after {
   content: "";

@@ -4,6 +4,7 @@ import Landing from './homeComponents/Landing';
 import ComSoon from './homeComponents/ComSoon';
 import Teacher from './Teacher';
 import axios from 'axios';
+import Teachers from './homeComponents/Teachers';
 
 const api = axios.create({
   baseURL: "http://localhost:3000",
@@ -29,18 +30,10 @@ export default class Home extends Component {
       <CourseConsumer>
         {value=>{
           return (
-            <>
+            <div className="home">
               <Landing />
               <ComSoon />
-              <div className="teachers">
-                <div className="container">
-                  <div className="cards">
-                    {value.teachers.slice(0, 2).map((teacher) => {
-                      return <Teacher key={teacher._id} teacher={teacher} />;
-                    })}
-                  </div>
-                </div>
-              </div>
+              <Teachers/>
               {/* <button
                 onClick={() => this.user()}
                 style={{ color: "blue", lineHeight: 10, padding: 20 }}
@@ -63,7 +56,7 @@ export default class Home extends Component {
               >
                 Courses
               </button> */}
-            </>
+            </div>
           );
         }}
       </CourseConsumer>

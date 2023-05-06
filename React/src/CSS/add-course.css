@@ -1,5 +1,6 @@
 .add-course .container > h1 {
   padding: 30px 0;
+  text-align: center;
 }
 
 .course .container form {

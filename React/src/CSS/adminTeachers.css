@@ -64,7 +64,7 @@
 }
 
 .admin-Teachers .info {
-  flex: 0 0 60%;
+  flex: 0 0 40%;
   display: flex;
   align-items: center;
 }

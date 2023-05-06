@@ -6,18 +6,20 @@ import "../CSS/teachers.css"
 
 export default class Teacher extends Component {
   render() {
-    const { _id, name, subjects, description } = this.props.teacher;
+    const { _id, name, subjects, description, img } = this.props.teacher;
     return (
       <CourseConsumer>
         {({ handleDetailsTeacher }) => (
           <Link to="/teacher">
             <div className="card" onClick={() => handleDetailsTeacher(_id)}>
               <div className="image">
-                <img src="./images/teacher.png" alt="" />
+                {/* <img src="./images/teacher.png" alt="" /> */}
+                <img src={img} alt="" />
                 <div className="name">
                   {name}
                   <span className="star">
-                    <img src="./images/star.png" alt="" />
+                    {/* <img src="./images/star.png" alt="" /> */}
+                    <i class="fa-solid fa-star" style={{color: "#ffeb3b"}}></i>
                     <span>4.2</span>
                   </span>
                 </div>
