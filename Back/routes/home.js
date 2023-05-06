@@ -38,6 +38,7 @@ router.post(
     console.log('post teacher')
     const { id } = req.params;
     const homeTeacher = new HomeTeacher({
+      _id:id,
       teacher: id
     })
     homeTeacher.save()
