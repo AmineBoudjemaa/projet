@@ -8,7 +8,7 @@ const api = axios.create({
   withCredentials: true, // send cookies with requests
 });
 
-function EditCourse() {
+function EditCourse() { 
   const location = useLocation();
   const [course, setState] = useState(location.state.courseDetails);
   const handleChange = (e) => {

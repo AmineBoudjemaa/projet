@@ -10,21 +10,30 @@ const api = axios.create({
 function CourseDetails() {
   const location = useLocation();
   const course = location.state.courseDetails;
-  console.log(course)
-  console.log("plan of course: ", course.plan)
-  const [teacher, setTeacher] = useState({})
-  const [mail, setMail] = useState('')
+  const title = course.title;
+  console.log("plan of course: ", course.plan);
+  const [planList, setPlanList] = useState(course.plan.split("."));
+  const [teacher, setTeacher] = useState({});
+  const [mail, setMail] = useState("");
 
   const handleChange = (e) => {
     setMail(e.target.value);
   };
 
-  const handleSubmit = (e)=>{
+  const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("send email", e)
-  }
+    console.log("send email", e);
+    api
+      .put(`/courses/${course._id}/email`, { mail: mail, title: title })
+      .then((res) => {
+        console.log("Email send ");
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
 
-  useEffect(()=>{
+  useEffect(() => {
     api
       .get(`/teachers/${location.state.courseDetails.teacher}`)
       .then((response) => {
@@ -36,7 +45,7 @@ function CourseDetails() {
         console.log("no teachers");
         console.error(error);
       });
-  },[])
+  }, []);
   return (
     <div className="course">
       <div className="container">
@@ -51,11 +60,9 @@ function CourseDetails() {
             </a>
             <h2>Program</h2>
             <ul>
-              <li>Matrix algebra notation</li>
-              <li>Matrix algebra operations</li>
-              <li>Application of matrix algebra to data analysis</li>
-              <li>Linear models</li>
-              <li>Brief introduction to the QR decomposition</li>
+              {planList.map((chapter) => {
+                return <li>{chapter}</li>;
+              })}
             </ul>
             <form style={{ display: "block" }} onSubmit={handleSubmit}>
               <label htmlFor="mail">Mail</label>

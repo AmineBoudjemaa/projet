@@ -22,7 +22,7 @@ export class CoursesForm extends Component {
       subscribe: true,
       img: "https://images.unsplash.com/photo-1580582932707-520aed937b7b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1032&q=80",
       plan: "",
-      // modalOpan: false,
+      modalOpan: false,
     };
   }
 
@@ -30,19 +30,44 @@ export class CoursesForm extends Component {
     this.setState({ [e.target.name]: e.target.value });
   };
 
-  // closeModal = () => {
-  //   this.setState(() => {
-  //     return { modalOpan: false };
-  //   });
-  // };
+  closeModal = () => {
+    this.setState(() => {
+      return { modalOpan: false };
+    });
+  };
 
   submitHandler = (e) => {
     e.preventDefault();
+    const {
+      title,
+      link,
+      description,
+      category,
+      type,
+      price,
+      hours,
+      certificate,
+      subscribe,
+      img,
+      plan,
+    } = this.state;
     api
-      .post("/courses", this.state)
+      .post("/courses", {
+        title,
+        link,
+        description,
+        category,
+        type,
+        price,
+        hours,
+        certificate,
+        subscribe,
+        img,
+        plan,
+      })
       .then((res) => {
         console.log("course added");
-        // this.setState({ modalOpan: true });
+        this.setState({ modalOpan: true });
       })
       .catch((err) => console.error(err));
   };
@@ -62,12 +87,12 @@ export class CoursesForm extends Component {
     } = this.state;
     return (
       <div className="course add-course">
-        {/* <AddModal
+        <AddModal
           modalOpan={this.state.modalOpan}
           closeModal={this.closeModal}
           title={title}
           editAdd={"add"}
-        /> */}
+        />
         <div className="container">
           <h1>Adding course</h1>
           <form onSubmit={this.submitHandler}>
