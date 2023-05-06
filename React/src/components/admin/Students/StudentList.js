@@ -38,7 +38,7 @@ export class StudentList extends Component {
       .delete(`/students/${id}`)
       .then((response) => {
         if (response.status === 200) {
-          console.log("student deleted")
+          console.log("student deleted");
           // api
           //   .get("/students")
           //   .then((response) => {
@@ -60,8 +60,8 @@ export class StudentList extends Component {
     // handleAlert({ type: "danger", text: "item deleted" });
   };
 
-  makeHimAdmin = (id)=>{
-    console.log("make him admin")
+  makeHimAdmin = (id) => {
+    console.log("make him admin");
     let tempStudents = this.state.students.filter((item) => item._id !== id);
     this.setState({ students: tempStudents });
     api
@@ -75,7 +75,24 @@ export class StudentList extends Component {
         console.log("no Students");
         console.error(error);
       });
-  }
+  };
+
+  makeHimTeacher = (id) => {
+    console.log("make him teacher");
+    let tempStudents = this.state.students.filter((item) => item._id !== id);
+    this.setState({ students: tempStudents });
+    api
+      .post(`/teachers/${id}`)
+      .then((response) => {
+        if (response.status === 200) {
+          console.log("added to teachers");
+        }
+      })
+      .catch((error) => {
+        console.log("no Students");
+        console.error(error);
+      });
+  };
 
   render() {
     let students = this.state.students;
@@ -93,6 +110,7 @@ export class StudentList extends Component {
                       student={student}
                       handleDelete={this.handleDelete}
                       makeHimAdmin={this.makeHimAdmin}
+                      makeHimTeacher={this.makeHimTeacher}
                     />
                   );
                 })}

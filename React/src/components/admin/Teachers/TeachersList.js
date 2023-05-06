@@ -144,9 +144,53 @@ function TeachersList() {
     }, 3000);
   };
   // handle delete
+  // const handleDelete = (id) => {
+  //   let tempTechers = teachers.filter((item) => item._id !== id);
+  //   setTeachers(tempTechers);
+  //    api
+  //     .get("/students")
+  //     .then((response) => {
+  //       if (response.status === 200) {
+  //         const strAscending = [...response.data].sort((a, b) =>
+  //           a.title > b.title ? 1 : -1
+  //         );
+  //         this.setState({ students: strAscending });
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       console.log("no Students");
+  //       console.error(error);
+  //     });
+  // }
+
   const handleDelete = (id) => {
-    let tempTechers = teachers.filter((item) => item._id !== id);
-    setTeachers(tempTechers);
+    console.log(id)
+    api
+      .delete(`/teachers/${id}`)
+      .then((response) => {
+        if (response.status === 200) {
+          console.log("teacher deleted");
+          api
+            .get("/teachers")
+            .then((response) => {
+              if (response.status === 200) {
+                // console.log(response.data);
+                const strAscending = [...response.data].sort((a, b) =>
+                  a.username > b.username ? 1 : -1
+                );
+                setTeachers(strAscending);
+              }
+            })
+            .catch((error) => {
+              console.log("no teachers");
+              console.error(error);
+            });
+        }
+      })
+      .catch((error) => {
+        console.log("no teacher");
+        console.error(error);
+      });
     handleAlert({ type: "danger", text: "item deleted" });
   };
   // ******************** useEffect *********************
@@ -155,7 +199,7 @@ function TeachersList() {
       .get("/teachers")
       .then((response) => {
         if (response.status === 200) {
-          console.log(response.data);
+          // console.log(response.data);
           const strAscending = [...response.data].sort((a, b) =>
             a.username > b.username ? 1 : -1
           );

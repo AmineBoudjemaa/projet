@@ -70,14 +70,14 @@ export default class Course extends Component {
                   // disabled={subscribe ? true : false}
                   onClick={() => {
                     addtoMyCourses(this.props.course);
-                    openModal(_id);
+                    // openModal(_id);
                   }}
                 >
                   {/* {subscribe ? "subscribed" : "Enroll"} */}
                   Enroll
                 </button>
               ) : (
-                <Link to="">
+                <Link to="" style={{width:"100%"}}>
                   <button className="btn-blue">Enroll</button>
                 </Link>
               )}
