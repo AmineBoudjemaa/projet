@@ -13,7 +13,7 @@ export default class NavBar extends Component {
           </Link>
           <ul className="nav">
             <li>
-              <NavLink to="/">Home</NavLink>
+              <NavLink to="/admin/home">Home</NavLink>
             </li>
             <li>
               <NavLink to="/admin/courses">Courses</NavLink>

@@ -1,5 +1,5 @@
-import React, { Component } from 'react'
-import { Link } from 'react-router-dom';
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
 
 export default class Landing extends Component {
   render() {
@@ -20,7 +20,6 @@ export default class Landing extends Component {
                 <Link to="/courses">
                   <button className="btn-blue">
                     Explore Courses
-                    {/* <img src="./images/right-arrow.png" alt="" /> */}
                     <i class="fa-solid fa-arrow-right"></i>
                   </button>
                 </Link>

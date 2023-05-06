@@ -21,13 +21,13 @@ import TeacherCourseDetails from "./components/teacher/CourseDetails";
 import TeacherAddCourse from "./components/teacher/AddCourse";
 import TeacherEditCourse from "./components/teacher/EditCourse";
 //admin space
+import HomeAdmin from "./components/admin/Home/Home";
 import TeachersList from "./components/admin/Teachers/TeachersList";
 import TeacherForm from "./components/admin/Teachers/TeacherForm";
 import StudentList from "./components/admin/Students/StudentList";
 import AdminCourses from "./components/admin/Courses/Courses";
 import WaitingList from "./components/admin/Courses/WaitingList";
 import Admins from "./components/admin/Admins/Admins"
-import AddModal from "./components/teacher/AddModal";
 
 function App() {
   return (
@@ -43,6 +43,7 @@ function App() {
         <Route path="/teacher-add-course" Component={TeacherAddCourse} />
         <Route path="/techer-edit-course" Component={TeacherEditCourse} />
         {/* admin space */}
+        <Route path="/admin/home" Component={HomeAdmin} />
         <Route path="/admins" Component={Admins} />
         <Route path="/admin/teachers" Component={TeachersList} />
         <Route path="/admin/teacherForm" Component={TeacherForm} />
