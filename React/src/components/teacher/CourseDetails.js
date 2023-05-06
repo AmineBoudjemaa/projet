@@ -154,7 +154,8 @@ function CourseDetails() {
             </div>
             <div className="teacher-profil">
               <h4>Teacher</h4>
-              <img src="./images/teacher.png" alt="" />
+              {/* <img src="./images/teacher.png" alt="" /> */}
+              <img src={teacher.img} alt="" />
               <h4>{teacher.username}</h4>
             </div>
           </div>

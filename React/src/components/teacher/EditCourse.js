@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
-
+import AddModal from "./AddModal";
 
 const api = axios.create({
   baseURL: "http://localhost:3000",
@@ -11,15 +11,26 @@ const api = axios.create({
 function EditCourse() { 
   const location = useLocation();
   const [course, setState] = useState(location.state.courseDetails);
+  const [modalOpan, setModalOpan] = useState(false)
+
+  const closeModal = () => {
+    setModalOpan( false );
+  };
+  const openModal = () => {
+    setModalOpan( true );
+  };
+
   const handleChange = (e) => {
     setState({ ...course, [e.target.name]: e.target.value });
   };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     api
       .put(`/courses/${course._id}`, course)
       .then((res) => {
-        console.log("Course edit ");
+        console.log("Course edited ");
+        openModal()
       })
       .catch((error) => {
         console.error(error);
@@ -27,6 +38,13 @@ function EditCourse() {
   };
   return (
     <div className="course add-course">
+      <AddModal
+        modalOpan={modalOpan}
+        closeModal={closeModal}
+        comment={""}
+        editAdd={"edited"}
+        red={false}
+      />
       <div className="container">
         <h1>Edit course</h1>
         <form onSubmit={handleSubmit}>

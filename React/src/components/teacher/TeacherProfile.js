@@ -5,6 +5,7 @@ import "../../CSS/course.css";
 import Course from "./Course";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import AddModal from "./AddModal";
 
 const api = axios.create({
   baseURL: "http://localhost:3000",
@@ -17,8 +18,22 @@ class TeacherProfile extends Component {
     this.state = {
       user: {},
       courses: [],
+      modalOpan: false,
     };
   }
+
+  closeModal = () => {
+    this.setState(() => {
+      return { modalOpan: false };
+    });
+  };
+
+  openModal = () => {
+    this.setState(() => {
+      return { modalOpan: true };
+    });
+  };
+
   componentDidMount() {
     api
       .get("/auth/me")
@@ -61,6 +76,13 @@ class TeacherProfile extends Component {
 
     return (
       <div>
+        <AddModal
+          modalOpan={this.state.modalOpan}
+          closeModal={this.closeModal}
+          comment={""}
+          editAdd={"deleted"}
+          red={true}
+        />
         <div className="teacher">
           <div className="container">
             <div>
@@ -80,7 +102,8 @@ class TeacherProfile extends Component {
                 <p>{this.state.user.description}</p>
               </div>
               <div className="image">
-                <img src="./images/teacher.png" alt="" />
+                {/* <img src="./images/teacher.png" alt="" /> */}
+                <img src={this.state.user.img} alt="" />
               </div>
             </div>
           </div>
@@ -127,6 +150,8 @@ class TeacherProfile extends Component {
                           handleDeleteTeacherCourse={
                             this.handleDeleteTeacherCourse
                           }
+                          closeModal={this.closeModal}
+                          openModal={this.openModal}
                         />
                       );
                     })}

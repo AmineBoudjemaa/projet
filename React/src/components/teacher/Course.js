@@ -2,8 +2,16 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { CourseConsumer } from "../../context";
+import AddModal from "./AddModal";
 
 export default class Course extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      modalOpan: false,
+    };
+  }
+
   render() {
     let {
       _id,
@@ -19,11 +27,16 @@ export default class Course extends Component {
     let courseDetails = this.props.course;
     return (
       <CourseConsumer>
-        {({
-          handleDetails,
-        }) => {
+        {({ handleDetails }) => {
           return (
             <div className="card" onClick={() => handleDetails(_id)}>
+              {/* <AddModal
+                modalOpan={this.state.modalOpan}
+                closeModal={this.closeModal}
+                comment={""}
+                editAdd={"deleted"}
+                red={true}
+              /> */}
               <Link to="/teacher-course-details" state={{ courseDetails }}>
                 <div>
                   <div className="image">
@@ -74,6 +87,7 @@ export default class Course extends Component {
                     className="btn delete-btn"
                     onClick={() => {
                       this.props.handleDeleteTeacherCourse(_id);
+                      this.props.openModal();
                     }}
                   >
                     Delete

@@ -23,6 +23,7 @@ const TeacherForm = () => {
   const [name, setName] = useState(teacher.username);
   const [modules, setModule] = useState(teacher.subjects.join("/"));
   const [description, setDescription] = useState(teacher.description);
+  const [img, setImg] = useState(teacher.img);
   // alert
   const [alert, setAlert] = useState({ show: false });
   // edit
@@ -41,6 +42,9 @@ const TeacherForm = () => {
   const handleDescription = (e) => {
     setDescription(e.target.value);
   };
+  const handleImg = (e) => {
+    setImg(e.target.value);
+  };
 
   //handle alert
   const handleAlert = ({ type, text }) => {
@@ -56,7 +60,7 @@ const TeacherForm = () => {
     if (name !== "" || modules !== "" || description !== "") {
       if (edit) {
         const subjects = modules.toUpperCase().split("/");
-        let tempTecher = { ...teacher, name, subjects, description };
+        let tempTecher = { ...teacher, name, subjects, description, img };
         setTeacher(tempTecher);
         setEdit(false);
         api
@@ -111,6 +115,14 @@ const TeacherForm = () => {
               value={description}
               onChange={handleDescription}
             ></textarea>
+            <label htmlFor="img">Image URL:</label>
+            <input
+              type="text"
+              id="img"
+              placeholder="http://img.org"
+              value={img}
+              onChange={handleImg}
+            />
             <button type="submit" className="btn-blue">
               Edit <img src="./../images/right-arrow.png" alt="" />
             </button>
