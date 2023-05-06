@@ -12,7 +12,7 @@ import Teachers from "./components/Teachers";
 import TeacherDetails from "./components/TeacherDetails";
 import "./CSS/home.css";
 import Footer from "./components/Footer";
-import MyCourses from "./components/MyCourses2";
+import MyCourses from "./components/MyCourses";
 import SignUp from "./components/login/SignUp";
 import CoursesForm from "./components/CoursesForm";
 //teacher space

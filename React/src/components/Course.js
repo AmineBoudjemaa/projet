@@ -19,13 +19,8 @@ export default class Course extends Component {
     // let courseDetails = this.props.course;
     return (
       <CourseConsumer>
-        {({
-          user,
-          handleDetails,
-          addtoMyCourses,
-          openModal,
-        }) => {
-          console.log(user.role)
+        {({ user, handleDetails, addtoMyCourses, openModal }) => {
+          console.log(user.role);
           return (
             <div className="card" onClick={() => handleDetails(_id)}>
               <Link to="/course">
@@ -75,14 +70,16 @@ export default class Course extends Component {
                   // disabled={subscribe ? true : false}
                   onClick={() => {
                     addtoMyCourses(this.props.course);
-                    // openModal(_id);
+                    openModal(_id);
                   }}
                 >
                   {/* {subscribe ? "subscribed" : "Enroll"} */}
                   Enroll
                 </button>
               ) : (
-                <></>
+                <Link to="">
+                  <button className="btn-blue">Enroll</button>
+                </Link>
               )}
             </div>
           );
