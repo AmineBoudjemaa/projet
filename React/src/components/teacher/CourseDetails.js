@@ -17,17 +17,17 @@ function CourseDetails() {
   const [titleMail, setTitleMail] = useState("");
 
   const handleChangeMail = (e) => {
-    setTitleMail(e.target.value);
+    setMail(e.target.value);
   };
   const handleChangeTitleMail = (e) => {
-    setMail(e.target.value);
+    setTitleMail(e.target.value);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("send email", e);
     api
-      .put(`/courses/${course._id}/email`, { mail: mail, title: titleMail })
+      .post(`/courses/${course._id}/email`, { mail: mail, title: titleMail })
       .then((res) => {
         console.log("Email send ");
       })
