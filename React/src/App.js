@@ -27,6 +27,7 @@ import StudentList from "./components/admin/Students/StudentList";
 import AdminCourses from "./components/admin/Courses/Courses";
 import WaitingList from "./components/admin/Courses/WaitingList";
 import Admins from "./components/admin/Admins/Admins"
+import AddModal from "./components/teacher/AddModal";
 
 function App() {
   return (
@@ -60,6 +61,7 @@ function App() {
         <Route path="*" Component={Default} />
       </Routes>
       <Modal />
+      {/* <AddModal/> */}
       <Footer />
     </React.Fragment>
   );

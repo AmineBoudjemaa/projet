@@ -10,7 +10,20 @@ const api = axios.create({
 function CourseDetails() {
   const location = useLocation();
   const course = location.state.courseDetails;
+  console.log(course)
+  console.log("plan of course: ", course.plan)
   const [teacher, setTeacher] = useState({})
+  const [mail, setMail] = useState('')
+
+  const handleChange = (e) => {
+    setMail(e.target.value);
+  };
+
+  const handleSubmit = (e)=>{
+    e.preventDefault();
+    console.log("send email", e)
+  }
+
   useEffect(()=>{
     api
       .get(`/teachers/${location.state.courseDetails.teacher}`)
@@ -23,7 +36,7 @@ function CourseDetails() {
         console.log("no teachers");
         console.error(error);
       });
-  })
+  },[])
   return (
     <div className="course">
       <div className="container">
@@ -44,7 +57,23 @@ function CourseDetails() {
               <li>Linear models</li>
               <li>Brief introduction to the QR decomposition</li>
             </ul>
+            <form style={{ display: "block" }} onSubmit={handleSubmit}>
+              <label htmlFor="mail">Mail</label>
+              <input
+                type="text"
+                id="mail"
+                required
+                placeholder="https://fr.wikipedia.org"
+                name="mail"
+                value={mail}
+                onChange={handleChange}
+              />
+              <button className="btn-blue">
+                Send Email<i class="fa-solid fa-arrow-right"></i>
+              </button>
+            </form>
           </div>
+
           <div className="details">
             <div className="image">
               <img src={course.img} alt="" />

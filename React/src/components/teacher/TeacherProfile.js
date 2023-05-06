@@ -34,20 +34,27 @@ class TeacherProfile extends Component {
   }
 
   handleDeleteTeacherCourse = (id) => {
-    api.delete(`http://localhost:3000/courses/${id}`).then((response) => {
-      api
-        .get("/auth/me")
-        .then((response) => {
-          if (response.status === 200) {
-            console.log("Course deleted");
-            this.setState({ user: response.data });
-          }
-        })
-        .catch((error) => {
-          console.log("no user");
-          console.error(error);
-        });
-    });
+    api
+      .delete(`/courses/${id}`)
+      .then((response) => {
+        console.log("amine");
+        console.log(response.status);
+        api
+          .get("/auth/me")
+          .then((response) => {
+            if (response.status === 200) {
+              console.log("Course deleted");
+              this.setState({ user: response.data });
+            }
+          })
+          .catch((error) => {
+            console.log("no user");
+            console.error(error);
+          });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
   render() {
     const length = this.state.user.subjects?.length;

@@ -61,6 +61,16 @@ function EditCourse() {
               value={course.description}
               onChange={handleChange}
             />
+            <label htmlFor="plan">Plan</label>
+            <textarea
+              type="text"
+              id="plan"
+              required
+              placeholder="Start by familiarizing yourself with the basics ..."
+              name="plan"
+              value={course.plan}
+              onChange={handleChange}
+            />
             <button type="submit" className="btn-blue">
               Edit <i class="fa-solid fa-arrow-right"></i>
             </button>

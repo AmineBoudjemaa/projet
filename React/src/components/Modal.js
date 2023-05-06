@@ -15,9 +15,14 @@ export default class Modal extends Component {
             return (
               <div className="modal ">
                 <div className="modal-content">
-                    <h4>{title}</h4>
+                  <h4>{title}</h4>
                   <h5>Course added to your course list</h5>
-                    <button onClick={() => closeModal()} className="close">Close</button>
+                  <Link to="/courses">
+                    <button onClick={() => closeModal()} className="close">
+                      Close
+                    </button>
+                  </Link>
+
                   <Link to="/myCourses">
                     <button onClick={() => closeModal()}>
                       Go to myCourses

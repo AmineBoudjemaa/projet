@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
+import AddModal from "./AddModal";
 
 const api = axios.create({
   baseURL: "http://localhost:3000",
@@ -20,6 +21,8 @@ export class CoursesForm extends Component {
       certificate: true,
       subscribe: true,
       img: "https://images.unsplash.com/photo-1580582932707-520aed937b7b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1032&q=80",
+      plan: "",
+      // modalOpan: false,
     };
   }
 
@@ -27,12 +30,19 @@ export class CoursesForm extends Component {
     this.setState({ [e.target.name]: e.target.value });
   };
 
+  // closeModal = () => {
+  //   this.setState(() => {
+  //     return { modalOpan: false };
+  //   });
+  // };
+
   submitHandler = (e) => {
     e.preventDefault();
     api
       .post("/courses", this.state)
       .then((res) => {
         console.log("course added");
+        // this.setState({ modalOpan: true });
       })
       .catch((err) => console.error(err));
   };
@@ -48,9 +58,16 @@ export class CoursesForm extends Component {
       certificate,
       subscribe,
       img,
+      plan,
     } = this.state;
     return (
       <div className="course add-course">
+        {/* <AddModal
+          modalOpan={this.state.modalOpan}
+          closeModal={this.closeModal}
+          title={title}
+          editAdd={"add"}
+        /> */}
         <div className="container">
           <h1>Adding course</h1>
           <form onSubmit={this.submitHandler}>
@@ -83,6 +100,16 @@ export class CoursesForm extends Component {
                 placeholder="A course on Boolean algebra is typically an introductory..."
                 name="description"
                 value={description}
+                onChange={this.changeHandeler}
+              />
+              <label htmlFor="plan">Plan</label>
+              <textarea
+                type="text"
+                id="plan"
+                required
+                placeholder="Start by familiarizing yourself with the basics ..."
+                name="plan"
+                value={plan}
                 onChange={this.changeHandeler}
               />
               <button type="submit" className="btn-blue">

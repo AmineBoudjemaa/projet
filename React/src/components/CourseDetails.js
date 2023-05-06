@@ -52,7 +52,7 @@ export default class CourseDetails extends Component {
                         // disabled={subscribe ? true : false}
                         onClick={() => {
                           addtoMyCourses(detailsCourse);
-                          // openModal(_id);
+                          openModal(_id);
                         }}
                       >
                         {/* {subscribe ? (
@@ -64,6 +64,7 @@ export default class CourseDetails extends Component {
                           </>
                         )} */}
                         Enroll
+                        <i class="fa-solid fa-arrow-right"></i>
                       </button>
                     ) : (
                       ""
