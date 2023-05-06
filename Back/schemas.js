@@ -6,7 +6,7 @@ module.exports.courseSchema = joi.object({
         description: joi.string().required(),
         category: joi.string().required(),
         type:joi.string().valid('on site', 'online'),
-        price:joi.number().min(10).max(5000000).required(),
+        price:joi.number().min(0).max(5000000).required(),
         hours:joi.number().required(),
         certificate:joi.boolean().required(),
         subscribe:joi.boolean().required(),
