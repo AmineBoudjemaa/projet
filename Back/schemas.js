@@ -21,7 +21,7 @@ module.exports.courseEditSchema = joi.object({
     description: joi.string(),
     category: joi.string(),
     type:joi.string().valid('on site', 'online'),
-    price:joi.number().min(10).max(5000000),
+    price:joi.number().min(0).max(5000000),
     hours:joi.number(),
     certificate:joi.boolean(),
     subscribe:joi.boolean(),
