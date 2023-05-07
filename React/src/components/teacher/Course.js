@@ -38,7 +38,7 @@ export default class Course extends Component {
                 red={true}
               /> */}
               <Link to="/teacher-course-details" state={{ courseDetails }}>
-                <div>
+                <div style={{minWidth: "270px"}}>
                   <div className="image">
                     <img
                       src={

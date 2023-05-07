@@ -1,6 +1,12 @@
 import React, { Component } from "react";
 import { CourseConsumer } from "../context";
+import axios from "axios";
 // import "../CSS/css"
+
+const api = axios.create({
+  baseURL: "http://localhost:3000",
+  withCredentials: true, // send cookies with requests
+});
 
 export default class CourseDetails extends Component {
   constructor(props) {
@@ -9,6 +15,22 @@ export default class CourseDetails extends Component {
       teacher: {},
     };
   }
+
+  // componentDidMount(){
+  //   api
+  //     .get(`/teachers/${}`)
+  //     .then((response) => {
+  //       if (response.status === 200) {
+  //         console.log(response.data)
+  //         this.setState({teacher:response.data});
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       console.log("no teachers");
+  //       console.error(error);
+  //     });
+  // }
+
   render() {
     return (
       <CourseConsumer>
@@ -25,7 +47,9 @@ export default class CourseDetails extends Component {
             certificate,
             subscribe,
             img,
+            plan,
           } = detailsCourse;
+          const planList = plan && plan.split(".").filter((word) => word !== "");
           return (
             <div className="course">
               <div className="container">
@@ -40,11 +64,9 @@ export default class CourseDetails extends Component {
                     </a>
                     <h2>Program</h2>
                     <ul>
-                      <li>Matrix algebra notation</li>
-                      <li>Matrix algebra operations</li>
-                      <li>Application of matrix algebra to data analysis</li>
-                      <li>Linear models</li>
-                      <li>Brief introduction to the QR decomposition</li>
+                      {planList.map((chapter) => {
+                        return <li>{chapter}</li>;
+                      })}
                     </ul>
                     {user.role === "student" ? (
                       <button

@@ -11,7 +11,9 @@ function CourseDetails() {
   const location = useLocation();
   const course = location.state.courseDetails;
   console.log("plan of course: ", course.plan);
-  const [planList, setPlanList] = useState(course.plan.split("."));
+  const [planList, setPlanList] = useState(
+    course.plan.split(".").filter((word) => word !== "")
+  );
   const [teacher, setTeacher] = useState({});
   const [mail, setMail] = useState("");
   const [titleMail, setTitleMail] = useState("");

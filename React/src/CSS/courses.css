@@ -31,10 +31,12 @@
 
 .courses .card .image {
   position: relative;
+  height: 250px;
 }
 
 .courses .card .image img {
   width: 100%;
+  height: 250px;
 }
 
 .courses .card .image span {
