@@ -395,6 +395,7 @@ ul {
 
 .search .search-category select {
   /* styling */
+  width: 150px;
   background-color: #63797a;
   color: #fff;
   border-radius: 16px;

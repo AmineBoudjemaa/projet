@@ -60,7 +60,7 @@ const TeacherForm = () => {
     if (name !== "" || modules !== "" || description !== "") {
       if (edit) {
         const subjects = modules.toUpperCase().split("/");
-        let tempTecher = { ...teacher, name, subjects, description, img };
+        let tempTecher = { ...teacher, username:name, subjects, description, img };
         setTeacher(tempTecher);
         setEdit(false);
         api
