@@ -262,8 +262,8 @@ export class CoursesForm extends Component {
 
               <div className="detail">
                 <span>
-                  <i className="fa-regular fa-calendar"></i>
-                  Duration
+                  <i class="fa-solid fa-image"></i>
+                  Image
                 </span>
                 <span>
                   <input

@@ -8,7 +8,7 @@ const api = axios.create({
 });
 
 const Teacher = ({ teacher, handleDelete, handleEdit }) => {
-  const { _id, username } = teacher;
+  const { _id, username, phone } = teacher;
   const addToHome = ()=>{
     api
       .post(`/home/teachers/${_id}`)
@@ -40,6 +40,9 @@ const Teacher = ({ teacher, handleDelete, handleEdit }) => {
       <div className="info">
         <i className="fa-regular fa-user"></i>
         <span className="name">{username}</span>
+        <span className="name" style={{ color: "#1E8722" }}>
+          {phone}
+        </span>
       </div>
       <div style={{ display: "flex" }}>
         <button

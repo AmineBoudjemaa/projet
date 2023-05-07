@@ -81,7 +81,7 @@ function CourseDetails() {
                 onChange={handleChangeTitleMail}
               />
               <label htmlFor="mail">Mail</label>
-              <input
+              <textarea
                 type="text"
                 id="mail"
                 required

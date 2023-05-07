@@ -58,7 +58,7 @@ export class SignUp extends Component {
             <input
               type="tel"
               id="tel"
-              //   pattern="[0-9]{10}"
+              pattern="[0-9]{10}"
               required
               placeholder="0606060606"
               name="tel"
@@ -68,8 +68,8 @@ export class SignUp extends Component {
             <button type="submit" className="submit">
               <i
                 className="fa-brands fa-google"
-                style={{ color: "#ffffff", paddingRight:10 }}
-                ></i>
+                style={{ color: "#ffffff", paddingRight: 10 }}
+              ></i>
               Create your account
             </button>
           </form>

@@ -8,7 +8,7 @@ const api = axios.create({
 
 const Waiting = ({ studentAccepted, course, refrechCourse }) => {
   const student = studentAccepted._id;
-  const { username } = studentAccepted;
+  const { username,phone } = studentAccepted;
 
   const deleteStudent = () => {
     api
@@ -28,6 +28,7 @@ const Waiting = ({ studentAccepted, course, refrechCourse }) => {
       <div className="info">
         <i className="fa-regular fa-user"></i>
         <span className="name">{username}</span>
+        <span className="name" style={{ color: "#1E8722" }}>{phone}</span>
       </div>
       <div>
         <button

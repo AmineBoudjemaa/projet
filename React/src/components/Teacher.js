@@ -29,7 +29,7 @@ export default class Teacher extends Component {
                   return <p key={i}>{module}</p>;
                 })}
               </div>
-              <p>{description.slice(0, 100)}...</p>
+              <p>{description.slice(0, 90)}...</p>
             </div>
           </Link>
         )}

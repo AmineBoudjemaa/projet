@@ -2,12 +2,15 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const Student = ({ admin, handleDelete }) => {
-  const { _id, username } = admin;
+  const { _id, username, phone } = admin;
   return (
     <li className="teacher">
       <div className="info">
         <i className="fa-regular fa-user"></i>
         <span className="name">{username}</span>
+        <span className="name" style={{ color: "#1E8722" }}>
+          {phone}
+        </span>
       </div>
       <div style={{ display: "flex" }}>
         <button

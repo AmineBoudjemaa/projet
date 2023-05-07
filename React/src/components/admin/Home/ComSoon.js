@@ -28,11 +28,16 @@ export default function ComSoon() {
           setImgs(imgs);
           console.log(imgs);
           setImg1(imgs[0].img);
-          setImg2(imgs[1].img);
-          setImg3(imgs[2].img);
           setLink1(imgs[0].link);
+          if(imgs.length>=2){
+            setImg2(imgs[1].img);
           setLink2(imgs[1].link);
+          }
+          if(imgs.length===3){
+          setImg3(imgs[2].img);
           setLink3(imgs[2].link);
+          }
+          
         }
       })
       .catch((error) => {
@@ -70,47 +75,48 @@ export default function ComSoon() {
   const submitHandler1 = (e) => {
     e.preventDefault();
     console.log("submit 1");
-    console.log(imgs);
-    console.log(imgs[0]._id);
-    console.log(imgs.length);
-    api
-      .delete(`/home/imgs/${imgs[0]._id}`)
-      .then((res) => {
-        console.log("img1 end link1 deleted ");
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-    // if (imgs.length >= 1) {
-    //   api
-    //     .delete(`/home/imgs/${imgs[0]._id}`)
-    //     .then((res) => {
-    //       console.log("img1 end link1 deleted ");
-    //       // openModal();
-    //       api
-    //         .post(`/home/imgs`, { img: img1, link: link1 })
-    //         .then((res) => {
-    //           console.log("img1 end link1 added ");
-    //           // openModal();
-    //         })
-    //         .catch((error) => {
-    //           console.error(error);
-    //         });
-    //     })
-    //     .catch((error) => {
-    //       console.error(error);
-    //     });
-    // } else {
-    //   api
-    //     .post(`/home/imgs`, { img: img1, link: link1 })
-    //     .then((res) => {
-    //       console.log("img1 end link1 added ");
-    //       // openModal();
-    //     })
-    //     .catch((error) => {
-    //       console.error(error);
-    //     });
-    // }
+    // console.log(imgs);
+    // console.log(imgs[0]._id);
+    // console.log(imgs.length);
+    // api
+    //   .delete(`/home/imgs/${imgs[0]._id}`)
+    //   .then((res) => {
+    //     console.log("img1 end link1 deleted ");
+    //   })
+    //   .catch((error) => {
+    //     console.log("img1 end link1 deleted erroe");
+    //     console.error(error);
+    //   });
+    if (imgs.length >= 1) {
+      api
+        .delete(`/home/imgs/${imgs[0]._id}`)
+        .then((res) => {
+          console.log("img1 end link1 deleted ");
+          // openModal();
+          api
+            .post(`/home/imgs`, { img: img1, link: link1 })
+            .then((res) => {
+              console.log("img1 end link1 added ");
+              // openModal();
+            })
+            .catch((error) => {
+              console.error(error);
+            });
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    } else {
+      api
+        .post(`/home/imgs`, { img: img1, link: link1 })
+        .then((res) => {
+          console.log("img1 end link1 added ");
+          // openModal();
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
     containerRef.current.scrollTop = containerRef.current.scrollHeight;
   };
   const submitHandler2 = (e) => {
