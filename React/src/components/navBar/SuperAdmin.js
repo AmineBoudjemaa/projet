@@ -3,7 +3,7 @@ import { Link, NavLink } from "react-router-dom";
 import logo from "../../logo.png";
 import LogoutLogoutButton from "../login/LogoutButton";
 
-export default class NavBar extends Component {
+export default class SuperAdmin extends Component {
   render() {
     return (
       <div className="header" id="header">
@@ -13,24 +13,15 @@ export default class NavBar extends Component {
           </Link>
           <ul className="nav">
             <li>
-              <NavLink to="/admin/home">Home</NavLink>
-            </li>
-            <li>
-              <NavLink to="/admin/courses">Courses</NavLink>
-            </li>
-            {/* <li>
               <NavLink to="/admins">Admins</NavLink>
-            </li> */}
-            <li>
-              <NavLink to="/admin/teachers">Teachers</NavLink>
             </li>
-            {/* <li>
+            <li>
               <NavLink to="/admin/students">Students</NavLink>
-            </li> */}
+            </li>
           </ul>
           <ul className="user">
             <li>
-                <button className="btn-profile btn-whit">Admin</button>
+              <button className="btn-profile btn-whit">Super Admin</button>
             </li>
             <li>
               <LogoutLogoutButton />

@@ -3,6 +3,7 @@ import Visitor from "./navBar/Visitor";
 import Teacher from "./navBar/Teacher";
 import Student from "./navBar/Student";
 import Admin from "./navBar/Admin";
+import SuperAdmin from "./navBar/SuperAdmin";
 import axios from "axios";
 
 const api = axios.create({
@@ -57,6 +58,8 @@ export default class NavBar extends Component {
               nav = <Teacher user={this.state.user}></Teacher>;
             } else if (this.state.user.role === "student") {
               nav = <Student name={this.state.user.username}></Student>;
+            } else if (this.state.user.role === "super admin") {
+              nav = <SuperAdmin name={this.state.user.username}></SuperAdmin>;
             }
           } else {
             nav = <Visitor setUser={this.setUser}></Visitor>;
